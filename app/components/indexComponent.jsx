@@ -1,7 +1,8 @@
 import React from 'react';
 import Store from '../store';
+import {ImageUrl} from '../api/ApiUrl';
 import {getPopularMovies} from '../api/Discover';
-import {List, ListItem} from 'material-ui/List';
+import {GridList, GridTile} from 'material-ui/GridList';
 export default class IndexComponent extends React.Component {
     componentWillMount() {
         this.state = {popularMovies: null};
@@ -19,19 +20,38 @@ export default class IndexComponent extends React.Component {
     }
 
     render() {
+        const styles = {
+            root: {
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'space-around',
+            },
+            gridList: {
+                overflowY: 'auto',
+            },
+        };
+
         var movieList = [];
         if (this.state.popularMovies) {
             for (let movie of this.state.popularMovies.results) {
-                movieList.push(<ListItem key={movie.id} primaryText={movie.original_title}/>);
-                //Added key: Each child in an array or iterator should have a unique "key" prop
-                //https://facebook.github.io/react/docs/lists-and-keys.html
+                movieList.push(movie);
             }
         }
         return (
-            <div>
-                <List>
-                    {movieList}
-                </List>
+            <div style={styles.root}>
+                <GridList style={styles.gridList}>
+                    {movieList.map((movie) => {
+                        var image = `${ImageUrl}w500/${movie.backdrop_path}`;
+                        return (
+                            <GridTile
+                                key={movie.id}
+                                title={movie.original_title}
+                            >
+                                <img src={image}/>
+                            </GridTile>
+                        );
+                    }, this)}
+                </GridList>
             </div>
         )
     }

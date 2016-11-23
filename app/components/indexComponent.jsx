@@ -15,10 +15,6 @@ export default class IndexComponent extends React.Component {
             Store.dispatch({type: 'load_popularMovies', data: jsondata});
         });
 
-        getPopularShows().then(jsondata => {
-            Store.dispatch({ type: 'load_popularShows', data: jsondata});
-        });
-
         this.unsubscribe = Store.subscribe(() => {
             this.setState({popularMovies: Store.getState().popularMovies});
         });
@@ -43,6 +39,14 @@ export default class IndexComponent extends React.Component {
                 overflowY: 'auto',
             },
         };
+
+        function getTVShows(tab) {
+            if (!tab.props.data) {
+                getPopularShows().then(jsondata => {
+                    Store.dispatch({type: 'load_popularShows', data: jsondata});
+                });
+            }
+        }
 
         var movieList = [];
         if (this.state.popularMovies) {
@@ -75,7 +79,9 @@ export default class IndexComponent extends React.Component {
                         }, this)}
                     </GridList>
                 </Tab>
-                <Tab label="TV Shows">
+                <Tab label="TV Shows"
+                     data={this.state.popularShows}
+                     onActive={getTVShows}>
                     <GridList style={styles.gridList}>
                         {showList.map((show) => {
                             var image = `${ImageUrl}w500/${show.backdrop_path}`;

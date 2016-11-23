@@ -10,3 +10,8 @@ React application with content from The Movie Database
     `npm run build-dev`
 3. Launch application:
     `webpack-dev-server`
+    
+### TODO ###
+- [ ] Popular movies/TV (Discover)
+- [ ] Latest movies/TV (Discover)
+- [ ] Dynamic configuration (image basurl, image sizes)

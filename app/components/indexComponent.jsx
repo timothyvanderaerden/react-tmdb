@@ -5,7 +5,9 @@ import {getPopularMovies} from '../api/Discover';
 import {GridList, GridTile} from 'material-ui/GridList';
 export default class IndexComponent extends React.Component {
     componentWillMount() {
-        this.state = {popularMovies: null};
+        this.state = {popularMovies: null, appBarTitle: "Popular Movies/TV-shows"};
+        Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+
         getPopularMovies().then(jsondata => {
             Store.dispatch({type: 'load_popularMovies', data: jsondata});
         });

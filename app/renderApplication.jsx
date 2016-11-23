@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, useRouterHistory, IndexRedirect } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import IndexComponent from './components/indexComponent';
+import AppNavComponent from './components/appNavComponent';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey:false});
 
@@ -11,6 +12,7 @@ class App extends React.Component {
         return (
             <MuiThemeProvider>
                 <div>
+                    <AppNavComponent />
                     <div>
                         {this.props.children}
                     </div>

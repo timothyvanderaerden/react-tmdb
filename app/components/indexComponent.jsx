@@ -2,13 +2,15 @@ import React from 'react';
 import Store from '../store';
 import {ImageUrl} from '../api/ApiUrl';
 import {getPopularMovies, getPopularShows} from '../api/Discover';
-import {GridList, GridTile} from 'material-ui/GridList';
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import {Grid, Col} from 'react-flexbox-grid/lib/index'
+import {Row, Col} from 'react-flexbox-grid/lib/index'
+import SwipeableViews from 'react-swipeable-views';
+
 
 export default class IndexComponent extends React.Component {
     componentWillMount() {
-        this.state = {popularMovies: null, popularShows: null, appBarTitle: "Dashboard"};
+        this.state = {popularMovies: null, popularShows: null, appBarTitle: "Popular", slideIndex: 0};
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
 
         getPopularMovies().then(jsondata => {
@@ -28,26 +30,16 @@ export default class IndexComponent extends React.Component {
         this.unsubscribe();
     }
 
-    render() {
-        const styles = {
-            root: {
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'space-around',
-            },
-            gridList: {
-                overflowY: 'auto',
-            },
-        };
-
-        function getTVShows(tab) {
-            if (!tab.props.data) {
-                getPopularShows().then(jsondata => {
-                    Store.dispatch({type: 'load_popularShows', data: jsondata});
-                });
-            }
+    handleChange(value) {
+        if (!this.state.popularShows) {
+            getPopularShows().then(jsondata => {
+                Store.dispatch({type: 'load_popularShows', data: jsondata});
+            });
         }
+        this.setState({slideIndex: value});
+    }
 
+    render() {
         var movieList = [];
         if (this.state.popularMovies) {
             for (let movie of this.state.popularMovies.results) {
@@ -61,44 +53,63 @@ export default class IndexComponent extends React.Component {
                 showList.push(show);
             }
         }
+
         return (
-            <Tabs>
-                <Tab label="Movies">
-                    <GridList style={styles.gridList}>
+            <div>
+                <Tabs
+                    onChange={this.handleChange.bind(this)}
+                    value={this.state.slideIndex}
+                >
+                    <Tab label="Movies" value={0}/>
+                    <Tab label="TV Shows" value={1}/>
+                </Tabs>
+                <SwipeableViews
+                    index={this.state.slideIndex}
+                    onChangeIndex={this.handleChange.bind(this)}
+                >
+                    <Row style={{margin: 8}}>
                         {movieList.map((movie) => {
                             var image = `${ImageUrl}w500/${movie.backdrop_path}`;
                             return (
-                                <GridTile
-                                    key={movie.id}
-                                    title={movie.original_title}
-                                    subtitle={movie.overview}
-                                >
-                                    <img src={image}/>
-                                </GridTile>
+                                <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
+                                    <Card>
+                                        <CardMedia>
+                                            <img src={image}/>
+                                        </CardMedia>
+                                        <CardTitle
+                                            title={movie.original_title}
+                                        >
+                                        </CardTitle>
+                                        <CardText>
+                                            {movie.overview}
+                                        </CardText>
+                                    </Card>
+                                </Col>
                             );
                         }, this)}
-                    </GridList>
-                </Tab>
-                <Tab label="TV Shows"
-                     data={this.state.popularShows}
-                     onActive={getTVShows}>
-                    <GridList style={styles.gridList}>
+                    </Row>
+                    <Row style={{margin: 8}}>
                         {showList.map((show) => {
                             var image = `${ImageUrl}w500/${show.backdrop_path}`;
                             return (
-                                <GridTile
-                                    key={show.id}
-                                    title={show.original_name}
-                                    subtitle={show.overview}
-                                >
-                                    <img src={image}/>
-                                </GridTile>
+                                <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>
+                                    <Card>
+                                        <CardMedia>
+                                            <img src={image}/>
+                                        </CardMedia>
+                                        <CardTitle
+                                            title={show.original_name}
+                                        />
+                                        <CardText>
+                                            {show.overview}
+                                        </CardText>
+                                    </Card>
+                                </Col>
                             );
                         }, this)}
-                    </GridList>
-                </Tab>
-            </Tabs>
-
+                    </Row>
+                </SwipeableViews>
+            </div>
         )
     }
 }

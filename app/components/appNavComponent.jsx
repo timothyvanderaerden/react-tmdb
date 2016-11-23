@@ -8,7 +8,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
+import PopularIcon from 'material-ui/svg-icons/action/stars';
 
 export default class appNavComponent extends React.Component  {
 
@@ -34,7 +34,7 @@ export default class appNavComponent extends React.Component  {
                 <Drawer
                     docked={false}
                     open={this.state.open}>
-                    <MenuItem onTouchTap={this.handleClose.bind(this)} leftIcon={<DashboardIcon/>} containerElement={<Link to={'/index'}></Link>} primaryText={"Dashboard"}></MenuItem>
+                    <MenuItem onTouchTap={this.handleClose.bind(this)} leftIcon={<PopularIcon/>} containerElement={<Link to={'/popular'}></Link>} primaryText={"Popular"}></MenuItem>
                 </Drawer>
 
                 <AppBar   title={this.state.appBarTitle}

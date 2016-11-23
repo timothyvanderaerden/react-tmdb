@@ -1,17 +1,22 @@
 # React-TMDb
-React application with content from The Movie Database
+React application with information about movies and TV shows
 
+    note: All content is provided by The Movie Database
+    
 ## Installation ##
 1. Clone repo:
     `git clone https://github.com/timothyvanderaerden/React-TMDb.git`
-1. Install node modules:
+2. Install node modules:
     `npm install`
-2. Create webpack bundle:
+3. Put your key in: (get your key [here](https://www.themoviedb.org))
+    `/app/api/ApiKey.js`
+4. Create webpack bundle:
     `npm run build-dev`
-3. Launch application:
+5. Launch application:
     `webpack-dev-server`
     
 ### TODO ###
-- [ ] Popular movies/TV (Discover)
+- [x] Popular movies/TV (Discover)
+    - [ ] Design popular movies/TV
 - [ ] Latest movies/TV (Discover)
 - [ ] Dynamic configuration (image basurl, image sizes)

@@ -4,6 +4,8 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'load_configurations':
             return Object.assign({}, state, {configurations: action.data});
+        case 'load_popularMovies':
+            return Object.assign({}, state, {popularMovies: action.data});
         default:
             return state;
     }

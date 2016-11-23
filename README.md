@@ -8,11 +8,12 @@ React application with information about movies and TV shows
     `git clone https://github.com/timothyvanderaerden/React-TMDb.git`
 2. Install node modules:
     `npm install`
-3. Put your key in: (get your key [here](https://www.themoviedb.org))
+3. Get your key [here](https://www.themoviedb.org)
+4. Place your key in: 
     `/app/api/ApiKey.js`
-4. Create webpack bundle:
+5. Create webpack bundle:
     `npm run build-dev`
-5. Launch application:
+6. Launch application:
     `webpack-dev-server`
     
 ### TODO ###

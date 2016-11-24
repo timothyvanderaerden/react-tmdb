@@ -8,12 +8,12 @@ import SwipeableViews from 'react-swipeable-views';
 
 export default class PopularComponent extends React.Component {
     componentWillMount() {
-        this.state = {popularMovies: null, popularShows: null, appBarTitle: "Popular", slideIndex: 0};
+        this.state = {popularMovies: null, popularShows: null, appBarTitle: "Popular", slideIndex: 0, load: false};
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
     }
 
     handleChange(value) {
-        this.setState({slideIndex: value});
+        this.setState({slideIndex: value, load: true});
     }
 
     render() {
@@ -27,11 +27,11 @@ export default class PopularComponent extends React.Component {
                     <Tab label="TV Shows" value={1}/>
                 </Tabs>
                 <SwipeableViews
-                    index={this.state.slideIndex}
-                    onChangeIndex={this.handleChange.bind(this)}
+                    index={ this.state.slideIndex }
+                    onChangeIndex={ this.handleChange.bind(this) }
                 >
                     <PopularMovieComponent/>
-                    <PopularShowComponent/>
+                    { this.state.load ? <PopularShowComponent/> : <div></div> }
                 </SwipeableViews>
             </div>
         )

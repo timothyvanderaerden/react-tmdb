@@ -24,6 +24,7 @@ export default class PopularMovieComponent extends React.Component {
             },
         };
     }
+
     componentWillMount() {
         this.state = {popularMovies: null, movieGenres: null};
 
@@ -73,21 +74,23 @@ export default class PopularMovieComponent extends React.Component {
                                 <CardMedia>
                                     <img src={image}/>
                                 </CardMedia>
-                                <CardTitle title={movie.original_title} />
+                                <CardTitle title={movie.original_title}/>
                                 <CardText>
                                     {movie.overview}
                                 </CardText>
                                 <CardActions>
                                     <div style={this.styles.wrapper}>
-                                    {movie.genre_ids.map((id) => {
-                                        var genre = genreList.find(function (x) { return x.id === id; });
-                                        return (
-                                            <Chip key={id} style={this.styles.chip}>
-                                                {genre.name}
-                                            </Chip>
-                                        );
-                                    })}
-                                        </div>
+                                        {movie.genre_ids.map((id) => {
+                                            var genre = genreList.find((x) => {
+                                                return x.id === id;
+                                            });
+                                            return (
+                                                <Chip key={id} style={this.styles.chip}>
+                                                    {genre.name}
+                                                </Chip>
+                                            );
+                                        })}
+                                    </div>
                                 </CardActions>
                             </Card>
                         </Col>

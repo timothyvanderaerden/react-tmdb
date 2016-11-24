@@ -37,12 +37,10 @@ export default class PopularMovieComponent extends React.Component {
         });
 
         this.unsubscribe = Store.subscribe(() => {
-            this.setState({popularMovies: Store.getState().popularMovies});
+            this.setState({popularMovies: Store.getState().popularMovies,
+                movieGenres: Store.getState().movieGenres});
         });
 
-        this.unsubscribe = Store.subscribe(() => {
-            this.setState({movieGenres: Store.getState().movieGenres});
-        });
     }
 
     componentWillUnmount() {

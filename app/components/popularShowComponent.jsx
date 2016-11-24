@@ -5,20 +5,42 @@ import React from 'react';
 import Store from '../store';
 import {ImageUrl} from '../api/ApiUrl';
 import {getPopularShows} from '../api/Discover';
-import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {getTVGenres} from '../api/Genres';
+import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
+import Chip from 'material-ui/Chip';
 import {Row, Col} from 'react-flexbox-grid/lib/index'
 
-
 export default class PopularShowComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.styles = {
+            chip: {
+                margin: 4,
+            },
+            wrapper: {
+                display: 'flex',
+                flexWrap: 'wrap',
+            },
+        };
+    }
+
     componentWillMount() {
-        this.state = { popularShows: null };
+        this.state = {popularShows: null, tvGenres: null, movieGenres: null};
 
         getPopularShows().then(jsondata => {
             Store.dispatch({type: 'load_popularShows', data: jsondata});
         });
 
+        getTVGenres().then(jsondata => {
+            Store.dispatch({type: 'load_tvGenres', data: jsondata});
+        });
+
         this.unsubscribe = Store.subscribe(() => {
-            this.setState({popularShows: Store.getState().popularShows});
+            this.setState({
+                popularShows: Store.getState().popularShows,
+                tvGenres: Store.getState().tvGenres,
+                movieGenres: Store.getState().movieGenres
+            });
         });
     }
 
@@ -28,9 +50,18 @@ export default class PopularShowComponent extends React.Component {
 
     render() {
         var showList = [];
-        if (this.state.popularShows) {
+        var genreList = [];
+        if (this.state.popularShows && this.state.tvGenres) {
             for (let show of this.state.popularShows.results) {
                 showList.push(show);
+            }
+
+            for (let genre of this.state.tvGenres.genres) {
+                genreList.push(genre);
+            }
+
+            for (let genre of this.state.movieGenres.genres) {
+                genreList.push(genre);
             }
         }
 
@@ -50,6 +81,20 @@ export default class PopularShowComponent extends React.Component {
                                 <CardText>
                                     {show.overview}
                                 </CardText>
+                                <CardActions>
+                                    <div style={this.styles.wrapper}>
+                                        {show.genre_ids.map((id) => {
+                                            var genre = genreList.find((x) => {
+                                                return x.id === id;
+                                            });
+                                            return (
+                                                <Chip key={id} style={this.styles.chip}>
+                                                    {genre.name}
+                                                </Chip>
+                                            );
+                                        })}
+                                    </div>
+                                </CardActions>
                             </Card>
                         </Col>
                     );

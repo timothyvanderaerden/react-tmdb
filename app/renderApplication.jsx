@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, useRouterHistory, IndexRedirect } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PopularComponent from './components/popularComponent';
+import MovieComponent from './components/movieComponent';
 import AppNavComponent from './components/appNavComponent';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey:false});
@@ -28,6 +29,7 @@ const renderApplication = () => {
         <Route path="/" component={App}>
             <IndexRedirect to='popular'/>
             <Route path="popular" component={PopularComponent}/>
+            <Route path="movie/:movieId" component={MovieComponent}/>
         </Route>
     </Router>
     ),document.getElementById('applicatie'));

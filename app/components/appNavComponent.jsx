@@ -34,7 +34,7 @@ export default class appNavComponent extends React.Component  {
                 <Drawer
                     docked={false}
                     open={this.state.open}>
-                    <MenuItem onTouchTap={this.handleClose.bind(this)} leftIcon={<PopularIcon/>} containerElement={<Link to={'/popular'}></Link>} primaryText={"Popular"}></MenuItem>
+                    <MenuItem onTouchTap={this.handleClose.bind(this)} leftIcon={<PopularIcon/>} containerElement={<Link to={'/popular'}/>} primaryText={"Popular"}/>
                 </Drawer>
 
                 <AppBar   title={this.state.appBarTitle}

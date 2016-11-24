@@ -3,12 +3,16 @@
  */
 import React from 'react';
 import Store from '../store';
+import {Link} from 'react-router';
+import { useRouterHistory } from 'react-router'
 import {ImageUrl} from '../api/ApiUrl';
 import {getPopularMovies} from '../api/Discover';
 import {getMovieGenres} from '../api/Genres';
 import Chip from 'material-ui/Chip';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
-import {Row, Col} from 'react-flexbox-grid/lib/index'
+import {Row, Col} from 'react-flexbox-grid/lib/index';
+import createHashHistory from 'history/lib/createHashHistory';
+export const history = useRouterHistory(createHashHistory)({queryKey:false});
 
 
 export default class PopularMovieComponent extends React.Component {
@@ -47,6 +51,10 @@ export default class PopularMovieComponent extends React.Component {
         this.unsubscribe();
     }
 
+    handleLinkToMovie(id) {
+        history.push(`/movie/${id}`);
+    }
+
     render() {
         var movieList = [];
         var genreList = [];
@@ -63,9 +71,11 @@ export default class PopularMovieComponent extends React.Component {
                         <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
                             <Card>
                                 <CardMedia>
-                                    <img src={image}/>
+                                    <img src={image} style={{cursor: 'pointer'}}
+                                         onClick={this.handleLinkToMovie.bind(this, movie.id)} />
                                 </CardMedia>
-                                <CardTitle title={movie.original_title}/>
+                                <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
+                                           onClick={this.handleLinkToMovie.bind(this, movie.id)} />
                                 <CardText>
                                     {movie.overview}
                                 </CardText>

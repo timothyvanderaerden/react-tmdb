@@ -21,5 +21,9 @@ React application with information about movies and TV shows
 ### TODO ###
 - [x] Popular movies/TV (Discover)
     - [ ] Design popular movies/TV
+- [ ] Movie/TV page
+    - [ ] Design Movie/TV
+- [ ] Remove inline style
 - [ ] Latest movies/TV (Discover)
 - [ ] Dynamic configuration (image basurl, image sizes)
+- [ ] Minimize bundle size

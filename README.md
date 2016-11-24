@@ -1,7 +1,7 @@
 # React-TMDb
 React application with information about movies and TV shows
 
-![Popular Movies](https://cloud.githubusercontent.com/assets/7502104/20592649/fe6d3cc0-b22e-11e6-9770-6eb7fc78ff04.png)
+![Popular Movies](https://cloud.githubusercontent.com/assets/7502104/20600337/70121188-b253-11e6-8314-4a9ef6ba6360.png)
 
    > note: All content is provided by [The Movie Database](https://www.themoviedb.org)
     

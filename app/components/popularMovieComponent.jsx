@@ -11,6 +11,7 @@ import {getMovieGenres} from '../api/Genres';
 import Chip from 'material-ui/Chip';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import {Row, Col} from 'react-flexbox-grid/lib/index';
+import CircularProgress from 'material-ui/CircularProgress';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey:false});
 
@@ -56,48 +57,56 @@ export default class PopularMovieComponent extends React.Component {
     }
 
     render() {
-        var movieList = [];
-        var genreList = [];
         if (this.state.popularMovies && this.state.movieGenres) {
-            movieList = this.state.popularMovies.results;
-            genreList = this.state.movieGenres.genres;
-        }
+            var movieList = this.state.popularMovies.results;
+            var genreList = this.state.movieGenres.genres;
 
-        return (
-            <Row style={{margin: 8}}>
-                {movieList.map((movie) => {
-                    var image = `${ImageUrl}w500/${movie.backdrop_path}`;
-                    return (
-                        <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
-                            <Card>
-                                <CardMedia>
-                                    <img src={image} style={{cursor: 'pointer'}}
-                                         onClick={this.handleLinkToMovie.bind(this, movie.id)} />
-                                </CardMedia>
-                                <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
-                                           onClick={this.handleLinkToMovie.bind(this, movie.id)} />
-                                <CardText>
-                                    {movie.overview}
-                                </CardText>
-                                <CardActions>
-                                    <div style={this.styles.wrapper}>
-                                        {movie.genre_ids.map((id) => {
-                                            var genre = genreList.find((x) => {
-                                                return x.id === id;
-                                            });
-                                            return (
-                                                <Chip key={id} style={this.styles.chip}>
-                                                    {genre.name}
-                                                </Chip>
-                                            );
-                                        })}
-                                    </div>
-                                </CardActions>
-                            </Card>
-                        </Col>
-                    );
-                }, this)}
-            </Row>
-        )
+            return (
+                <Row style={{margin: 8}}>
+                    {movieList.map((movie) => {
+                        var image = `${ImageUrl}w500/${movie.backdrop_path}`;
+                        return (
+                            <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
+                                <Card>
+                                    <CardMedia>
+                                        <img src={image} style={{cursor: 'pointer'}}
+                                             onClick={this.handleLinkToMovie.bind(this, movie.id)}/>
+                                    </CardMedia>
+                                    <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
+                                               onClick={this.handleLinkToMovie.bind(this, movie.id)}/>
+                                    <CardText>
+                                        {movie.overview}
+                                    </CardText>
+                                    <CardActions>
+                                        <div style={this.styles.wrapper}>
+                                            {movie.genre_ids.map((id) => {
+                                                var genre = genreList.find((x) => {
+                                                    return x.id === id;
+                                                });
+                                                return (
+                                                    <Chip key={id} style={this.styles.chip}>
+                                                        {genre.name}
+                                                    </Chip>
+                                                );
+                                            })}
+                                        </div>
+                                    </CardActions>
+                                </Card>
+                            </Col>
+                        );
+                    }, this)}
+                </Row>
+            )
+        } else {
+            return (
+                <Row style={{margin: 8}}>
+                    <Col xs={12}>
+                        <Row center="xs">
+                            <CircularProgress />
+                        </Row>
+                    </Col>
+                </Row>
+            )
+        }
     }
 }

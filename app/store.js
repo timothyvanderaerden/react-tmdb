@@ -8,6 +8,8 @@ const reducer = (state, action) => {
             return Object.assign({}, state, {popularMovies: action.data});
         case 'load_popularShows':
             return Object.assign({}, state, {popularShows: action.data});
+        case 'load_movieGenres':
+            return Object.assign({}, state, {movieGenres: action.data});
         case 'appbar_title':
             return Object.assign({}, state, { appBarTitle: action.data });
         default:

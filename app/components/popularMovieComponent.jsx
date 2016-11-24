@@ -51,13 +51,8 @@ export default class PopularMovieComponent extends React.Component {
         var movieList = [];
         var genreList = [];
         if (this.state.popularMovies && this.state.movieGenres) {
-            for (let movie of this.state.popularMovies.results) {
-                movieList.push(movie);
-            }
-
-            for (let genre of this.state.movieGenres.genres) {
-                genreList.push(genre);
-            }
+            movieList = this.state.popularMovies.results;
+            genreList = this.state.movieGenres.genres;
         }
 
         return (

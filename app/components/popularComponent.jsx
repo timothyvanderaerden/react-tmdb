@@ -31,7 +31,7 @@ export default class PopularComponent extends React.Component {
                     onChangeIndex={ this.handleChange.bind(this) }
                 >
                     <PopularMovieComponent/>
-                    { this.state.load ? <PopularShowComponent/> : <div></div> }
+                    { this.state.load ? <PopularShowComponent/> : null }
                 </SwipeableViews>
             </div>
         )

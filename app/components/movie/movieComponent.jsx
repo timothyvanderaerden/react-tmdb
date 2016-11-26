@@ -1,10 +1,8 @@
-/**
- * Created by timothy on 24/11/16.
- */
 import React from 'react';
-import Store from '../store';
-import {getMovieById} from '../api/Movies';
-import {ImageUrl} from '../api/ApiUrl';
+import Store from '../../store';
+import {getMovieById} from '../../api/Movies';
+import KeywordComponent from './keywordComponent';
+import {ImageUrl} from '../../api/ApiUrl';
 import {Card, CardMedia, CardText, CardTitle} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -25,17 +23,15 @@ export default class MovieComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.state = {appBarTitle: "Movie", movie: null};
-        Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+        this.state = {movie: null};
 
-        getMovieById(this.props.params.movieId).then(jsondata => {
+        getMovieById(this.props.id).then(jsondata => {
             Store.dispatch({type: 'load_movie', data: jsondata});
         });
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({movie: Store.getState().movie});
         });
-
     }
 
     componentWillUnmount() {
@@ -44,17 +40,17 @@ export default class MovieComponent extends React.Component {
 
     render() {
         if (this.state.movie) {
-            var movie = this.state.movie;
-            var image = `${ImageUrl}w1280/${movie.backdrop_path}`;
+            const movie = this.state.movie;
+            const image = `${ImageUrl}w1280${movie.backdrop_path}`;
 
             return (
-                <Card>
+                <Card style={{marginBottom: 8}}>
                     <CardMedia
                         overlay={<CardTitle title={movie.original_title}/>}
                     >
                         <img src={image}/>
                     </CardMedia>
-                    <CardTitle subtitle={movie.overview}/>
+                    <CardTitle title="Overview" subtitle={movie.overview}/>
                     <CardText>
                         <Row>
                             <Col xs={6}>
@@ -95,6 +91,8 @@ export default class MovieComponent extends React.Component {
                                         )
                                     })}
                                 </div>
+                                <h2>Keywords</h2>
+                                <KeywordComponent id={this.props.id}/>
                             </Col>
                         </Row>
                     </CardText>

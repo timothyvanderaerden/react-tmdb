@@ -51,13 +51,13 @@ export default class PopularShowComponent extends React.Component {
 
     render() {
         if (this.state.popularShows && this.state.tvGenres) {
-            var showList = this.state.popularShows.results;
-            var genreList = this.state.tvGenres.genres.concat(this.state.movieGenres.genres);
+            const showList = this.state.popularShows.results;
+            const genreList = this.state.tvGenres.genres.concat(this.state.movieGenres.genres);
 
             return (
                 <Row style={{margin: 8}}>
                     {showList.map((show) => {
-                        var image = `${ImageUrl}w500/${show.backdrop_path}`;
+                        const image = `${ImageUrl}w500/${show.backdrop_path}`;
                         return (
                             <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>
                                 <Card>
@@ -73,7 +73,7 @@ export default class PopularShowComponent extends React.Component {
                                     <CardActions>
                                         <div style={this.styles.wrapper}>
                                             {show.genre_ids.map((id) => {
-                                                var genre = genreList.find((x) => {
+                                                const genre = genreList.find((x) => {
                                                     return x.id === id;
                                                 });
                                                 return (

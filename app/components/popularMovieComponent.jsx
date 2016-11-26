@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import Store from '../store';
-import {Link} from 'react-router';
 import { useRouterHistory } from 'react-router'
 import {ImageUrl} from '../api/ApiUrl';
 import {getPopularMovies} from '../api/Discover';
@@ -58,13 +57,13 @@ export default class PopularMovieComponent extends React.Component {
 
     render() {
         if (this.state.popularMovies && this.state.movieGenres) {
-            var movieList = this.state.popularMovies.results;
-            var genreList = this.state.movieGenres.genres;
+            const movieList = this.state.popularMovies.results;
+            const genreList = this.state.movieGenres.genres;
 
             return (
                 <Row style={{margin: 8}}>
                     {movieList.map((movie) => {
-                        var image = `${ImageUrl}w500/${movie.backdrop_path}`;
+                        const image = `${ImageUrl}w500/${movie.backdrop_path}`;
                         return (
                             <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
                                 <Card>
@@ -80,7 +79,7 @@ export default class PopularMovieComponent extends React.Component {
                                     <CardActions>
                                         <div style={this.styles.wrapper}>
                                             {movie.genre_ids.map((id) => {
-                                                var genre = genreList.find((x) => {
+                                                const genre = genreList.find((x) => {
                                                     return x.id === id;
                                                 });
                                                 return (

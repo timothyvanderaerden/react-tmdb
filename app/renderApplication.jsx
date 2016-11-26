@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, useRouterHistory, IndexRedirect } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PopularComponent from './components/popularComponent';
-import MovieComponent from './components/movieComponent';
+import MovieComponent from './components/movie/mainComponent';
 import AppNavComponent from './components/appNavComponent';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey:false});

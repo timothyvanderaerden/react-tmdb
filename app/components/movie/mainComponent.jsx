@@ -3,8 +3,8 @@ import Store from '../../store';
 import {getMovieById, getKeywordsForMovie, getMovieReviews,
     getCastForMovie, getSimilarMovies} from '../../api/Movies';
 import MovieComponent from './movieComponent';
-import SidebarComponent from './sidebarComponent';
-import ReviewComponent from './reviewComponent';
+import SidebarComponent from '../shared/sidebarComponent';
+import ReviewComponent from '../shared/reviewComponent';
 import LoadingComponent from '../shared/loadingComponent';
 import {Row, Col} from 'react-flexbox-grid';
 
@@ -65,7 +65,7 @@ export default class MainComponent extends React.Component {
     }
 
     render() {
-        if (this.state.percent) {
+        if (this.state.loaded) {
             return (
                 <Row style={{margin: 8}}>
                     <Col xs={12} md={8}>

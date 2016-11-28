@@ -1,5 +1,5 @@
 import React from 'react';
-import KeywordComponent from './keywordComponent';
+import KeywordComponent from '../shared/keywordComponent';
 import {ImageUrl} from '../../api/ApiUrl';
 import {Card, CardMedia, CardText, CardTitle} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';

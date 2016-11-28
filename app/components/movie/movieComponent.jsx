@@ -32,7 +32,9 @@ export default class MovieComponent extends React.Component {
                             title={movie.original_title}
                             subtitle={movie.tagline}/>
                     }>
-                    <img src={image}/>
+                    {movie.backdrop_path ?
+                        <img src={image}/> : null
+                    }
                 </CardMedia>
                 <CardTitle title="Overview" subtitle={movie.overview}/>
                 <Row>

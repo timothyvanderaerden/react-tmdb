@@ -8,7 +8,7 @@ import {getPopularShows} from '../api/Discover';
 import {getTVGenres} from '../api/Genres';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
-import CircularProgress from 'material-ui/CircularProgress';
+import LoadingComponent from './shared/loadingComponent';
 import {Row, Col} from 'react-flexbox-grid';
 
 export default class PopularShowComponent extends React.Component {
@@ -62,7 +62,9 @@ export default class PopularShowComponent extends React.Component {
                             <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>
                                 <Card>
                                     <CardMedia>
-                                        <img src={image}/>
+                                        {show.backdrop_path ?
+                                            <img src={image}/> : null
+                                        }
                                     </CardMedia>
                                     <CardTitle
                                         title={show.original_name}
@@ -92,13 +94,7 @@ export default class PopularShowComponent extends React.Component {
             )
         } else {
             return (
-                <Row style={{margin: 8}}>
-                    <Col xs={12}>
-                        <Row center="xs">
-                            <CircularProgress />
-                        </Row>
-                    </Col>
-                </Row>
+                <LoadingComponent/>
             )
         }
     }

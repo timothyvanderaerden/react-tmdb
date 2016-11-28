@@ -3,17 +3,16 @@
  */
 import React from 'react';
 import Store from '../store';
-import { useRouterHistory } from 'react-router'
+import {useRouterHistory} from 'react-router'
 import {ImageUrl} from '../api/ApiUrl';
 import {getPopularMovies} from '../api/Discover';
 import {getMovieGenres} from '../api/Genres';
 import Chip from 'material-ui/Chip';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import {Row, Col} from 'react-flexbox-grid/lib/index';
-import CircularProgress from 'material-ui/CircularProgress';
+import LoadingComponent from './shared/loadingComponent';
 import createHashHistory from 'history/lib/createHashHistory';
-export const history = useRouterHistory(createHashHistory)({queryKey:false});
-
+export const history = useRouterHistory(createHashHistory)({queryKey: false});
 
 export default class PopularMovieComponent extends React.Component {
     constructor(props) {
@@ -41,8 +40,10 @@ export default class PopularMovieComponent extends React.Component {
         });
 
         this.unsubscribe = Store.subscribe(() => {
-            this.setState({popularMovies: Store.getState().popularMovies,
-                movieGenres: Store.getState().movieGenres});
+            this.setState({
+                popularMovies: Store.getState().popularMovies,
+                movieGenres: Store.getState().movieGenres
+            });
         });
 
     }
@@ -68,8 +69,10 @@ export default class PopularMovieComponent extends React.Component {
                             <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
                                 <Card>
                                     <CardMedia>
-                                        <img src={image} style={{cursor: 'pointer'}}
-                                             onClick={this.handleLinkToMovie.bind(this, movie.id)}/>
+                                        {movie.backdrop_path ?
+                                            <img src={image} style={{cursor: 'pointer'}}
+                                                 onClick={this.handleLinkToMovie.bind(this, movie.id)}/> : null
+                                        }
                                     </CardMedia>
                                     <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
                                                onClick={this.handleLinkToMovie.bind(this, movie.id)}/>
@@ -98,13 +101,7 @@ export default class PopularMovieComponent extends React.Component {
             )
         } else {
             return (
-                <Row style={{margin: 8}}>
-                    <Col xs={12}>
-                        <Row center="xs">
-                            <CircularProgress />
-                        </Row>
-                    </Col>
-                </Row>
+                <LoadingComponent/>
             )
         }
     }

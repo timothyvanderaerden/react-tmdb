@@ -29,27 +29,27 @@ export default class MainComponent extends React.Component {
 
         getMovieById(movieId).then(jsondata => {
             Store.dispatch({type: 'load_movie', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 20})
+            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1})
         });
 
         getKeywordsForMovie(movieId).then(jsondata => {
             Store.dispatch({type: 'load_keywords', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 20})
+            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1})
         });
 
         getMovieReviews(movieId).then(jsondata => {
             Store.dispatch({type: 'load_reviews', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 20})
+            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1})
         });
 
         getCastForMovie(movieId).then(jsondata => {
             Store.dispatch({type: 'load_cast', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 20});
+            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1});
         });
 
         getSimilarMovies(movieId).then(jsondata => {
             Store.dispatch({type: 'load_similar', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 20});
+            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1});
         });
 
         this.unsubscribe = Store.subscribe(() => {
@@ -69,7 +69,7 @@ export default class MainComponent extends React.Component {
     }
 
     render() {
-        if (this.state.percent === 100) {
+        if (this.state.percent === 5) {
             return (
                 <Row style={{margin: 8}}>
                     <Col xs={12} md={8}>

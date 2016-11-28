@@ -1,3 +1,3 @@
-import BootstrapApplication from './app/bootstrapper';
+import RenderApplication from './app/renderApplication';
 
-BootstrapApplication();
+RenderApplication();

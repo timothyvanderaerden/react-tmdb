@@ -1,7 +1,9 @@
 import React from 'react';
 import Store from '../../store';
-import {getMovieById, getKeywordsForMovie, getMovieReviews,
-    getCastForMovie, getSimilarMovies} from '../../api/Movies';
+import {
+    getMovieById, getKeywordsForMovie, getMovieReviews,
+    getCastForMovie, getSimilarMovies
+} from '../../api/Movies';
 import MovieComponent from './movieComponent';
 import SidebarComponent from '../shared/sidebarComponent';
 import ReviewComponent from '../shared/reviewComponent';
@@ -27,7 +29,7 @@ export default class MainComponent extends React.Component {
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
         Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        this.getDataAsync(movieId);
+        this.getMovieData(movieId);
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -45,7 +47,7 @@ export default class MainComponent extends React.Component {
         this.unsubscribe();
     }
 
-    getDataAsync(movieId) {
+    getMovieData(movieId) {
         Promise.all([
             getMovieById(movieId),
             getKeywordsForMovie(movieId),

@@ -1,6 +1,6 @@
 {
   "name": "react-TMDb",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,8 +13,9 @@
     "babel-cli": "^6.18.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2016": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
     "css-loader": "^0.26.0",
     "npm": "^4.0.2",
     "style-loader": "^0.13.1",

@@ -26,7 +26,7 @@ export default class PopularShowComponent extends React.Component {
         this.state = {popularShows: null, tvGenres: null, movieGenres: null, loaded: false};
         Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        this.getDataAsync();
+        this.getShowData();
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -42,7 +42,7 @@ export default class PopularShowComponent extends React.Component {
         this.unsubscribe();
     }
 
-    getDataAsync() {
+    getShowData() {
         Promise.all([
             getPopularShows(),
             getTVGenres()
@@ -62,7 +62,7 @@ export default class PopularShowComponent extends React.Component {
 
             return (
                 <Row style={{margin: 8}}>
-                    {showList.map((show) => {
+                    {showList.map(show => {
                         const image = `${ImageUrl}w500/${show.backdrop_path}`;
                         return (
                             <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>
@@ -80,10 +80,8 @@ export default class PopularShowComponent extends React.Component {
                                     </CardText>
                                     <CardActions>
                                         <div style={this.styles.wrapper}>
-                                            {show.genre_ids.map((id) => {
-                                                const genre = genreList.find((x) => {
-                                                    return x.id === id;
-                                                });
+                                            {show.genre_ids.map(id => {
+                                                const genre = genreList.find(x => x.id === id);
                                                 return (
                                                     <Chip key={id} style={this.styles.chip}>
                                                         {genre.name}
@@ -95,7 +93,7 @@ export default class PopularShowComponent extends React.Component {
                                 </Card>
                             </Col>
                         );
-                    }, this)}
+                    })}
                 </Row>
             )
         } else {

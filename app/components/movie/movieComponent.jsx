@@ -71,7 +71,7 @@ export default class MovieComponent extends React.Component {
                         <CardTitle title="Genres"/>
                         <CardText>
                             <div style={this.styles.wrapper}>
-                                {movie.genres.map((genre) => {
+                                {movie.genres.map(genre => {
                                     return (
                                         <Chip key={genre.id} style={this.styles.chip}>
                                             {genre.name}
@@ -82,9 +82,7 @@ export default class MovieComponent extends React.Component {
                         </CardText>
                         <CardTitle title="Keywords"/>
                         <CardText>
-                            {this.props.keywords ?
-                                <KeywordComponent keywords={this.props.keywords}/> : null
-                            }
+                            <KeywordComponent keywords={this.props.keywords}/>
                         </CardText>
                     </Col>
                 </Row>

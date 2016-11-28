@@ -20,7 +20,7 @@ export default class KeywordComponent extends React.Component {
 
         return (
             <div style={this.styles.wrapper}>
-                {keywords.keywords.map((keyword) => {
+                {keywords.keywords.map(keyword => {
                     return (
                         <Chip key={keyword.id} style={this.styles.chip}>
                             {keyword.name}

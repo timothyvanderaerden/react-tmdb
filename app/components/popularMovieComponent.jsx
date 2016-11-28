@@ -29,7 +29,7 @@ export default class PopularMovieComponent extends React.Component {
         this.state = {popularMovies: null, movieGenres: null, loaded: false};
         Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        this.getDataAsync();
+        this.getMovieData();
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -45,7 +45,7 @@ export default class PopularMovieComponent extends React.Component {
         this.unsubscribe();
     }
 
-    getDataAsync() {
+    getMovieData() {
         Promise.all([
             getPopularMovies(),
             getMovieGenres()
@@ -69,7 +69,7 @@ export default class PopularMovieComponent extends React.Component {
 
             return (
                 <Row style={{margin: 8}}>
-                    {movieList.map((movie) => {
+                    {movieList.map(movie => {
                         const image = `${ImageUrl}w500/${movie.backdrop_path}`;
                         return (
                             <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
@@ -87,10 +87,8 @@ export default class PopularMovieComponent extends React.Component {
                                     </CardText>
                                     <CardActions>
                                         <div style={this.styles.wrapper}>
-                                            {movie.genre_ids.map((id) => {
-                                                const genre = genreList.find((x) => {
-                                                    return x.id === id;
-                                                });
+                                            {movie.genre_ids.map(id => {
+                                                const genre = genreList.find(x => x.id === id);
                                                 return (
                                                     <Chip key={id} style={this.styles.chip}>
                                                         {genre.name}
@@ -102,7 +100,7 @@ export default class PopularMovieComponent extends React.Component {
                                 </Card>
                             </Col>
                         );
-                    }, this)}
+                    })}
                 </Row>
             )
         } else {

@@ -22,7 +22,7 @@ export default class CastComponent extends React.Component {
 
         return (
             <div style={this.styles.wrapper}>
-                {cast.cast.map((credit) => {
+                {cast.cast.map(credit => {
                     const image = `${ImageUrl}w45${credit.profile_path}`;
                     return (
                         <Chip key={credit.id} style={this.styles.chip}>

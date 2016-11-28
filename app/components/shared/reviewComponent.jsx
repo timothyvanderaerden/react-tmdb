@@ -13,7 +13,7 @@ export default class ReviewComponent extends React.Component {
             <Card style={{marginBottom: 8}}>
                 <CardTitle title="Reviews"/>
                 {reviews.total_results === 0 ? <CardText>No reviews yet</CardText> : null}
-                {reviews.results.map((review) => {
+                {reviews.results.map(review => {
                     return (
                         <div key={review.id}>
                             <CardTitle title={review.author}/>

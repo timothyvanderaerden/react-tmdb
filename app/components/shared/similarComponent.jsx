@@ -12,7 +12,7 @@ export default class SimilarComponent extends React.Component {
 
         return (
             <GridList>
-                {similarList.map((similar) => {
+                {similarList.map(similar => {
                     const image = `${ImageUrl}w300${similar.backdrop_path}`;
                     return (
                         <GridTile

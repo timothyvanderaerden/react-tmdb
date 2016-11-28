@@ -1,11 +1,8 @@
 import React from 'react';
-import Store from '../../store';
-import {getMovieById} from '../../api/Movies';
 import KeywordComponent from './keywordComponent';
 import {ImageUrl} from '../../api/ApiUrl';
 import {Card, CardMedia, CardText, CardTitle} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
-import CircularProgress from 'material-ui/CircularProgress';
 import {Row, Col} from 'react-flexbox-grid';
 
 export default class MovieComponent extends React.Component {
@@ -22,92 +19,74 @@ export default class MovieComponent extends React.Component {
         };
     }
 
-    componentWillMount() {
-        this.state = {movie: null};
-
-        getMovieById(this.props.id).then(jsondata => {
-            Store.dispatch({type: 'load_movie', data: jsondata});
-        });
-
-        this.unsubscribe = Store.subscribe(() => {
-            this.setState({movie: Store.getState().movie});
-        });
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
 
     render() {
-        if (this.state.movie) {
-            const movie = this.state.movie;
-            const image = `${ImageUrl}w1280${movie.backdrop_path}`;
+        const movie = this.props.movie;
+        const image = `${ImageUrl}w1280${movie.backdrop_path}`;
 
-            return (
-                <Card style={{marginBottom: 8}}>
-                    <CardMedia
-                        overlay={<CardTitle title={movie.original_title}/>}
-                    >
-                        <img src={image}/>
-                    </CardMedia>
-                    <CardTitle title="Overview" subtitle={movie.overview}/>
-                    <CardText>
-                        <Row>
-                            <Col xs={6}>
-                                <h2>Facts</h2>
-                                <p>
-                                    <strong style={{display: 'block'}}>Status</strong>
-                                    {movie.status}
-                                </p>
-                                <p>
-                                    <strong style={{display: 'block'}}>Original language</strong>
-                                    {movie.original_language}
-                                </p>
-                                <p>
-                                    <strong style={{display: 'block'}}>Runtime</strong>
-                                    {movie.runtime}
-                                </p>
-                                <p>
-                                    <strong style={{display: 'block'}}>Budget</strong>
-                                    $ {movie.budget}
-                                </p>
-                                <p>
-                                    <strong style={{display: 'block'}}>Revenue</strong>
-                                    $ {movie.revenue}
-                                </p>
-                                <p>
-                                    <strong style={{display: 'block'}}>Homepage</strong>
-                                    <a href={movie.homepage}>{movie.homepage}</a>
-                                </p>
-                            </Col>
-                            <Col xs={6}>
-                                <h2>Genres</h2>
-                                <div style={this.styles.wrapper}>
-                                    {movie.genres.map((genre) => {
-                                        return (
-                                            <Chip key={genre.id} style={this.styles.chip}>
-                                                {genre.name}
-                                            </Chip>
-                                        )
-                                    })}
-                                </div>
-                                <h2>Keywords</h2>
-                                <KeywordComponent id={this.props.id}/>
-                            </Col>
-                        </Row>
-                    </CardText>
-                </Card>
-            )
-        } else {
-            return (
-                <Row style={{margin: 8}}>
-                    <Col xs={12}>
-                        <Row center="xs">
-                            <CircularProgress />
-                        </Row>
+        return (
+            <Card style={{marginBottom: 8}}>
+                <CardMedia
+                    overlay={
+                        <CardTitle
+                            title={movie.original_title}
+                            subtitle={movie.tagline}/>
+                    }>
+                    <img src={image}/>
+                </CardMedia>
+                <CardTitle title="Overview" subtitle={movie.overview}/>
+                <Row>
+                    <Col xs={6}>
+                        <CardTitle title="Facts"/>
+                        <CardText>
+                            <p>
+                                <strong style={{display: 'block'}}>Status</strong>
+                                {movie.status}
+                            </p>
+                            <p>
+                                <strong style={{display: 'block'}}>Original language</strong>
+                                {movie.original_language}
+                            </p>
+                            <p>
+                                <strong style={{display: 'block'}}>Runtime</strong>
+                                {movie.runtime} min
+                            </p>
+                            <p>
+                                <strong style={{display: 'block'}}>Budget</strong>
+                                $ {movie.budget.toLocaleString('en-US')}
+                            </p>
+                            <p>
+                                <strong style={{display: 'block'}}>Revenue</strong>
+                                $ {movie.revenue.toLocaleString('en-US')}
+                            </p>
+                            <p>
+                                <strong style={{display: 'block'}}>Homepage</strong>
+                                <a href={movie.homepage}>Website</a>
+                            </p>
+                        </CardText>
+                    </Col>
+                    <Col xs={6}>
+                        <CardTitle title="Genres"/>
+                        <CardText>
+                            <div style={this.styles.wrapper}>
+                                {movie.genres.map((genre) => {
+                                    return (
+                                        <Chip key={genre.id} style={this.styles.chip}>
+                                            {genre.name}
+                                        </Chip>
+                                    )
+                                })}
+                            </div>
+                        </CardText>
+                        <CardTitle title="Keywords"/>
+                        <CardText>
+                            {this.props.keywords ?
+                                <KeywordComponent keywords={this.props.keywords}/> : null
+                            }
+                        </CardText>
                     </Col>
                 </Row>
-            )
-        }
+            </Card>
+        )
     }
 }

@@ -6,15 +6,6 @@ import SimilarComponent from './similarComponent';
 export default class SidebarComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.styles = {
-            chip: {
-                margin: 4,
-            },
-            wrapper: {
-                display: 'flex',
-                flexWrap: 'wrap',
-            },
-        };
     }
 
     render() {
@@ -22,11 +13,11 @@ export default class SidebarComponent extends React.Component {
             <Card>
                 <CardTitle title="Cast"/>
                 <CardText>
-                    <CastComponent id={this.props.id}/>
+                    <CastComponent cast={this.props.cast}/>
                 </CardText>
                 <CardTitle title="Similar"/>
                 <CardText>
-                    <SimilarComponent id={this.props.id}/>
+                    <SimilarComponent similar={this.props.similar}/>
                 </CardText>
             </Card>
         )

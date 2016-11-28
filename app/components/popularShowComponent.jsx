@@ -1,6 +1,3 @@
-/**
- * Created by timothy on 23/11/16.
- */
 import React from 'react';
 import Store from '../store';
 import {ImageUrl} from '../api/ApiUrl';
@@ -26,21 +23,17 @@ export default class PopularShowComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.state = {popularShows: null, tvGenres: null, movieGenres: null};
+        this.state = {popularShows: null, tvGenres: null, movieGenres: null, loaded: false};
+        Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        getPopularShows().then(jsondata => {
-            Store.dispatch({type: 'load_popularShows', data: jsondata});
-        });
-
-        getTVGenres().then(jsondata => {
-            Store.dispatch({type: 'load_tvGenres', data: jsondata});
-        });
+        this.getDataAsync();
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
                 popularShows: Store.getState().popularShows,
                 tvGenres: Store.getState().tvGenres,
-                movieGenres: Store.getState().movieGenres
+                movieGenres: Store.getState().movieGenres,
+                loaded: Store.getState().loaded
             });
         });
     }
@@ -49,8 +42,21 @@ export default class PopularShowComponent extends React.Component {
         this.unsubscribe();
     }
 
+    getDataAsync() {
+        Promise.all([
+            getPopularShows(),
+            getTVGenres()
+        ]).then((data) => {
+            let [ shows, genres ] = data;
+            Store.dispatch({type: 'load_popularShows', data: shows});
+            Store.dispatch({type: 'load_tvGenres', data: genres});
+        }).then(() => {
+            Store.dispatch({type: 'loading_state', data: true});
+        })
+    }
+
     render() {
-        if (this.state.popularShows && this.state.tvGenres) {
+        if (this.state.loaded) {
             const showList = this.state.popularShows.results;
             const genreList = this.state.tvGenres.genres.concat(this.state.movieGenres.genres);
 

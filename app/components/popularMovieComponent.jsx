@@ -1,6 +1,3 @@
-/**
- * Created by timothy on 23/11/16.
- */
 import React from 'react';
 import Store from '../store';
 import {useRouterHistory} from 'react-router'
@@ -29,20 +26,16 @@ export default class PopularMovieComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.state = {popularMovies: null, movieGenres: null};
+        this.state = {popularMovies: null, movieGenres: null, loaded: false};
+        Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        getPopularMovies().then(jsondata => {
-            Store.dispatch({type: 'load_popularMovies', data: jsondata});
-        });
-
-        getMovieGenres().then(jsondata => {
-            Store.dispatch({type: 'load_movieGenres', data: jsondata});
-        });
+        this.getDataAsync();
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
                 popularMovies: Store.getState().popularMovies,
-                movieGenres: Store.getState().movieGenres
+                movieGenres: Store.getState().movieGenres,
+                loaded: Store.getState().loaded
             });
         });
 
@@ -52,12 +45,25 @@ export default class PopularMovieComponent extends React.Component {
         this.unsubscribe();
     }
 
+    getDataAsync() {
+        Promise.all([
+            getPopularMovies(),
+            getMovieGenres()
+        ]).then((data) => {
+            let [ movies, genres ] = data;
+            Store.dispatch({type: 'load_popularMovies', data: movies});
+            Store.dispatch({type: 'load_movieGenres', data: genres});
+        }).then(() => {
+            Store.dispatch({type: 'loading_state', data: true});
+        })
+    }
+
     handleLinkToMovie(id) {
         history.push(`/movie/${id}`);
     }
 
     render() {
-        if (this.state.popularMovies && this.state.movieGenres) {
+        if (this.state.loaded) {
             const movieList = this.state.popularMovies.results;
             const genreList = this.state.movieGenres.genres;
 

@@ -22,35 +22,12 @@ export default class MainComponent extends React.Component {
             reviews: null,
             cast: null,
             similar: null,
-            percent: 0
+            loaded: false
         };
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
-        Store.dispatch({type: 'loading_state', data: this.state.percent});
+        Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        getMovieById(movieId).then(jsondata => {
-            Store.dispatch({type: 'load_movie', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1})
-        });
-
-        getKeywordsForMovie(movieId).then(jsondata => {
-            Store.dispatch({type: 'load_keywords', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1})
-        });
-
-        getMovieReviews(movieId).then(jsondata => {
-            Store.dispatch({type: 'load_reviews', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1})
-        });
-
-        getCastForMovie(movieId).then(jsondata => {
-            Store.dispatch({type: 'load_cast', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1});
-        });
-
-        getSimilarMovies(movieId).then(jsondata => {
-            Store.dispatch({type: 'load_similar', data: jsondata});
-            Store.dispatch({type: 'loading_state', data: Store.getState().percent + 1});
-        });
+        this.getDataAsync(movieId);
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -59,7 +36,7 @@ export default class MainComponent extends React.Component {
                 reviews: Store.getState().reviews,
                 cast: Store.getState().cast,
                 similar: Store.getState().similar,
-                percent: Store.getState().percent
+                loaded: Store.getState().loaded
             });
         });
     }
@@ -68,8 +45,27 @@ export default class MainComponent extends React.Component {
         this.unsubscribe();
     }
 
+    getDataAsync(movieId) {
+        Promise.all([
+            getMovieById(movieId),
+            getKeywordsForMovie(movieId),
+            getMovieReviews(movieId),
+            getCastForMovie(movieId),
+            getSimilarMovies(movieId)
+        ]).then((data) => {
+            let [ movie, keywords, reviews, cast, similar ] = data;
+            Store.dispatch({type: 'load_movie', data: movie});
+            Store.dispatch({type: 'load_keywords', data: keywords});
+            Store.dispatch({type: 'load_reviews', data: reviews});
+            Store.dispatch({type: 'load_cast', data: cast});
+            Store.dispatch({type: 'load_similar', data: similar});
+        }).then(() => {
+            Store.dispatch({type: 'loading_state', data: true});
+        })
+    }
+
     render() {
-        if (this.state.percent === 5) {
+        if (this.state.percent) {
             return (
                 <Row style={{margin: 8}}>
                     <Col xs={12} md={8}>

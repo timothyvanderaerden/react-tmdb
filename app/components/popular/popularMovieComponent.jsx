@@ -58,9 +58,9 @@ export default class PopularMovieComponent extends React.Component {
         })
     }
 
-    handleLinkToMovie(id) {
+    _handleClick = (id) => {
         history.push(`/movie/${id}`);
-    }
+    };
 
     render() {
         if (this.state.loaded) {
@@ -70,18 +70,18 @@ export default class PopularMovieComponent extends React.Component {
             return (
                 <Row style={{margin: 8}}>
                     {movieList.map(movie => {
-                        const image = `${ImageUrl}w500/${movie.backdrop_path}`;
+                        const image = `${ImageUrl}w500${movie.backdrop_path}`;
                         return (
                             <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
                                 <Card>
                                     <CardMedia>
                                         {movie.backdrop_path ?
                                             <img src={image} style={{cursor: 'pointer'}}
-                                                 onClick={this.handleLinkToMovie.bind(this, movie.id)}/> : null
+                                                 onClick={() => {this._handleClick(movie.id)}} /> : null
                                         }
                                     </CardMedia>
                                     <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
-                                               onClick={this.handleLinkToMovie.bind(this, movie.id)}/>
+                                               onClick={() => {this._handleClick(movie.id)}} />
                                     <CardText>
                                         {movie.overview}
                                     </CardText>

@@ -58,9 +58,9 @@ export default class PopularShowComponent extends React.Component {
         })
     }
 
-    handleLinkToTvShow(id) {
+    _handleClick = (id) => {
         history.push(`/tv/${id}`);
-    }
+    };
 
     render() {
         if (this.state.loaded) {
@@ -77,11 +77,11 @@ export default class PopularShowComponent extends React.Component {
                                     <CardMedia>
                                         {show.backdrop_path ?
                                             <img src={image} style={{cursor: 'pointer'}}
-                                                 onClick={this.handleLinkToTvShow.bind(this, show.id)} /> : null
+                                                 onClick={() => {this._handleClick(show.id)}} /> : null
                                         }
                                     </CardMedia>
                                     <CardTitle title={show.original_name} style={{cursor: 'pointer'}}
-                                               onClick={this.handleLinkToTvShow.bind(this, show.id)} />
+                                               onClick={() => {this._handleClick(show.id)}} />
                                     <CardText>
                                         {show.overview}
                                     </CardText>

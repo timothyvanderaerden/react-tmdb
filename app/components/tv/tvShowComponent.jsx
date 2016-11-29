@@ -21,49 +21,49 @@ export default class MovieComponent extends React.Component {
 
 
     render() {
-        const movie = this.props.movie;
-        const image = `${ImageUrl}w780${movie.backdrop_path}`;
+        const tvShow = this.props.tvShow;
+        const image = `${ImageUrl}w780${tvShow.backdrop_path}`;
 
         return (
             <Card style={{marginBottom: 8}}>
                 <CardMedia
                     overlay={
                         <CardTitle
-                            title={movie.original_title}
-                            subtitle={movie.tagline}/>
+                            title={tvShow.original_title}
+                            subtitle={`Created by ${tvShow.created_by[0].name}`}/>
                     }>
-                    {movie.backdrop_path ?
+                    {tvShow.backdrop_path ?
                         <img src={image}/> : null
                     }
                 </CardMedia>
-                <CardTitle title="Overview" subtitle={movie.overview}/>
+                <CardTitle title="Overview" subtitle={tvShow.overview}/>
                 <Row>
                     <Col xs={6}>
                         <CardTitle title="Facts"/>
                         <CardText>
                             <p>
                                 <strong style={{display: 'block'}}>Status</strong>
-                                {movie.status}
+                                {tvShow.status}
                             </p>
                             <p>
                                 <strong style={{display: 'block'}}>Original language</strong>
-                                {movie.original_language}
+                                {tvShow.original_language}
                             </p>
                             <p>
-                                <strong style={{display: 'block'}}>Runtime</strong>
-                                {movie.runtime} min
+                                <strong style={{display: 'block'}}>First aired</strong>
+                                {tvShow.first_air_date.toLocaleString()}
                             </p>
                             <p>
-                                <strong style={{display: 'block'}}>Budget</strong>
-                                $ {movie.budget.toLocaleString('en-US')}
+                                <strong style={{display: 'block'}}>Seasons</strong>
+                                {tvShow.number_of_seasons}
                             </p>
                             <p>
-                                <strong style={{display: 'block'}}>Revenue</strong>
-                                $ {movie.revenue.toLocaleString('en-US')}
+                                <strong style={{display: 'block'}}>Episodes</strong>
+                                {tvShow.number_of_episodes}
                             </p>
                             <p>
                                 <strong style={{display: 'block'}}>Homepage</strong>
-                                <a href={movie.homepage}>Website</a>
+                                <a href={tvShow.homepage}>Website</a>
                             </p>
                         </CardText>
                     </Col>
@@ -71,7 +71,7 @@ export default class MovieComponent extends React.Component {
                         <CardTitle title="Genres"/>
                         <CardText>
                             <div style={this.styles.wrapper}>
-                                {movie.genres.map(genre => {
+                                {tvShow.genres.map(genre => {
                                     return (
                                         <Chip key={genre.id} style={this.styles.chip}>
                                             {genre.name}
@@ -82,7 +82,7 @@ export default class MovieComponent extends React.Component {
                         </CardText>
                         <CardTitle title="Keywords"/>
                         <CardText>
-                            <KeywordComponent keywords={this.props.keywords.keywords}/>
+                            <KeywordComponent keywords={this.props.keywords}/>
                         </CardText>
                     </Col>
                 </Row>

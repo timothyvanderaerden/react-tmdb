@@ -1,17 +1,17 @@
 import React from 'react';
-import Store from '../store';
+import Store from '../../store';
 import {useRouterHistory} from 'react-router'
-import {ImageUrl} from '../api/ApiUrl';
-import {getPopularMovies} from '../api/Discover';
-import {getMovieGenres} from '../api/Genres';
-import Chip from 'material-ui/Chip';
+import {ImageUrl} from '../../api/ApiUrl';
+import {getPopularShows} from '../../api/Discover';
+import {getTVGenres} from '../../api/Genres';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
-import {Row, Col} from 'react-flexbox-grid/lib/index';
-import LoadingComponent from './shared/loadingComponent';
+import Chip from 'material-ui/Chip';
+import LoadingComponent from '../shared/loadingComponent';
+import {Row, Col} from 'react-flexbox-grid';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey: false});
 
-export default class PopularMovieComponent extends React.Component {
+export default class PopularShowComponent extends React.Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -26,68 +26,68 @@ export default class PopularMovieComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.state = {popularMovies: null, movieGenres: null, loaded: false};
+        this.state = {popularShows: null, tvGenres: null, movieGenres: null, loaded: false};
         Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        this.getMovieData();
+        this.getShowData();
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
-                popularMovies: Store.getState().popularMovies,
+                popularShows: Store.getState().popularShows,
+                tvGenres: Store.getState().tvGenres,
                 movieGenres: Store.getState().movieGenres,
                 loaded: Store.getState().loaded
             });
         });
-
     }
 
     componentWillUnmount() {
         this.unsubscribe();
     }
 
-    getMovieData() {
+    getShowData() {
         Promise.all([
-            getPopularMovies(),
-            getMovieGenres()
+            getPopularShows(),
+            getTVGenres()
         ]).then((data) => {
-            let [ movies, genres ] = data;
-            Store.dispatch({type: 'load_popularMovies', data: movies});
-            Store.dispatch({type: 'load_movieGenres', data: genres});
+            let [ shows, genres ] = data;
+            Store.dispatch({type: 'load_popularShows', data: shows});
+            Store.dispatch({type: 'load_tvGenres', data: genres});
         }).then(() => {
             Store.dispatch({type: 'loading_state', data: true});
         })
     }
 
-    handleLinkToMovie(id) {
-        history.push(`/movie/${id}`);
+    handleLinkToTvShow(id) {
+        history.push(`/tv/${id}`);
     }
 
     render() {
         if (this.state.loaded) {
-            const movieList = this.state.popularMovies.results;
-            const genreList = this.state.movieGenres.genres;
+            const showList = this.state.popularShows.results;
+            const genreList = this.state.tvGenres.genres.concat(this.state.movieGenres.genres);
 
             return (
                 <Row style={{margin: 8}}>
-                    {movieList.map(movie => {
-                        const image = `${ImageUrl}w500/${movie.backdrop_path}`;
+                    {showList.map(show => {
+                        const image = `${ImageUrl}w500/${show.backdrop_path}`;
                         return (
-                            <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
+                            <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>
                                 <Card>
                                     <CardMedia>
-                                        {movie.backdrop_path ?
+                                        {show.backdrop_path ?
                                             <img src={image} style={{cursor: 'pointer'}}
-                                                 onClick={this.handleLinkToMovie.bind(this, movie.id)}/> : null
+                                                 onClick={this.handleLinkToTvShow.bind(this, show.id)} /> : null
                                         }
                                     </CardMedia>
-                                    <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
-                                               onClick={this.handleLinkToMovie.bind(this, movie.id)}/>
+                                    <CardTitle title={show.original_name} style={{cursor: 'pointer'}}
+                                               onClick={this.handleLinkToTvShow.bind(this, show.id)} />
                                     <CardText>
-                                        {movie.overview}
+                                        {show.overview}
                                     </CardText>
                                     <CardActions>
                                         <div style={this.styles.wrapper}>
-                                            {movie.genre_ids.map(id => {
+                                            {show.genre_ids.map(id => {
                                                 const genre = genreList.find(x => x.id === id);
                                                 return (
                                                     <Chip key={id} style={this.styles.chip}>

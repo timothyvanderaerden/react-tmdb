@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from '../store';
+import Store from '../../store';
 import PopularMovieComponent from './popularMovieComponent';
 import PopularShowComponent from './popularShowComponent';
 import {Tabs, Tab} from 'material-ui/Tabs';

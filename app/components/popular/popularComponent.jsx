@@ -58,16 +58,16 @@ export default class PopularComponent extends React.Component {
         })
     }
 
-    handleChange(value) {
+    handleChange = (value) => {
         this.setState({slideIndex: value, load: true});
         this.getShowData();
-    }
+    };
 
     render() {
         return (
             <div>
                 <Tabs
-                    onChange={this.handleChange.bind(this)}
+                    onChange={this.handleChange}
                     value={this.state.slideIndex}
                 >
                     <Tab label="Movies" value={0}/>
@@ -75,7 +75,7 @@ export default class PopularComponent extends React.Component {
                 </Tabs>
                 <SwipeableViews
                     index={ this.state.slideIndex }
-                    onChangeIndex={ this.handleChange.bind(this) }
+                    onChangeIndex={ this.handleChange }
                 >
                     { this.state.movieLoaded ?
                         <PopularMovieComponent movies={this.state.popularMovies} movieGenres={this.state.movieGenres}/>

@@ -24,8 +24,6 @@ const reducer = (state, action) => {
             return Object.assign({}, state, {reviews: action.data});
         case 'load_tvShow':
             return Object.assign({}, state, {tvShow: action.data});
-        case 'loading_state':
-            return Object.assign({}, state, {loaded: action.data});
         case 'appbar_title':
             return Object.assign({}, state, { appBarTitle: action.data });
         default:

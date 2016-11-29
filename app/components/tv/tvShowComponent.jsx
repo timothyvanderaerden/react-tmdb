@@ -23,10 +23,9 @@ export default class TvShowComponent extends React.Component {
             keywords: null,
             cast: null,
             similar: null,
-            loaded: false
+            showLoaded: false
         };
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
-        Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
         this.getTvShowData(tvShowId);
 
@@ -35,8 +34,7 @@ export default class TvShowComponent extends React.Component {
                 tvShow: Store.getState().tvShow,
                 keywords: Store.getState().keywords,
                 cast: Store.getState().cast,
-                similar: Store.getState().similar,
-                loaded: Store.getState().loaded
+                similar: Store.getState().similar
             });
         });
     }
@@ -58,12 +56,12 @@ export default class TvShowComponent extends React.Component {
             Store.dispatch({type: 'load_cast', data: cast});
             Store.dispatch({type: 'load_similar', data: similar});
         }).then(() => {
-            Store.dispatch({type: 'loading_state', data: true});
+            this.setState({showLoaded: true});
         })
     }
 
     render() {
-        if (this.state.loaded) {
+        if (this.state.showLoaded) {
             return (
                 <Row style={{margin: 8}}>
                     <Col xs={12} md={8}>

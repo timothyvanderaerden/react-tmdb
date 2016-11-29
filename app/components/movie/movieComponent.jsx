@@ -24,10 +24,9 @@ export default class MovieComponent extends React.Component {
             reviews: null,
             cast: null,
             similar: null,
-            loaded: false
+            movieLoaded: false
         };
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
-        Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
         this.getMovieData(movieId);
 
@@ -37,8 +36,7 @@ export default class MovieComponent extends React.Component {
                 keywords: Store.getState().keywords,
                 reviews: Store.getState().reviews,
                 cast: Store.getState().cast,
-                similar: Store.getState().similar,
-                loaded: Store.getState().loaded
+                similar: Store.getState().similar
             });
         });
     }
@@ -62,12 +60,12 @@ export default class MovieComponent extends React.Component {
             Store.dispatch({type: 'load_cast', data: cast});
             Store.dispatch({type: 'load_similar', data: similar});
         }).then(() => {
-            Store.dispatch({type: 'loading_state', data: true});
+            this.setState({movieLoaded: true})
         })
     }
 
     render() {
-        if (this.state.loaded) {
+        if (this.state.movieLoaded) {
             return (
                 <Row style={{margin: 8}}>
                     <Col xs={12} md={8}>

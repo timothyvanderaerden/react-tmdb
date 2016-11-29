@@ -6,14 +6,15 @@ import {getPopularShows} from '../../api/Discover';
 import {getTVGenres} from '../../api/Genres';
 import PopularMovieComponent from '../movie/movieCardsComponent';
 import PopularShowComponent from '../tv/tvShowCardsComponent';
+import LoadingComponent from '../shared/loadingComponent';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 
 export default class PopularComponent extends React.Component {
     componentWillMount() {
-        this.state = {popularMovies: null, popularShows: null, appBarTitle: "Popular", slideIndex: 0, load: false};
+        this.state = {popularMovies: null, popularShows: null, appBarTitle: "Popular",
+            slideIndex: 0, load: false, movieLoaded: false, showLoaded: false};
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
-        Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
         this.getMovieData();
 
@@ -22,8 +23,7 @@ export default class PopularComponent extends React.Component {
                 popularMovies: Store.getState().popularMovies,
                 movieGenres: Store.getState().movieGenres,
                 popularShows: Store.getState().popularShows,
-                tvGenres: Store.getState().tvGenres,
-                loaded: Store.getState().loaded
+                tvGenres: Store.getState().tvGenres
             });
         });
     }
@@ -41,7 +41,7 @@ export default class PopularComponent extends React.Component {
             Store.dispatch({type: 'load_popularMovies', data: movies});
             Store.dispatch({type: 'load_movieGenres', data: genres});
         }).then(() => {
-            Store.dispatch({type: 'loading_state', data: true});
+            this.setState({movieLoaded: true});
         })
     }
 
@@ -54,7 +54,7 @@ export default class PopularComponent extends React.Component {
             Store.dispatch({type: 'load_popularShows', data: shows});
             Store.dispatch({type: 'load_tvGenres', data: genres});
         }).then(() => {
-            Store.dispatch({type: 'loading_state', data: true});
+            this.setState({showLoaded: true});
         })
     }
 
@@ -77,10 +77,16 @@ export default class PopularComponent extends React.Component {
                     index={ this.state.slideIndex }
                     onChangeIndex={ this.handleChange.bind(this) }
                 >
-                    <PopularMovieComponent movies={this.state.popularMovies} movieGenres={this.state.movieGenres} />
-                    { this.state.load ? <PopularShowComponent tvShows={this.state.popularShows}
+                    { this.state.movieLoaded ?
+                        <PopularMovieComponent movies={this.state.popularMovies} movieGenres={this.state.movieGenres}/>
+                        : <LoadingComponent/>
+                    }
+
+                    { this.state.load && this.state.showLoaded ?
+                        <PopularShowComponent tvShows={this.state.popularShows}
                                                               tvGenres={this.state.tvGenres}
-                                                              movieGenres={this.state.movieGenres}/> : null
+                                                              movieGenres={this.state.movieGenres}/>
+                        : null
                     }
                 </SwipeableViews>
             </div>

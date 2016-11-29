@@ -1,92 +1,84 @@
 import React from 'react';
-import KeywordComponent from '../shared/keywordComponent';
-import {ImageUrl} from '../../api/ApiUrl';
-import {Card, CardMedia, CardText, CardTitle} from 'material-ui/Card';
-import Chip from 'material-ui/Chip';
+import Store from '../../store';
+import {
+    getTvShowById, getKeywordsForTvShow,
+    getCastForTvShow, getSimilarTvShows
+} from '../../api/Tv';
+import TvShowCardComponent from './tvShowCardComponent';
+import SeasonComponent from '../shared/seasonsComponent';
+import SidebarComponent from '../shared/sidebarComponent';
+import LoadingComponent from '../shared/loadingComponent';
 import {Row, Col} from 'react-flexbox-grid';
 
-export default class MovieComponent extends React.Component {
+export default class TvShowComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.styles = {
-            chip: {
-                margin: 4,
-            },
-            wrapper: {
-                display: 'flex',
-                flexWrap: 'wrap',
-            },
-        };
     }
 
+    componentWillMount() {
+        const tvShowId = this.props.params.tvShowId;
+        this.state = {
+            appBarTitle: "TV Show",
+            tvShow: null,
+            keywords: null,
+            cast: null,
+            similar: null,
+            loaded: false
+        };
+        Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+        Store.dispatch({type: 'loading_state', data: this.state.loaded});
+
+        this.getTvShowData(tvShowId);
+
+        this.unsubscribe = Store.subscribe(() => {
+            this.setState({
+                tvShow: Store.getState().tvShow,
+                keywords: Store.getState().keywords,
+                cast: Store.getState().cast,
+                similar: Store.getState().similar,
+                loaded: Store.getState().loaded
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+    getTvShowData(tvShowId) {
+        Promise.all([
+            getTvShowById(tvShowId),
+            getKeywordsForTvShow(tvShowId),
+            getCastForTvShow(tvShowId),
+            getSimilarTvShows(tvShowId)
+        ]).then((data) => {
+            let [ show, keywords, cast, similar ] = data;
+            Store.dispatch({type: 'load_tvShow', data: show});
+            Store.dispatch({type: 'load_keywords', data: keywords});
+            Store.dispatch({type: 'load_cast', data: cast});
+            Store.dispatch({type: 'load_similar', data: similar});
+        }).then(() => {
+            Store.dispatch({type: 'loading_state', data: true});
+        })
+    }
 
     render() {
-        const tvShow = this.props.tvShow;
-        const image = `${ImageUrl}w780${tvShow.backdrop_path}`;
-
-        return (
-            <Card style={{marginBottom: 8}}>
-                <CardMedia
-                    overlay={
-                        <CardTitle
-                            title={tvShow.original_title}
-                            subtitle={`Created by ${tvShow.created_by[0].name}`}/>
-                    }>
-                    {tvShow.backdrop_path ?
-                        <img src={image}/> : null
-                    }
-                </CardMedia>
-                <CardTitle title="Overview" subtitle={tvShow.overview}/>
-                <Row>
-                    <Col xs={6}>
-                        <CardTitle title="Facts"/>
-                        <CardText>
-                            <p>
-                                <strong style={{display: 'block'}}>Status</strong>
-                                {tvShow.status}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Original language</strong>
-                                {tvShow.original_language}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>First aired</strong>
-                                {tvShow.first_air_date.toLocaleString()}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Seasons</strong>
-                                {tvShow.number_of_seasons}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Episodes</strong>
-                                {tvShow.number_of_episodes}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Homepage</strong>
-                                <a href={tvShow.homepage}>Website</a>
-                            </p>
-                        </CardText>
+        if (this.state.loaded) {
+            return (
+                <Row style={{margin: 8}}>
+                    <Col xs={12} md={8}>
+                        <TvShowCardComponent keywords={this.state.keywords.results} tvShow={this.state.tvShow}/>
+                        <SeasonComponent seasons={this.state.tvShow.seasons}/>
                     </Col>
-                    <Col xs={6}>
-                        <CardTitle title="Genres"/>
-                        <CardText>
-                            <div style={this.styles.wrapper}>
-                                {tvShow.genres.map(genre => {
-                                    return (
-                                        <Chip key={genre.id} style={this.styles.chip}>
-                                            {genre.name}
-                                        </Chip>
-                                    )
-                                })}
-                            </div>
-                        </CardText>
-                        <CardTitle title="Keywords"/>
-                        <CardText>
-                            <KeywordComponent keywords={this.props.keywords}/>
-                        </CardText>
+                    <Col xs={12} md={4}>
+                        <SidebarComponent cast={this.state.cast} similar={this.state.similar}/>
                     </Col>
                 </Row>
-            </Card>
-        )
+            )
+        } else {
+            return (
+                <LoadingComponent/>
+            )
+        }
     }
 }

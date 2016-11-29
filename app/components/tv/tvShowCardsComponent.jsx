@@ -2,8 +2,6 @@ import React from 'react';
 import Store from '../../store';
 import {useRouterHistory} from 'react-router'
 import {ImageUrl} from '../../api/ApiUrl';
-import {getPopularShows} from '../../api/Discover';
-import {getTVGenres} from '../../api/Genres';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import LoadingComponent from '../shared/loadingComponent';
@@ -11,7 +9,7 @@ import {Row, Col} from 'react-flexbox-grid';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey: false});
 
-export default class PopularShowComponent extends React.Component {
+export default class TvShowCardsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -29,13 +27,8 @@ export default class PopularShowComponent extends React.Component {
         this.state = {popularShows: null, tvGenres: null, movieGenres: null, loaded: false};
         Store.dispatch({type: 'loading_state', data: this.state.loaded});
 
-        this.getShowData();
-
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
-                popularShows: Store.getState().popularShows,
-                tvGenres: Store.getState().tvGenres,
-                movieGenres: Store.getState().movieGenres,
                 loaded: Store.getState().loaded
             });
         });
@@ -45,27 +38,14 @@ export default class PopularShowComponent extends React.Component {
         this.unsubscribe();
     }
 
-    getShowData() {
-        Promise.all([
-            getPopularShows(),
-            getTVGenres()
-        ]).then((data) => {
-            let [ shows, genres ] = data;
-            Store.dispatch({type: 'load_popularShows', data: shows});
-            Store.dispatch({type: 'load_tvGenres', data: genres});
-        }).then(() => {
-            Store.dispatch({type: 'loading_state', data: true});
-        })
-    }
-
     _handleClick = (id) => {
         history.push(`/tv/${id}`);
     };
 
     render() {
         if (this.state.loaded) {
-            const showList = this.state.popularShows.results;
-            const genreList = this.state.tvGenres.genres.concat(this.state.movieGenres.genres);
+            const showList = this.props.tvShows.results;
+            const genreList = this.props.tvGenres.genres.concat(this.props.movieGenres.genres);
 
             return (
                 <Row style={{margin: 8}}>

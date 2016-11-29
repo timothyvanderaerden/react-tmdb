@@ -1,92 +1,88 @@
 import React from 'react';
-import KeywordComponent from '../shared/keywordComponent';
-import {ImageUrl} from '../../api/ApiUrl';
-import {Card, CardMedia, CardText, CardTitle} from 'material-ui/Card';
-import Chip from 'material-ui/Chip';
+import Store from '../../store';
+import {
+    getMovieById, getKeywordsForMovie, getMovieReviews,
+    getCastForMovie, getSimilarMovies
+} from '../../api/Movies';
+import MovieCardComponent from './movieCardComponent';
+import SidebarComponent from '../shared/sidebarComponent';
+import ReviewComponent from '../shared/reviewComponent';
+import LoadingComponent from '../shared/loadingComponent';
 import {Row, Col} from 'react-flexbox-grid';
 
 export default class MovieComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.styles = {
-            chip: {
-                margin: 4,
-            },
-            wrapper: {
-                display: 'flex',
-                flexWrap: 'wrap',
-            },
-        };
     }
 
+    componentWillMount() {
+        const movieId = this.props.params.movieId;
+        this.state = {
+            appBarTitle: "Movie",
+            movie: null,
+            keywords: null,
+            reviews: null,
+            cast: null,
+            similar: null,
+            loaded: false
+        };
+        Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+        Store.dispatch({type: 'loading_state', data: this.state.loaded});
+
+        this.getMovieData(movieId);
+
+        this.unsubscribe = Store.subscribe(() => {
+            this.setState({
+                movie: Store.getState().movie,
+                keywords: Store.getState().keywords,
+                reviews: Store.getState().reviews,
+                cast: Store.getState().cast,
+                similar: Store.getState().similar,
+                loaded: Store.getState().loaded
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+    getMovieData(movieId) {
+        Promise.all([
+            getMovieById(movieId),
+            getKeywordsForMovie(movieId),
+            getMovieReviews(movieId),
+            getCastForMovie(movieId),
+            getSimilarMovies(movieId)
+        ]).then((data) => {
+            let [ movie, keywords, reviews, cast, similar ] = data;
+            Store.dispatch({type: 'load_movie', data: movie});
+            Store.dispatch({type: 'load_keywords', data: keywords});
+            Store.dispatch({type: 'load_reviews', data: reviews});
+            Store.dispatch({type: 'load_cast', data: cast});
+            Store.dispatch({type: 'load_similar', data: similar});
+        }).then(() => {
+            Store.dispatch({type: 'loading_state', data: true});
+        })
+    }
 
     render() {
-        const movie = this.props.movie;
-        const image = `${ImageUrl}w780${movie.backdrop_path}`;
-
-        return (
-            <Card style={{marginBottom: 8}}>
-                <CardMedia
-                    overlay={
-                        <CardTitle
-                            title={movie.original_title}
-                            subtitle={movie.tagline}/>
-                    }>
-                    {movie.backdrop_path ?
-                        <img src={image}/> : null
-                    }
-                </CardMedia>
-                <CardTitle title="Overview" subtitle={movie.overview}/>
-                <Row>
-                    <Col xs={6}>
-                        <CardTitle title="Facts"/>
-                        <CardText>
-                            <p>
-                                <strong style={{display: 'block'}}>Status</strong>
-                                {movie.status}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Original language</strong>
-                                {movie.original_language}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Runtime</strong>
-                                {movie.runtime} min
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Budget</strong>
-                                $ {movie.budget.toLocaleString('en-US')}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Revenue</strong>
-                                $ {movie.revenue.toLocaleString('en-US')}
-                            </p>
-                            <p>
-                                <strong style={{display: 'block'}}>Homepage</strong>
-                                <a href={movie.homepage}>Website</a>
-                            </p>
-                        </CardText>
+        if (this.state.loaded) {
+            return (
+                <Row style={{margin: 8}}>
+                    <Col xs={12} md={8}>
+                        <MovieCardComponent keywords={this.state.keywords} movie={this.state.movie}/>
+                        <ReviewComponent reviews={this.state.reviews}/>
                     </Col>
-                    <Col xs={6}>
-                        <CardTitle title="Genres"/>
-                        <CardText>
-                            <div style={this.styles.wrapper}>
-                                {movie.genres.map(genre => {
-                                    return (
-                                        <Chip key={genre.id} style={this.styles.chip}>
-                                            {genre.name}
-                                        </Chip>
-                                    )
-                                })}
-                            </div>
-                        </CardText>
-                        <CardTitle title="Keywords"/>
-                        <CardText>
-                            <KeywordComponent keywords={this.props.keywords.keywords}/>
-                        </CardText>
+                    <Col xs={12} md={4}>
+                        <SidebarComponent cast={this.state.cast} similar={this.state.similar}/>
                     </Col>
                 </Row>
-            </Card>
-        )
+            )
+        } else {
+            return (
+                <LoadingComponent/>
+            )
+        }
     }
 }

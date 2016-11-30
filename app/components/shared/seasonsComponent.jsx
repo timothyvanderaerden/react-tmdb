@@ -10,7 +10,7 @@ export default class SeasonsComponent extends React.Component {
     }
 
     render() {
-        const seasons = this.props.seasons;
+        const { seasons } = this.props;
 
         return (
             <Card style={{marginBottom: 8}}>

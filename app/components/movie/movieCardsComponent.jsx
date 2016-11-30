@@ -26,12 +26,11 @@ export default class MovieCardsComponent extends React.Component {
     };
 
     render() {
-        const movieList = this.props.movies.results;
-        const genreList = this.props.movieGenres.genres;
+        const { movies, movieGenres } = this.props;
 
         return (
             <Row style={{margin: 8}}>
-                {movieList.map(movie => {
+                {movies.results.map(movie => {
                     const image = `${ImageUrl}w500${movie.backdrop_path}`;
                     return (
                         <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
@@ -54,7 +53,7 @@ export default class MovieCardsComponent extends React.Component {
                                 <CardActions>
                                     <div style={this.styles.wrapper}>
                                         {movie.genre_ids.map(id => {
-                                            const genre = genreList.find(x => x.id === id);
+                                            const genre = movieGenres.genres.find(x => x.id === id);
                                             return (
                                                 <Chip key={id} style={this.styles.chip}>
                                                     {genre.name}

@@ -26,12 +26,12 @@ export default class TvShowCardsComponent extends React.Component {
     };
 
     render() {
-        const showList = this.props.tvShows.results;
-        const genreList = this.props.tvGenres.genres.concat(this.props.movieGenres.genres);
+        const { tvShows, tvGenres, movieGenres } = this.props;
+        const genreList = tvGenres.genres.concat(movieGenres.genres);
 
         return (
             <Row style={{margin: 8}}>
-                {showList.map(show => {
+                {tvShows.results.map(show => {
                     const image = `${ImageUrl}w500/${show.backdrop_path}`;
                     return (
                         <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>

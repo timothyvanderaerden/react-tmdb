@@ -17,14 +17,7 @@ export default class MovieComponent extends React.Component {
 
     componentWillMount() {
         const movieId = this.props.params.movieId;
-        this.state = {
-            movie: null,
-            keywords: null,
-            reviews: null,
-            cast: null,
-            similar: null,
-            movieLoaded: false
-        };
+        this.state = { movieLoaded: false };
         Store.dispatch({type: 'appbar_title', data: this.props.params.movieName});
 
         this.getMovieData(movieId);
@@ -64,15 +57,16 @@ export default class MovieComponent extends React.Component {
     }
 
     render() {
-        if (this.state.movieLoaded) {
+        const { movieLoaded, keywords, reviews, movie, cast, similar  } = this.state;
+        if (movieLoaded) {
             return (
                 <Row style={{margin: 8}}>
                     <Col xs={12} md={8}>
-                        <MovieCardComponent keywords={this.state.keywords} movie={this.state.movie}/>
-                        <ReviewComponent reviews={this.state.reviews}/>
+                        <MovieCardComponent keywords={keywords} movie={movie}/>
+                        <ReviewComponent reviews={reviews}/>
                     </Col>
                     <Col xs={12} md={4}>
-                        <SidebarComponent cast={this.state.cast} similar={this.state.similar}/>
+                        <SidebarComponent cast={cast} similar={similar}/>
                     </Col>
                 </Row>
             )

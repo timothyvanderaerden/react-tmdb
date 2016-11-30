@@ -18,7 +18,7 @@ export default class CastComponent extends React.Component {
     }
 
     render() {
-        const cast = this.props.cast;
+        const { cast } = this.props;
 
         return (
             <div style={this.styles.wrapper}>

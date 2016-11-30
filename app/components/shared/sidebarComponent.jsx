@@ -9,15 +9,16 @@ export default class SidebarComponent extends React.Component {
     }
 
     render() {
+        const { cast, similar } = this.props;
         return (
             <Card>
                 <CardTitle title="Cast"/>
                 <CardText>
-                    <CastComponent cast={this.props.cast}/>
+                    <CastComponent cast={cast}/>
                 </CardText>
                 <CardTitle title="Similar"/>
                 <CardText>
-                    <SimilarComponent similar={this.props.similar}/>
+                    <SimilarComponent similar={similar}/>
                 </CardText>
             </Card>
         )

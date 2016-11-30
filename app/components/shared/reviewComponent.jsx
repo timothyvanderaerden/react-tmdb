@@ -8,7 +8,7 @@ export default class ReviewComponent extends React.Component {
     }
 
     render() {
-        const reviews = this.props.reviews;
+        const { reviews } = this.props;
         return (
             <Card style={{marginBottom: 8}}>
                 <CardTitle title="Reviews"/>

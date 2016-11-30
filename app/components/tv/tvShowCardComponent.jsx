@@ -21,7 +21,7 @@ export default class TvShowCardComponent extends React.Component {
 
 
     render() {
-        const tvShow = this.props.tvShow;
+        const { tvShow } = this.props;
         const image = `${ImageUrl}w780${tvShow.backdrop_path}`;
 
         return (

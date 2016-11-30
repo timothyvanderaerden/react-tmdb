@@ -16,7 +16,7 @@ export default class KeywordComponent extends React.Component {
     }
 
     render() {
-        const keywords = this.props.keywords;
+        const { keywords } = this.props;
 
         return (
             <div style={this.styles.wrapper}>

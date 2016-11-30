@@ -17,13 +17,7 @@ export default class TvShowComponent extends React.Component {
 
     componentWillMount() {
         const tvShowId = this.props.params.tvShowId;
-        this.state = {
-            tvShow: null,
-            keywords: null,
-            cast: null,
-            similar: null,
-            showLoaded: false
-        };
+        this.state = { showLoaded: false };
         Store.dispatch({type: 'appbar_title', data: this.props.params.tvShowName});
 
         this.getTvShowData(tvShowId);
@@ -60,15 +54,16 @@ export default class TvShowComponent extends React.Component {
     }
 
     render() {
-        if (this.state.showLoaded) {
+        const { showLoaded, keywords, tvShow, cast, similar } = this.state;
+        if (showLoaded) {
             return (
                 <Row style={{margin: 8}}>
                     <Col xs={12} md={8}>
-                        <TvShowCardComponent keywords={this.state.keywords.results} tvShow={this.state.tvShow}/>
-                        <SeasonComponent seasons={this.state.tvShow.seasons}/>
+                        <TvShowCardComponent keywords={keywords.results} tvShow={tvShow}/>
+                        <SeasonComponent seasons={tvShow.seasons}/>
                     </Col>
                     <Col xs={12} md={4}>
-                        <SidebarComponent cast={this.state.cast} similar={this.state.similar}/>
+                        <SidebarComponent cast={cast} similar={similar}/>
                     </Col>
                 </Row>
             )

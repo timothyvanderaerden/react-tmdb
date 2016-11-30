@@ -29,15 +29,16 @@ export default class appNavComponent extends React.Component  {
     handleClose = () => { this.setState({open: false}) };
 
     render() {
+        const { open, appBarTitle } = this.state;
         return (
             <div>
                 <Drawer
                     docked={false}
-                    open={this.state.open}>
+                    open={open}>
                     <MenuItem onTouchTap={this.handleClose} leftIcon={<PopularIcon/>} containerElement={<Link to={'/popular'}/>} primaryText={"Popular"}/>
                 </Drawer>
 
-                <AppBar   title={this.state.appBarTitle}
+                <AppBar   title={appBarTitle}
                           onLeftIconButtonTouchTap={this.handleToggle} />
             </div>
         );

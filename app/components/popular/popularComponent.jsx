@@ -63,29 +63,31 @@ export default class PopularComponent extends React.Component {
     };
 
     render() {
+        const { index, slideIndex, movieLoaded, popularMovies, movieGenres,
+            load, showLoaded, popularShows, tvGenres } = this.state;
         return (
             <div>
                 <Tabs
                     onChange={this.handleChange}
-                    value={this.state.slideIndex}
+                    value={index}
                 >
                     <Tab label="Movies" value={0}/>
                     <Tab label="TV Shows" value={1}/>
                 </Tabs>
                 <SwipeableViews
-                    index={ this.state.slideIndex }
+                    index={ slideIndex }
                     onChangeIndex={ this.handleChange }
                 >
-                    { this.state.movieLoaded ?
-                        <PopularMovieComponent movies={this.state.popularMovies}
-                                               movieGenres={this.state.movieGenres}/>
+                    { movieLoaded ?
+                        <PopularMovieComponent movies={ popularMovies }
+                                               movieGenres={ movieGenres }/>
                         : <LoadingComponent/>
                     }
 
-                    { this.state.load && this.state.showLoaded ?
-                        <PopularShowComponent tvShows={this.state.popularShows}
-                                                              tvGenres={this.state.tvGenres}
-                                                              movieGenres={this.state.movieGenres}/>
+                    { load && showLoaded ?
+                        <PopularShowComponent tvShows={ popularShows }
+                                                              tvGenres={ tvGenres }
+                                                              movieGenres={ movieGenres }/>
                         : null
                     }
                 </SwipeableViews>

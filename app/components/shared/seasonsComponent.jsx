@@ -23,7 +23,7 @@ export default class SeasonsComponent extends React.Component {
                                 key={season.id}
                                 primaryText={season.air_date}
                                 secondaryText={`Episodes: ${season.episode_count}`}
-                                leftAvatar={<Avatar src={image} />}
+                                leftAvatar={<Avatar src={season.poster_path ? image : null} />}
                             />
                         )
                     })}

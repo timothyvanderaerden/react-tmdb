@@ -17,7 +17,7 @@ export default class SimilarComponent extends React.Component {
                     return (
                         <GridTile
                             key={similar.id}
-                            title={similar.original_title}
+                            title={similar.original_title != null ? similar.original_title : similar.original_name}
                         >
                             {similar.backdrop_path ? <img src={image}/> : null}
                         </GridTile>

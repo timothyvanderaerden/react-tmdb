@@ -19,7 +19,8 @@ export default class TvShowComponent extends React.Component {
         const tvShowId = this.props.params.tvShowId;
         this.state = { showLoaded: false };
         Store.dispatch({type: 'appbar_title', data: this.props.params.tvShowName});
-
+        Store.dispatch({type: 'appbar_navigationBack', data: true});
+        
         this.getTvShowData(tvShowId);
 
         this.unsubscribe = Store.subscribe(() => {

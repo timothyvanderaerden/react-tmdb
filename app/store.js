@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import {createStore} from 'redux';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -25,7 +25,9 @@ const reducer = (state, action) => {
         case 'load_tvShow':
             return Object.assign({}, state, {tvShow: action.data});
         case 'appbar_title':
-            return Object.assign({}, state, { appBarTitle: action.data });
+            return Object.assign({}, state, {appBarTitle: action.data});
+        case 'appbar_navigationBack':
+            return Object.assign({}, state, {appBarBack: action.data});
         default:
             return state;
     }

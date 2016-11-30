@@ -21,8 +21,8 @@ export default class MovieCardsComponent extends React.Component {
         };
     }
 
-    _handleClick = (id) => {
-        history.push(`/movie/${id}`);
+    _handleClick = (id, name) => {
+        history.push(`/movie/${id}/${name}`);
     };
 
     render() {
@@ -40,13 +40,13 @@ export default class MovieCardsComponent extends React.Component {
                                     {movie.backdrop_path ?
                                         <img src={image} style={{cursor: 'pointer'}}
                                              onClick={() => {
-                                                 this._handleClick(movie.id)
+                                                 this._handleClick(movie.id, movie.original_title)
                                              }}/> : null
                                     }
                                 </CardMedia>
                                 <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
                                            onClick={() => {
-                                               this._handleClick(movie.id)
+                                               this._handleClick(movie.id, movie.original_title)
                                            }}/>
                                 <CardText>
                                     {movie.overview}

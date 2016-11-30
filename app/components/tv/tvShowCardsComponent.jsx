@@ -21,8 +21,8 @@ export default class TvShowCardsComponent extends React.Component {
         };
     }
 
-    _handleClick = (id) => {
-        history.push(`/tv/${id}`);
+    _handleClick = (id, name) => {
+        history.push(`/tv/${id}/${name}`);
     };
 
     render() {
@@ -40,13 +40,13 @@ export default class TvShowCardsComponent extends React.Component {
                                     {show.backdrop_path ?
                                         <img src={image} style={{cursor: 'pointer'}}
                                              onClick={() => {
-                                                 this._handleClick(show.id)
+                                                 this._handleClick(show.id, show.original_name)
                                              }}/> : null
                                     }
                                 </CardMedia>
                                 <CardTitle title={show.original_name} style={{cursor: 'pointer'}}
                                            onClick={() => {
-                                               this._handleClick(show.id)
+                                               this._handleClick(show.id, show.original_name)
                                            }}/>
                                 <CardText>
                                     {show.overview}

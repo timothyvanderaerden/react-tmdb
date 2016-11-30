@@ -18,7 +18,6 @@ export default class MovieComponent extends React.Component {
     componentWillMount() {
         const movieId = this.props.params.movieId;
         this.state = {
-            appBarTitle: "Movie",
             movie: null,
             keywords: null,
             reviews: null,
@@ -26,7 +25,7 @@ export default class MovieComponent extends React.Component {
             similar: null,
             movieLoaded: false
         };
-        Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+        Store.dispatch({type: 'appbar_title', data: this.props.params.movieName});
 
         this.getMovieData(movieId);
 

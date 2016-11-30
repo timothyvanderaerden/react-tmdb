@@ -18,14 +18,13 @@ export default class TvShowComponent extends React.Component {
     componentWillMount() {
         const tvShowId = this.props.params.tvShowId;
         this.state = {
-            appBarTitle: "TV Show",
             tvShow: null,
             keywords: null,
             cast: null,
             similar: null,
             showLoaded: false
         };
-        Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+        Store.dispatch({type: 'appbar_title', data: this.props.params.tvShowName});
 
         this.getTvShowData(tvShowId);
 

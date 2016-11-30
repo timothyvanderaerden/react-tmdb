@@ -30,8 +30,8 @@ const renderApplication = () => {
         <Route path="/" component={App}>
             <IndexRedirect to='popular'/>
             <Route path="popular" component={PopularComponent}/>
-            <Route path="movie/:movieId" component={MovieComponent}/>
-            <Route path="tv/:tvShowId" component={TvShowComponent}/>
+            <Route path="movie/:movieId/:movieName" component={MovieComponent}/>
+            <Route path="tv/:tvShowId/:tvShowName" component={TvShowComponent}/>
         </Route>
     </Router>
     ),document.getElementById('applicatie'));

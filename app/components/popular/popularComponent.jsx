@@ -12,8 +12,7 @@ import SwipeableViews from 'react-swipeable-views';
 
 export default class PopularComponent extends React.Component {
     componentWillMount() {
-        this.state = {popularMovies: null, popularShows: null, appBarTitle: "Popular",
-            slideIndex: 0, load: false, movieLoaded: false, showLoaded: false};
+        this.state = {appBarTitle: "Popular", slideIndex: 0, load: false, movieLoaded: false, showLoaded: false};
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
 
         this.getMovieData();
@@ -78,7 +77,8 @@ export default class PopularComponent extends React.Component {
                     onChangeIndex={ this.handleChange }
                 >
                     { this.state.movieLoaded ?
-                        <PopularMovieComponent movies={this.state.popularMovies} movieGenres={this.state.movieGenres}/>
+                        <PopularMovieComponent movies={this.state.popularMovies}
+                                               movieGenres={this.state.movieGenres}/>
                         : <LoadingComponent/>
                     }
 

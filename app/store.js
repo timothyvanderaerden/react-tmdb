@@ -28,6 +28,8 @@ const reducer = (state, action) => {
             return Object.assign({}, state, {appBarTitle: action.data});
         case 'appbar_navigationBack':
             return Object.assign({}, state, {appBarBack: action.data});
+        case 'react_router':
+            return Object.assign({}, state, {location: action.data});
         default:
             return state;
     }

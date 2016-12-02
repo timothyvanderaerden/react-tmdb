@@ -16,12 +16,11 @@ export default class MovieComponent extends React.Component {
     }
 
     componentWillMount() {
-        const movieId = this.props.params.movieId;
-        this.state = { movieLoaded: false };
+        this.state = {movieLoaded: false, movieId: this.props.params.movieId};
         Store.dispatch({type: 'appbar_title', data: this.props.params.movieName});
         Store.dispatch({type: 'appbar_navigationBack', data: true});
 
-        this.getMovieData(movieId);
+        this.getMovieData(this.state.movieId);
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -29,9 +28,19 @@ export default class MovieComponent extends React.Component {
                 keywords: Store.getState().keywords,
                 reviews: Store.getState().reviews,
                 cast: Store.getState().cast,
-                similar: Store.getState().similar
+                similar: Store.getState().similar,
+                location: Store.getState().location
             });
         });
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if (this.state.location !== nextState.location) {
+            window.scrollTo(0,0);
+            const [ , , movieId, movieName ] = nextState.location.pathname.split('/');
+            Store.dispatch({type: 'appbar_title', data: movieName});
+            this.getMovieData(movieId);
+        }
     }
 
     componentWillUnmount() {
@@ -58,7 +67,7 @@ export default class MovieComponent extends React.Component {
     }
 
     render() {
-        const { movieLoaded, keywords, reviews, movie, cast, similar  } = this.state;
+        const {movieLoaded, keywords, reviews, movie, cast, similar} = this.state;
         if (movieLoaded) {
             return (
                 <Row style={{margin: 8}}>

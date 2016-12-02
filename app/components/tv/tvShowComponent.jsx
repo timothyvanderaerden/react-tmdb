@@ -28,9 +28,19 @@ export default class TvShowComponent extends React.Component {
                 tvShow: Store.getState().tvShow,
                 keywords: Store.getState().keywords,
                 cast: Store.getState().cast,
-                similar: Store.getState().similar
+                similar: Store.getState().similar,
+                location: Store.getState().location
             });
         });
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if (this.state.location !== nextState.location) {
+            window.scrollTo(0,0);
+            const [ , , tvshowId, tvShowTitle ] = nextState.location.pathname.split('/');
+            Store.dispatch({type: 'appbar_title', data: tvShowTitle});
+            this.getTvShowData(tvshowId);
+        }
     }
 
     componentWillUnmount() {

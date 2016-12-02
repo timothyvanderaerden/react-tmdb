@@ -1,5 +1,6 @@
 import React from 'react';
 import Store from '../../store';
+import Scroll from 'react-scroll';
 import {
     getTvShowById, getKeywordsForTvShow,
     getCastForTvShow, getSimilarTvShows
@@ -36,7 +37,7 @@ export default class TvShowComponent extends React.Component {
 
     componentWillUpdate(nextProps, nextState) {
         if (this.state.location !== nextState.location) {
-            window.scrollTo(0,0);
+            Scroll.animateScroll.scrollToTop();
             const [ , , tvshowId, tvShowTitle ] = nextState.location.pathname.split('/');
             Store.dispatch({type: 'appbar_title', data: tvShowTitle});
             Store.dispatch({type: 'appbar_navigationBack', data: true});

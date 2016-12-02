@@ -1,6 +1,6 @@
 {
   "name": "react-TMDb",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "css-loader": "^0.26.0",
     "npm": "^4.0.2",
+    "react-scroll": "^1.4.4",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
   },

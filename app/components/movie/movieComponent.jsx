@@ -39,6 +39,7 @@ export default class MovieComponent extends React.Component {
             window.scrollTo(0,0);
             const [ , , movieId, movieName ] = nextState.location.pathname.split('/');
             Store.dispatch({type: 'appbar_title', data: movieName});
+            Store.dispatch({type: 'appbar_navigationBack', data: true});
             this.getMovieData(movieId);
         }
     }

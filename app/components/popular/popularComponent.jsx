@@ -14,6 +14,7 @@ export default class PopularComponent extends React.Component {
     componentWillMount() {
         this.state = {appBarTitle: "Popular", slideIndex: 0, load: false, movieLoaded: false, showLoaded: false};
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+        Store.dispatch({type: 'appbar_navigationBack', data: false});
 
         this.getMovieData();
 

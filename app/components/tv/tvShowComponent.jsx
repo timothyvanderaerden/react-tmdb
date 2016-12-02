@@ -39,6 +39,7 @@ export default class TvShowComponent extends React.Component {
             window.scrollTo(0,0);
             const [ , , tvshowId, tvShowTitle ] = nextState.location.pathname.split('/');
             Store.dispatch({type: 'appbar_title', data: tvShowTitle});
+            Store.dispatch({type: 'appbar_navigationBack', data: true});
             this.getTvShowData(tvshowId);
         }
     }

@@ -7,6 +7,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconUp from 'material-ui/svg-icons/navigation/expand-less';
 import ScrollToTop from 'react-scroll-up';
 import PopularComponent from './components/popular/popularComponent';
+import UpcomingComponent from './components/upcoming/upcomingComponent';
 import MovieComponent from './components/movie/movieComponent';
 import TvShowComponent from './components/tv/tvShowComponent';
 import AppNavComponent from './components/appNavComponent';
@@ -41,6 +42,7 @@ const renderApplication = () => {
         <Route path="/" component={App}>
             <IndexRedirect to='popular'/>
             <Route path="popular" component={PopularComponent}/>
+            <Route path="upcoming" component={UpcomingComponent}/>
             <Route path="movie/:movieId/:movieName" component={MovieComponent}/>
             <Route path="tv/:tvShowId/:tvShowName" component={TvShowComponent}/>
         </Route>

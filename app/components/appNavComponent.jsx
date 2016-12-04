@@ -7,6 +7,7 @@ import {Link, useRouterHistory} from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import IconButton from 'material-ui/IconButton';
 import PopularIcon from 'material-ui/svg-icons/action/stars';
+import TheatersIcon from 'material-ui/svg-icons/action/theaters'
 import BackIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey: false});
@@ -51,6 +52,8 @@ export default class appNavComponent extends React.Component {
                 >
                     <MenuItem onTouchTap={this.handleClose} leftIcon={<PopularIcon/>}
                               containerElement={<Link to={'/popular'}/>} primaryText={"Popular"}/>
+                    <MenuItem onTouchTap={this.handleClose} leftIcon={<TheatersIcon/>}
+                              containerElement={<Link to={'/upcoming'}/>} primaryText={"Now in theaters"}/>
                 </Drawer>
 
                 <AppBar title={appBarTitle}

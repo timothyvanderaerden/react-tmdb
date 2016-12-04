@@ -20,9 +20,9 @@ export default class PopularComponent extends React.Component {
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
-                popularMovies: Store.getState().popularMovies,
+                movieList: Store.getState().movieList,
                 movieGenres: Store.getState().movieGenres,
-                popularShows: Store.getState().popularShows,
+                tvShowList: Store.getState().tvShowList,
                 tvGenres: Store.getState().tvGenres
             });
         });
@@ -38,7 +38,7 @@ export default class PopularComponent extends React.Component {
             getMovieGenres()
         ]).then((data) => {
             let [ movies, genres ] = data;
-            Store.dispatch({type: 'load_popularMovies', data: movies});
+            Store.dispatch({type: 'load_movieList', data: movies});
             Store.dispatch({type: 'load_movieGenres', data: genres});
         }).then(() => {
             this.setState({movieLoaded: true});
@@ -51,7 +51,7 @@ export default class PopularComponent extends React.Component {
             getTVGenres()
         ]).then((data) => {
             let [ shows, genres ] = data;
-            Store.dispatch({type: 'load_popularShows', data: shows});
+            Store.dispatch({type: 'load_tvShowList', data: shows});
             Store.dispatch({type: 'load_tvGenres', data: genres});
         }).then(() => {
             this.setState({showLoaded: true});
@@ -64,8 +64,8 @@ export default class PopularComponent extends React.Component {
     };
 
     render() {
-        const { index, slideIndex, movieLoaded, popularMovies, movieGenres,
-            load, showLoaded, popularShows, tvGenres } = this.state;
+        const { index, slideIndex, movieLoaded, movieList, movieGenres,
+            load, showLoaded, tvShowList, tvGenres } = this.state;
         return (
             <div>
                 <Tabs
@@ -80,15 +80,15 @@ export default class PopularComponent extends React.Component {
                     onChangeIndex={ this.handleChange }
                 >
                     { movieLoaded ?
-                        <PopularMovieComponent movies={ popularMovies }
+                        <PopularMovieComponent movies={ movieList }
                                                movieGenres={ movieGenres }/>
                         : <LoadingComponent/>
                     }
 
                     { load && showLoaded ?
-                        <PopularShowComponent tvShows={ popularShows }
-                                                              tvGenres={ tvGenres }
-                                                              movieGenres={ movieGenres }/>
+                        <PopularShowComponent tvShows={ tvShowList }
+                                              tvGenres={ tvGenres }
+                                              movieGenres={ movieGenres }/>
                         : null
                     }
                 </SwipeableViews>

@@ -23,3 +23,7 @@ export const getSimilarMovies = (id) => {
 export const getMovieReviews = (id) => {
     return fetch(`${ApiUrl}movie/${id}/reviews?api_key=${key}&language=en-US`).then(result => result.json());
 };
+
+export const getUpcomingMovies = () => {
+    return fetch(`${ApiUrl}movie/upcoming?api_key=${key}`).then(result => result.json());
+};

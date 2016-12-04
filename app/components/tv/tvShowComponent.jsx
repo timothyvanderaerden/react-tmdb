@@ -34,11 +34,10 @@ export default class TvShowComponent extends React.Component {
         });
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        if (this.state.location !== nextState.location) {
+    componentWillUpdate(nextState) {
+        if (this.state.location !== nextState.location && this.state.location !== undefined) {
             const [ , , tvshowId, tvShowTitle ] = nextState.location.pathname.split('/');
             Store.dispatch({type: 'appbar_title', data: tvShowTitle});
-            Store.dispatch({type: 'appbar_navigationBack', data: true});
             this.getTvShowData(tvshowId);
         }
     }

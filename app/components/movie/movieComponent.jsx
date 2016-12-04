@@ -16,11 +16,12 @@ export default class MovieComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.state = {movieLoaded: false, movieId: this.props.params.movieId};
+        const movieId = this.props.params.movieId;
+        this.state = {movieLoaded: false};
         Store.dispatch({type: 'appbar_title', data: this.props.params.movieName});
         Store.dispatch({type: 'appbar_navigationBack', data: true});
 
-        this.getMovieData(this.state.movieId);
+        this.getMovieData(movieId);
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -34,11 +35,10 @@ export default class MovieComponent extends React.Component {
         });
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        if (this.state.location !== nextState.location) {
+    componentWillUpdate(nextState) {
+        if (this.state.location !== nextState.location && this.state.location !== undefined) {
             const [ , , movieId, movieName ] = nextState.location.pathname.split('/');
             Store.dispatch({type: 'appbar_title', data: movieName});
-            Store.dispatch({type: 'appbar_navigationBack', data: true});
             this.getMovieData(movieId);
         }
     }

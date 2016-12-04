@@ -19,7 +19,6 @@ export default class MovieCardComponent extends React.Component {
         };
     }
 
-
     render() {
         const { movie, keywords } = this.props;
         const image = `${ImageUrl}w780${movie.backdrop_path}`;

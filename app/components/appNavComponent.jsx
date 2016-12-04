@@ -3,14 +3,10 @@ import Store from '../store';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import {Link, useRouterHistory} from 'react-router'
+import {Link} from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import IconButton from 'material-ui/IconButton';
 import PopularIcon from 'material-ui/svg-icons/action/stars';
 import TheatersIcon from 'material-ui/svg-icons/action/theaters'
-import BackIcon from 'material-ui/svg-icons/navigation/arrow-back';
-import createHashHistory from 'history/lib/createHashHistory';
-export const history = useRouterHistory(createHashHistory)({queryKey: false});
 
 export default class appNavComponent extends React.Component {
 
@@ -21,11 +17,10 @@ export default class appNavComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.state = {appBarTitle: null, appBarBack: false};
+        this.state = {appBarTitle: null};
         Store.subscribe(() => {
             this.setState({
                 appBarTitle: Store.getState().appBarTitle,
-                appBarBack: Store.getState().appBarBack
             });
         });
     }
@@ -33,16 +28,13 @@ export default class appNavComponent extends React.Component {
     handleToggle = () => {
         this.setState({open: !this.state.open})
     };
+
     handleClose = () => {
         this.setState({open: false})
     };
-    handleBack = () => {
-        Store.dispatch({type: 'appbar_navigationBack', data: false});
-        history.goBack();
-    };
 
     render() {
-        const {open, appBarTitle, appBarBack} = this.state;
+        const {open, appBarTitle} = this.state;
         return (
             <div>
                 <Drawer
@@ -57,9 +49,9 @@ export default class appNavComponent extends React.Component {
                 </Drawer>
 
                 <AppBar title={appBarTitle}
-                        iconElementLeft={appBarBack ? <IconButton><BackIcon /></IconButton> : null}
-                        onLeftIconButtonTouchTap={appBarBack ? () => {this.handleBack()} : this.handleToggle}
-                />
+                        onLeftIconButtonTouchTap={this.handleToggle}
+                >
+                </AppBar>
             </div>
         );
     }

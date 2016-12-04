@@ -9,7 +9,6 @@ export default class UpcomingComponent extends React.Component {
     componentWillMount() {
         this.state = {appBarTitle: "Now in theaters", movieLoaded: false};
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
-        Store.dispatch({type: 'appbar_navigationBack', data: false});
 
         this.getMovieData();
 

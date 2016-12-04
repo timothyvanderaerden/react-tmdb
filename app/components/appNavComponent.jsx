@@ -46,7 +46,9 @@ export default class appNavComponent extends React.Component {
             <div>
                 <Drawer
                     docked={false}
-                    open={open}>
+                    open={open}
+                    onRequestChange={(open) => this.setState({open})}
+                >
                     <MenuItem onTouchTap={this.handleClose} leftIcon={<PopularIcon/>}
                               containerElement={<Link to={'/popular'}/>} primaryText={"Popular"}/>
                 </Drawer>

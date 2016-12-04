@@ -1,6 +1,5 @@
 import React from 'react';
 import Store from '../../store';
-import Scroll from 'react-scroll';
 import {
     getMovieById, getKeywordsForMovie, getMovieReviews,
     getCastForMovie, getSimilarMovies
@@ -37,7 +36,6 @@ export default class MovieComponent extends React.Component {
 
     componentWillUpdate(nextProps, nextState) {
         if (this.state.location !== nextState.location) {
-            Scroll.animateScroll.scrollToTop();
             const [ , , movieId, movieName ] = nextState.location.pathname.split('/');
             Store.dispatch({type: 'appbar_title', data: movieName});
             Store.dispatch({type: 'appbar_navigationBack', data: true});

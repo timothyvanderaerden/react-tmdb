@@ -29,7 +29,7 @@ history.listen(location => Store.dispatch({type: 'react_router', data: location}
 
 const renderApplication = () => {
     render((
-    <Router history={history}>
+    <Router onUpdate={() => window.scrollTo(0, 0)} history={history}>
         <Route path="/" component={App}>
             <IndexRedirect to='popular'/>
             <Route path="popular" component={PopularComponent}/>

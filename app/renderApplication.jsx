@@ -10,7 +10,7 @@ import PopularComponent from './components/popular/popularComponent';
 import UpcomingComponent from './components/upcoming/upcomingComponent';
 import MovieComponent from './components/movie/movieComponent';
 import TvShowComponent from './components/tv/tvShowComponent';
-import AppNavComponent from './components/appNavComponent';
+import AppNavComponent from './components/navigation/appNavComponent';
 import createHashHistory from 'history/lib/createHashHistory';
 export const history = useRouterHistory(createHashHistory)({queryKey:false});
 

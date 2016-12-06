@@ -21,7 +21,7 @@ export default class TvShowCardComponent extends React.Component {
 
 
     render() {
-        const { tvShow } = this.props;
+        const { tvShow, keywords } = this.props;
         const image = `${ImageUrl}w780${tvShow.backdrop_path}`;
 
         return (
@@ -82,7 +82,7 @@ export default class TvShowCardComponent extends React.Component {
                         </CardText>
                         <CardTitle title="Keywords"/>
                         <CardText>
-                            <KeywordComponent keywords={this.props.keywords}/>
+                            <KeywordComponent keywords={keywords}/>
                         </CardText>
                     </Col>
                 </Row>

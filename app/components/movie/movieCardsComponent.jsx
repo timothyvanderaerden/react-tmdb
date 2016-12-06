@@ -44,7 +44,7 @@ export default class MovieCardsComponent extends React.Component {
                                     }
                                 </CardMedia>
                                 <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
-                                           onClick={() => {
+                                           onTouchTap={() => {
                                                this._handleClick(movie.id, movie.original_title)
                                            }}/>
                                 <CardText>

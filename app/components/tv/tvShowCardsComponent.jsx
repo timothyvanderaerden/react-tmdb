@@ -45,7 +45,7 @@ export default class TvShowCardsComponent extends React.Component {
                                     }
                                 </CardMedia>
                                 <CardTitle title={show.original_name} style={{cursor: 'pointer'}}
-                                           onClick={() => {
+                                           onTouchTap={() => {
                                                this._handleClick(show.id, show.original_name)
                                            }}/>
                                 <CardText>

@@ -3,7 +3,7 @@ import Store from '../../store';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import {Link} from 'react-router'
+import {Link, browserHistory} from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import PopularIcon from 'material-ui/svg-icons/action/stars';
 import TheatersIcon from 'material-ui/svg-icons/action/theaters';

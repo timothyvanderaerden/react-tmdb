@@ -1,11 +1,9 @@
 import React from 'react';
-import {useRouterHistory} from 'react-router'
+import {browserHistory} from 'react-router'
 import {ImageUrl} from '../../api/ApiUrl';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import {Row, Col} from 'react-flexbox-grid';
-import createHashHistory from 'history/lib/createHashHistory';
-export const history = useRouterHistory(createHashHistory)({queryKey: false});
 
 export default class TvShowCardsComponent extends React.Component {
     constructor(props) {
@@ -22,7 +20,7 @@ export default class TvShowCardsComponent extends React.Component {
     }
 
     _handleClick = (id, name) => {
-        history.push(`/tv/${id}/${name}`);
+        browserHistory.push(`/tv/${id}/${name}`);
     };
 
     render() {

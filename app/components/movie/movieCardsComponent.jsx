@@ -1,11 +1,9 @@
 import React from 'react';
-import {useRouterHistory} from 'react-router'
+import {browserHistory} from 'react-router'
 import {ImageUrl} from '../../api/ApiUrl';
 import Chip from 'material-ui/Chip';
 import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import {Row, Col} from 'react-flexbox-grid/lib/index';
-import createHashHistory from 'history/lib/createHashHistory';
-export const history = useRouterHistory(createHashHistory)({queryKey: false});
 
 export default class MovieCardsComponent extends React.Component {
     constructor(props) {
@@ -22,7 +20,7 @@ export default class MovieCardsComponent extends React.Component {
     }
 
     _handleClick = (id, name) => {
-        history.push(`/movie/${id}/${name}`);
+        browserHistory.push(`/movie/${id}/${name}`);
     };
 
     render() {

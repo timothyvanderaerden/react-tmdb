@@ -44,6 +44,7 @@ export default class searchBarComponent extends React.Component {
                         fullWidth={true}
                         underlineShow={false}
                         onChange={this.handleSearch}
+                        autoFocus
                     />}
                     style={this.styles.appBar}
                     iconElementLeft={iconElementLeft}

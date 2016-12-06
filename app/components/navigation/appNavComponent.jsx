@@ -25,7 +25,7 @@ export default class appNavComponent extends React.Component {
         this.state = {appBarTitle: null};
         Store.subscribe(() => {
             this.setState({
-                appBarTitle: Store.getState().appBarTitle,
+                appBarTitle: Store.getState().appBarTitle
             });
         });
     }
@@ -39,7 +39,13 @@ export default class appNavComponent extends React.Component {
     };
 
     handleSearchToggle = () => {
+        browserHistory.push('/search');
         this.setState({searchBar: !this.state.searchBar})
+    };
+
+    handleSearchClose = () => {
+        browserHistory.goBack();
+        this.setState({searchBar: false})
     };
 
     render() {
@@ -60,15 +66,18 @@ export default class appNavComponent extends React.Component {
                 {!this.state.searchBar ?
                     <AppBar title={appBarTitle}
                             onLeftIconButtonTouchTap={this.handleToggle}
-                            iconElementRight={<IconButton><SearchIcon/></IconButton>}
+                            iconElementRight={
+                                <IconButton>
+                                    <SearchIcon/>
+                                </IconButton>
+                            }
                             onRightIconButtonTouchTap={this.handleSearchToggle}
                     >
                     </AppBar> :
                     <SearchBar iconElementLeft={<IconButton><BackIcon color={cyan500}/></IconButton>}
-                               onLeftIconButtonTouchTap={this.handleSearchToggle}
+                               onLeftIconButtonTouchTap={this.handleSearchClose}
                     />
                 }
-
             </div>
         );
     }

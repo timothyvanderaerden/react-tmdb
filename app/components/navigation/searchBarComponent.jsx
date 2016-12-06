@@ -1,4 +1,6 @@
 import React from 'react';
+import Store from '../../store';
+import {searchMulti} from '../../api/Search';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import SearchIcon from 'material-ui/svg-icons/action/search';
@@ -21,10 +23,16 @@ export default class searchBarComponent extends React.Component {
                 backgroundColor: white
             },
             textField: {
-                height: 56
+                marginTop: 8
             }
         }
     }
+
+    handleSearch = (event) => {
+        searchMulti(event.target.value).then(result => {
+            Store.dispatch({type: 'search', data: result});
+        });
+    };
 
     render() {
         const {iconElementLeft, onLeftIconButtonTouchTap} = this.props;
@@ -35,6 +43,7 @@ export default class searchBarComponent extends React.Component {
                         style={this.styles.textField}
                         fullWidth={true}
                         underlineShow={false}
+                        onChange={this.handleSearch}
                     />}
                     style={this.styles.appBar}
                     iconElementLeft={iconElementLeft}

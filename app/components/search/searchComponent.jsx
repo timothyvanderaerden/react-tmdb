@@ -3,6 +3,7 @@ import Store from '../../store';
 import {ImageUrl} from '../../api/ApiUrl';
 import {Row} from 'react-flexbox-grid/lib/index';
 import {Card, CardMedia} from 'material-ui/Card';
+import Subheader from 'material-ui/Subheader';
 
 export default class SearchComponent extends React.Component {
     componentWillMount() {
@@ -23,19 +24,46 @@ export default class SearchComponent extends React.Component {
         const {searchResult} = this.state;
         if (searchResult) {
             const movies = searchResult.results.filter(x => x.media_type === 'movie' && x.poster_path !== null);
+            const tvShows = searchResult.results.filter(x => x.media_type === 'tv' && x.poster_path !== null);
             return (
-                <Row style={{margin: 8}} center="xs">
-                    {movies.map(movie => {
-                        const image = `${ImageUrl}w154${movie.poster_path}`;
-                        return (
-                            <Card style={{width: 154, margin: 4}}>
-                                <CardMedia>
-                                    <img src={image}/>
-                                </CardMedia>
-                            </Card>
-                        )
-                    })}
-                </Row>
+                <div style={{margin: 8}}>
+                    {movies ?
+                        <div>
+                            <Subheader>Movies</Subheader>
+                            <Row center="xs">
+                                {movies.map(movie => {
+                                    const image = `${ImageUrl}w154${movie.poster_path}`;
+                                    return (
+                                        <Card style={{width: 154, margin: 4}}>
+                                            <CardMedia>
+                                                <img src={image}/>
+                                            </CardMedia>
+                                        </Card>
+                                    )
+                                })}
+                            </Row>
+                        </div>
+                        : null
+                    }
+                    {tvShows ?
+                        <div>
+                            <Subheader>TV Shows</Subheader>
+                            <Row center="xs">
+                                {tvShows.map(show => {
+                                    const image = `${ImageUrl}w154${show.poster_path}`;
+                                    return (
+                                        <Card style={{width: 154, margin: 4}}>
+                                            <CardMedia>
+                                                <img src={image}/>
+                                            </CardMedia>
+                                        </Card>
+                                    )
+                                })}
+                            </Row>
+                        </div>
+                        : null
+                    }
+                </div>
             )
         } else {
             return null

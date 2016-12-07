@@ -19,7 +19,7 @@ export default class MovieComponent extends React.Component {
         const movieId = this.props.params.movieId;
         this.state = {movieLoaded: false};
         Store.dispatch({type: 'appbar_title', data: this.props.params.movieName});
-        Store.dispatch({type: 'appbar_navigationBack', data: true});
+        Store.dispatch({type: 'search_bar', data: false});
 
         this.getMovieData(movieId);
 

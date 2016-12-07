@@ -10,6 +10,7 @@ import PosterComponent from '../shared/posterComponent';
 export default class SearchComponent extends React.Component {
     componentWillMount() {
         this.state = {searchResult: null};
+        Store.dispatch({type: 'search_bar', data: true});
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({

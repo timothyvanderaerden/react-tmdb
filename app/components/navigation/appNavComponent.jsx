@@ -23,9 +23,11 @@ export default class appNavComponent extends React.Component {
 
     componentWillMount() {
         this.state = {appBarTitle: null};
+
         Store.subscribe(() => {
             this.setState({
-                appBarTitle: Store.getState().appBarTitle
+                appBarTitle: Store.getState().appBarTitle,
+                searchBar: Store.getState().searchBar
             });
         });
     }
@@ -49,7 +51,7 @@ export default class appNavComponent extends React.Component {
     };
 
     render() {
-        const {open, appBarTitle} = this.state;
+        const {open, appBarTitle, searchBar} = this.state;
         return (
             <div>
                 <Drawer
@@ -63,7 +65,7 @@ export default class appNavComponent extends React.Component {
                               containerElement={<Link to={'/upcoming'}/>} primaryText={"Now in theaters"}/>
                 </Drawer>
 
-                {!this.state.searchBar ?
+                {!searchBar ?
                     <AppBar title={appBarTitle}
                             onLeftIconButtonTouchTap={this.handleToggle}
                             iconElementRight={

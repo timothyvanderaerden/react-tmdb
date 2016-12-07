@@ -30,6 +30,8 @@ const reducer = (state, action) => {
             return Object.assign({}, state, {location: action.data});
         case 'search':
             return Object.assign({}, state, {searchResult: action.data});
+        case 'search_people':
+            return Object.assign({}, state, {searchPeople: action.data});
         case 'search_bar':
             return Object.assign({}, state, {searchBar: action.data});
         default:

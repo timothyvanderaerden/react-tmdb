@@ -4,17 +4,19 @@ import {Link} from 'react-router';
 import {ImageUrl} from '../../api/ApiUrl';
 import {Row} from 'react-flexbox-grid/lib/index';
 import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 import PosterComponent from '../shared/posterComponent';
 
 export default class SearchComponent extends React.Component {
     componentWillMount() {
-        this.state = {searchResult: null};
+        this.state = {searchResult: null, searchPeople: null};
         Store.dispatch({type: 'search_bar', data: true});
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
                 searchResult: Store.getState().searchResult,
+                searchPeople: Store.getState().searchPeople
             });
         });
     }
@@ -24,8 +26,8 @@ export default class SearchComponent extends React.Component {
     }
 
     render() {
-        const {searchResult} = this.state;
-        if (searchResult) {
+        const {searchResult, searchPeople} = this.state;
+        if (searchResult && searchPeople) {
             const movies = searchResult.results.filter(x => x.media_type === 'movie' && x.poster_path !== null);
             const tvShows = searchResult.results.filter(x => x.media_type === 'tv' && x.poster_path !== null);
             return (
@@ -59,6 +61,23 @@ export default class SearchComponent extends React.Component {
                                     )
                                 })}
                             </Row>
+                        </ListItem>
+                        : null
+                    }
+                    {searchPeople.results ?
+                        <ListItem disabled={true}>
+                            <Subheader>People</Subheader>
+                            <List>
+                                {searchPeople.results.map(person => {
+                                    {person.profile_path ?
+                                        const image = `${ImageUrl}w45${person.profile_path}`
+                                    }
+                                    return (
+                                        <ListItem primaryText={person.name}
+                                                  leftAvatar={<Avatar src={image}/>}/>
+                                    )
+                                })}
+                            </List>
                         </ListItem>
                         : null
                     }

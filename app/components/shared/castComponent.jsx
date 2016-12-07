@@ -23,10 +23,12 @@ export default class CastComponent extends React.Component {
         return (
             <div style={this.styles.wrapper}>
                 {cast.cast.map(credit => {
-                    const image = `${ImageUrl}w45${credit.profile_path}`;
+                    const image = credit.profile_path ?
+                        `${ImageUrl}w45${credit.profile_path}` :
+                        '/app/resources/images/profile_avatar_placeholder.png';
                     return (
                         <Chip key={credit.id} style={this.styles.chip}>
-                            {credit.profile_path ? <Avatar src={image}/> : null}
+                            <Avatar src={image}/>
                             {credit.name}
                         </Chip>
                     )

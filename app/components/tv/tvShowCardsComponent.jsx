@@ -24,23 +24,23 @@ export default class TvShowCardsComponent extends React.Component {
     };
 
     render() {
-        const { tvShows, tvGenres, movieGenres } = this.props;
+        const {tvShows, tvGenres, movieGenres} = this.props;
         const genreList = tvGenres.genres.concat(movieGenres.genres);
 
         return (
             <Row style={{margin: 8}}>
                 {tvShows.results.map(show => {
-                    const image = `${ImageUrl}w500/${show.backdrop_path}`;
+                    const image = show.backdrop_path ?
+                        `${ImageUrl}w500/${show.backdrop_path}` :
+                        '/app/resources/images/backdrop_placeholder.png';
                     return (
                         <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>
                             <Card>
                                 <CardMedia>
-                                    {show.backdrop_path ?
-                                        <img src={image} style={{cursor: 'pointer'}}
-                                             onClick={() => {
-                                                 this._handleClick(show.id, show.original_name)
-                                             }}/> : null
-                                    }
+                                    <img src={image} style={{cursor: 'pointer'}}
+                                         onClick={() => {
+                                             this._handleClick(show.id, show.original_name)
+                                         }}/>
                                 </CardMedia>
                                 <CardTitle title={show.original_name} style={{cursor: 'pointer'}}
                                            onTouchTap={() => {

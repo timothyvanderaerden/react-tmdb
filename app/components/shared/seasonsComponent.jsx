@@ -17,13 +17,15 @@ export default class SeasonsComponent extends React.Component {
                 <CardTitle title="Seasons"/>
                 <List>
                     {seasons.map(season => {
-                        const image = `${ImageUrl}w300${season.poster_path}`;
+                        const image = season.poster_path ?
+                            `${ImageUrl}w300${season.poster_path}` :
+                            '/app/resources/images/poster_avatar_placeholder.png';
                         return (
                             <ListItem
                                 key={season.id}
                                 primaryText={season.air_date}
                                 secondaryText={`Episodes: ${season.episode_count}`}
-                                leftAvatar={<Avatar src={season.poster_path ? image : null} />}
+                                leftAvatar={<Avatar src={image} />}
                             />
                         )
                     })}

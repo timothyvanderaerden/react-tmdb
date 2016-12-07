@@ -24,22 +24,22 @@ export default class MovieCardsComponent extends React.Component {
     };
 
     render() {
-        const { movies, movieGenres } = this.props;
+        const {movies, movieGenres} = this.props;
 
         return (
             <Row style={{margin: 8}}>
                 {movies.results.map(movie => {
-                    const image = `${ImageUrl}w500${movie.backdrop_path}`;
+                    const image = movie.backdrop_path ?
+                        `${ImageUrl}w500${movie.backdrop_path}` :
+                        '/app/resources/images/backdrop_placeholder.png';
                     return (
                         <Col xs={12} sm={6} md={6} lg={4} key={movie.id} style={{marginBottom: 12}}>
                             <Card>
                                 <CardMedia>
-                                    {movie.backdrop_path ?
-                                        <img src={image} style={{cursor: 'pointer'}}
-                                             onClick={() => {
-                                                 this._handleClick(movie.id, movie.original_title)
-                                             }}/> : null
-                                    }
+                                    <img src={image} style={{cursor: 'pointer'}}
+                                         onClick={() => {
+                                             this._handleClick(movie.id, movie.original_title)
+                                         }}/>
                                 </CardMedia>
                                 <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
                                            onTouchTap={() => {

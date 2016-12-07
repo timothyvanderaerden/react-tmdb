@@ -4,6 +4,7 @@ import {ImageUrl} from '../../api/ApiUrl';
 import {Row} from 'react-flexbox-grid/lib/index';
 import {Card, CardMedia} from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
+import PosterComponent from '../shared/posterComponent';
 
 export default class SearchComponent extends React.Component {
     componentWillMount() {
@@ -34,11 +35,7 @@ export default class SearchComponent extends React.Component {
                                 {movies.map(movie => {
                                     const image = `${ImageUrl}w154${movie.poster_path}`;
                                     return (
-                                        <Card style={{width: 154, margin: 4}}>
-                                            <CardMedia>
-                                                <img src={image}/>
-                                            </CardMedia>
-                                        </Card>
+                                        <PosterComponent poster={image}/>
                                     )
                                 })}
                             </Row>
@@ -52,11 +49,7 @@ export default class SearchComponent extends React.Component {
                                 {tvShows.map(show => {
                                     const image = `${ImageUrl}w154${show.poster_path}`;
                                     return (
-                                        <Card style={{width: 154, margin: 4}}>
-                                            <CardMedia>
-                                                <img src={image}/>
-                                            </CardMedia>
-                                        </Card>
+                                        <PosterComponent poster={image}/>
                                     )
                                 })}
                             </Row>

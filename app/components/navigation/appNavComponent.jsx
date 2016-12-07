@@ -47,7 +47,7 @@ export default class appNavComponent extends React.Component {
 
     handleSearchClose = () => {
         browserHistory.goBack();
-        this.setState({searchBar: false})
+        Store.dispatch({type: 'search_bar', data: false});
     };
 
     render() {

@@ -1,6 +1,10 @@
 const webpack = require("webpack");
+
 module.exports = {
-    entry: './entry',
+    entry: {
+        javascript: './entry.js',
+        html: './index.html'
+    },
     output: {
         path: './dist',
         filename: 'bundle.js'
@@ -19,15 +23,22 @@ module.exports = {
                 test: /\.css$/,
                 loader: 'style!css?modules',
                 include: /flexboxgrid/,
+            },
+            {
+                test: /\.html$/,
+                loader: 'file?name=[name].[ext]'
             }
         ]
     },
     resolve: {
-        extensions:[
+        extensions: [
             '',
             '.js',
             '.jsx'
         ]
+    },
+    devServer: {
+        historyApiFallback: true
     },
     plugins: [
         new webpack.DefinePlugin({

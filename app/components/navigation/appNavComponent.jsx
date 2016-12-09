@@ -14,7 +14,6 @@ import BackIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import {cyan500} from 'material-ui/styles/colors';
 
 export default class appNavComponent extends React.Component {
-
     constructor(props) {
         super(props);
         injectTapEventPlugin(); //onTouchTap
@@ -27,7 +26,8 @@ export default class appNavComponent extends React.Component {
         Store.subscribe(() => {
             this.setState({
                 appBarTitle: Store.getState().appBarTitle,
-                searchBar: Store.getState().searchBar
+                searchBar: Store.getState().searchBar,
+                appBarStyle: Store.getState().appBarStyle
             });
         });
     }
@@ -74,6 +74,7 @@ export default class appNavComponent extends React.Component {
                                 </IconButton>
                             }
                             onRightIconButtonTouchTap={this.handleSearchToggle}
+                            style={this.state.appBarStyle}
                     >
                     </AppBar> :
                     <SearchBar iconElementLeft={<IconButton><BackIcon color={cyan500}/></IconButton>}

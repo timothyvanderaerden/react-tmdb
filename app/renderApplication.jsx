@@ -1,7 +1,7 @@
 import React from 'react';
 import Store from './store';
-import { render } from 'react-dom';
-import { Router, Route, browserHistory, IndexRedirect } from 'react-router';
+import {render} from 'react-dom';
+import {Router, Route, browserHistory, IndexRedirect} from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconUp from 'material-ui/svg-icons/navigation/expand-less';
@@ -37,17 +37,17 @@ browserHistory.listen(location => Store.dispatch({type: 'react_router', data: lo
 
 const renderApplication = () => {
     render((
-    <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
-        <Route path="/" component={App}>
-            <IndexRedirect to='popular'/>
-            <Route path="popular" component={PopularComponent}/>
-            <Route path="upcoming" component={UpcomingComponent}/>
-            <Route path="movie/:movieId/:movieName" component={MovieComponent}/>
-            <Route path="tv/:tvShowId/:tvShowName" component={TvShowComponent}/>
-            <Route path="search" component={SearchComponent}/>
-        </Route>
-    </Router>
-    ),document.getElementById('applicatie'));
+        <Router onUpdate={() => {window.scrollTo(0, 0)}} history={browserHistory}>
+            <Route path="/" component={App}>
+                <IndexRedirect to='popular'/>
+                <Route path="popular" component={PopularComponent}/>
+                <Route path="upcoming" component={UpcomingComponent}/>
+                <Route path="movie/:movieId/:movieName" component={MovieComponent}/>
+                <Route path="tv/:tvShowId/:tvShowName" component={TvShowComponent}/>
+                <Route path="search" component={SearchComponent}/>
+            </Route>
+        </Router>
+    ), document.getElementById('applicatie'));
 };
 
 export default renderApplication;

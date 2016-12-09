@@ -5,10 +5,20 @@ import {ImageUrl} from '../../api/ApiUrl';
 import {Row} from 'react-flexbox-grid/lib/index';
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import Subheader from 'material-ui/Subheader';
+import SubHeader from 'material-ui/Subheader';
 import PosterComponent from '../shared/posterComponent';
+import Divider from 'material-ui/Divider';
 
 export default class SearchComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.styles = {
+            subHeader: {
+                fontSize: 24,
+            }
+        };
+    }
+
     componentWillMount() {
         this.state = {searchResult: null, searchPeople: null};
         Store.dispatch({type: 'search_bar', data: true});
@@ -34,7 +44,7 @@ export default class SearchComponent extends React.Component {
                 <List style={{margin: 8}}>
                     {movies ?
                         <ListItem disabled={true}>
-                            <Subheader>Movies</Subheader>
+                            <SubHeader style={this.styles.subHeader}>Movies</SubHeader>
                             <Row center="xs">
                                 {movies.map(movie => {
                                     const image = `${ImageUrl}w154${movie.poster_path}`;
@@ -50,7 +60,8 @@ export default class SearchComponent extends React.Component {
                     }
                     {tvShows ?
                         <ListItem disabled={true}>
-                            <Subheader>TV Shows</Subheader>
+                            <Divider />
+                            <SubHeader style={this.styles.subHeader}>TV Shows</SubHeader>
                             <Row center="xs">
                                 {tvShows.map(show => {
                                     const image = `${ImageUrl}w154${show.poster_path}`;
@@ -66,7 +77,8 @@ export default class SearchComponent extends React.Component {
                     }
                     {searchPeople.results ?
                         <ListItem disabled={true}>
-                            <Subheader>People</Subheader>
+                            <Divider />
+                            <SubHeader style={this.styles.subHeader}>People</SubHeader>
                             <List>
                                 {searchPeople.results.map(person => {
                                     const image  = person.profile_path ?

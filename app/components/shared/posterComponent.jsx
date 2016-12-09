@@ -1,15 +1,27 @@
 import React from 'react';
-import {Card, CardMedia} from 'material-ui/Card';
+import {GridTile} from 'material-ui/GridList';
 
 export default class PosterComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.styles = {
+            poster: {
+                width: '100%',
+                height: '100%'
+            },
+            tile: {
+                width: 154,
+                height: 236,
+                margin: 4
+            }
+        };
+    }
     render() {
         const {poster} = this.props;
         return (
-            <Card style={{width: 154, margin: 4}}>
-                <CardMedia>
-                    <img src={poster}/>
-                </CardMedia>
-            </Card>
+            <GridTile style={this.styles.tile}>
+                    <img style={this.styles.poster} src={poster}/>
+            </GridTile>
         )
     }
 }

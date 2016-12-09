@@ -34,6 +34,8 @@ const reducer = (state, action) => {
             return Object.assign({}, state, {searchPeople: action.data});
         case 'search_bar':
             return Object.assign({}, state, {searchBar: action.data});
+        case 'appbar_style':
+            return Object.assign({}, state, {appBarStyle: action.data});
         default:
             return state;
     }

@@ -19,10 +19,16 @@ React application with information about movies and TV shows
     `webpack-dev-server`
     
 ### TODO ###
+#### Release v1 ####
 - [x] Popular movies/TV (Discover)
-    - [ ] Design popular movies/TV
 - [x] Movie/TV page
-    - [ ] Design Movie/TV
+- [x] Now in theater
+- [x] Search
+   - [x] Movies/TV
+   - [x] People
+- [ ] People page
+- [ ] Minimize bundle size
+
+---
 - [ ] Remove inline style
 - [ ] Dynamic configuration (image basurl, image sizes)
-- [ ] Minimize bundle size

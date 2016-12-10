@@ -30,11 +30,13 @@ export default class searchBarComponent extends React.Component {
 
     handleSearch = (event) => {
         if (event.target.value && event.target.value.replace(/\s/g, '').length) {
-            searchMulti(event.target.value).then(result => {
-                Store.dispatch({type: 'search', data: result});
-            });
-            searchPerson(event.target.value).then(result => {
-                Store.dispatch({type: 'search_people', data: result});
+            Promise.all([
+                searchMulti(event.target.value),
+                searchPerson(event.target.value)
+            ]).then((data) => {
+                let [ multi, person ] = data;
+                Store.dispatch({type: 'search', data: multi});
+                Store.dispatch({type: 'search_people', data: person});
             })
         } else {
             Store.dispatch({type: 'search', data: null});

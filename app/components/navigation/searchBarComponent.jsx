@@ -29,7 +29,7 @@ export default class searchBarComponent extends React.Component {
     }
 
     handleSearch = (event) => {
-        if (event.target.value) {
+        if (event.target.value && event.target.value.replace(/\s/g, '').length) {
             searchMulti(event.target.value).then(result => {
                 Store.dispatch({type: 'search', data: result});
             });
@@ -45,20 +45,20 @@ export default class searchBarComponent extends React.Component {
     render() {
         const {iconElementLeft, onLeftIconButtonTouchTap} = this.props;
         return (
-                <AppBar
-                    title={<TextField
-                        hintText="Search..."
-                        style={this.styles.textField}
-                        fullWidth={true}
-                        underlineShow={false}
-                        onChange={this.handleSearch}
-                        autoFocus
-                    />}
-                    style={this.styles.appBar}
-                    iconElementLeft={iconElementLeft}
-                    onLeftIconButtonTouchTap={onLeftIconButtonTouchTap}
-                    iconElementRight={<IconButton><SearchIcon color={cyan500}/></IconButton>}
-                />
+            <AppBar
+                title={<TextField
+                    hintText="Search..."
+                    style={this.styles.textField}
+                    fullWidth={true}
+                    underlineShow={false}
+                    onChange={this.handleSearch}
+                    autoFocus
+                />}
+                style={this.styles.appBar}
+                iconElementLeft={iconElementLeft}
+                onLeftIconButtonTouchTap={onLeftIconButtonTouchTap}
+                iconElementRight={<IconButton><SearchIcon color={cyan500}/></IconButton>}
+            />
         );
     }
 }

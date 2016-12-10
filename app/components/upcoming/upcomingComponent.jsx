@@ -11,17 +11,6 @@ export default class UpcomingComponent extends React.Component {
         Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
 
         this.getMovieData();
-
-        this.unsubscribe = Store.subscribe(() => {
-            this.setState({
-                movieList: Store.getState().movieList,
-                movieGenres: Store.getState().movieGenres
-            });
-        });
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     getMovieData() {
@@ -30,8 +19,8 @@ export default class UpcomingComponent extends React.Component {
             getMovieGenres()
         ]).then((data) => {
             let [ movies, genres ] = data;
-            Store.dispatch({type: 'load_movieList', data: movies});
-            Store.dispatch({type: 'load_movieGenres', data: genres});
+            this.setState({movieList: movies});
+            this.setState({movieGenres: genres});
         }).then(() => {
             this.setState({movieLoaded: true});
         })

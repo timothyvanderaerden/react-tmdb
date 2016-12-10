@@ -5,7 +5,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import TextField from 'material-ui/TextField';
-import {pink400, white, cyan500} from 'material-ui/styles/colors';
+import {white, cyan500} from 'material-ui/styles/colors';
 
 export default class searchBarComponent extends React.Component {
 
@@ -13,12 +13,6 @@ export default class searchBarComponent extends React.Component {
         super(props);
 
         this.styles = {
-            underlineStyle: {
-                borderColor: cyan500
-            },
-            underlineFocusStyle: {
-                borderColor: pink400
-            },
             appBar: {
                 backgroundColor: white
             },

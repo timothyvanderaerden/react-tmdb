@@ -32,6 +32,7 @@ export default class SearchComponent extends React.Component {
     }
 
     componentWillUnmount() {
+        Store.dispatch({type: 'search_bar', data: false});
         this.unsubscribe();
     }
 

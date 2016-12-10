@@ -17,20 +17,10 @@ export default class PopularComponent extends React.Component {
         Store.dispatch({type: 'appbar_style', data: {boxShadow: 'none'}});
 
         this.getMovieData();
-
-        this.unsubscribe = Store.subscribe(() => {
-            this.setState({
-                movieList: Store.getState().movieList,
-                movieGenres: Store.getState().movieGenres,
-                tvShowList: Store.getState().tvShowList,
-                tvGenres: Store.getState().tvGenres
-            });
-        });
     }
 
     componentWillUnmount() {
         Store.dispatch({type: 'appbar_style', data: null});
-        this.unsubscribe();
     }
 
     getMovieData() {
@@ -39,8 +29,8 @@ export default class PopularComponent extends React.Component {
             getMovieGenres()
         ]).then((data) => {
             let [ movies, genres ] = data;
-            Store.dispatch({type: 'load_movieList', data: movies});
-            Store.dispatch({type: 'load_movieGenres', data: genres});
+            this.setState({movieList: movies});
+            this.setState({movieGenres: genres});
         }).then(() => {
             this.setState({movieLoaded: true});
         })
@@ -52,8 +42,8 @@ export default class PopularComponent extends React.Component {
             getTVGenres()
         ]).then((data) => {
             let [ shows, genres ] = data;
-            Store.dispatch({type: 'load_tvShowList', data: shows});
-            Store.dispatch({type: 'load_tvGenres', data: genres});
+            this.setState({tvShowList: shows});
+            this.setState({tvGenres: genres});
         }).then(() => {
             this.setState({showLoaded: true});
         })

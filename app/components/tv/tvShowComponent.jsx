@@ -17,18 +17,13 @@ export default class TvShowComponent extends React.Component {
 
     componentWillMount() {
         const tvShowId = this.props.params.tvShowId;
-        this.state = { showLoaded: false };
+        this.state = { showLoaded: false, location: Store.getState().location };
         Store.dispatch({type: 'appbar_title', data: this.props.params.tvShowName});
-        Store.dispatch({type: 'search_bar', data: false});
 
         this.getTvShowData(tvShowId);
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
-                tvShow: Store.getState().tvShow,
-                keywords: Store.getState().keywords,
-                cast: Store.getState().cast,
-                similar: Store.getState().similar,
                 location: Store.getState().location
             });
         });
@@ -54,10 +49,10 @@ export default class TvShowComponent extends React.Component {
             getSimilarTvShows(tvShowId)
         ]).then((data) => {
             let [ show, keywords, cast, similar ] = data;
-            Store.dispatch({type: 'load_tvShow', data: show});
-            Store.dispatch({type: 'load_keywords', data: keywords});
-            Store.dispatch({type: 'load_cast', data: cast});
-            Store.dispatch({type: 'load_similar', data: similar});
+            this.setState({tvShow: show});
+            this.setState({keywords: keywords});
+            this.setState({cast: cast});
+            this.setState({similar: similar});
         }).then(() => {
             this.setState({showLoaded: true});
         })

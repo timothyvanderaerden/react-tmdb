@@ -36,6 +36,9 @@ export default class searchBarComponent extends React.Component {
             searchPerson(event.target.value).then(result => {
                 Store.dispatch({type: 'search_people', data: result});
             })
+        } else {
+            Store.dispatch({type: 'search', data: null});
+            Store.dispatch({type: 'search_people', data: null});
         }
     };
 

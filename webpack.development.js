@@ -1,6 +1,10 @@
 const webpack = require("webpack");
 
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProd = nodeEnv === 'production';
+
 module.exports = {
+    devtool: isProd ? 'cheap-module-source-map' : 'eval',
     entry: {
         javascript: './entry.js',
         html: './index.html'
@@ -43,7 +47,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('production')
+                NODE_ENV: JSON.stringify(nodeEnv)
             }
         })
     ]

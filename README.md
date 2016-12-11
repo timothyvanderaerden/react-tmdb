@@ -27,7 +27,7 @@ React application with information about movies and TV shows
    - [x] Movies/TV
    - [x] People
 - [x] People page
-- [ ] Minimize bundle size
+- [x] Minimize bundle size
 
 ---
 - [ ] Design pattern (?MVC, ?MVP)

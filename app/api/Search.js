@@ -1,6 +1,3 @@
-/**
- * Created by timothy on 5/12/16.
- */
 import {ApiUrl} from './ApiUrl';
 import key from './ApiKey';
 

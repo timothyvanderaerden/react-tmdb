@@ -17,9 +17,9 @@ export default class PosterComponent extends React.Component {
         };
     }
     render() {
-        const {poster} = this.props;
+        const {poster, title, subtitle} = this.props;
         return (
-            <GridTile style={this.styles.tile}>
+            <GridTile style={this.styles.tile} title={title} subtitle={subtitle}>
                     <img style={this.styles.poster} src={poster}/>
             </GridTile>
         )

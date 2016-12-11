@@ -82,17 +82,21 @@ export default class SearchComponent extends React.Component {
                             <SubHeader style={this.styles.subHeader}>People</SubHeader>
                             <List>
                                 {searchPeople.results.map(person => {
-                                    const image  = person.profile_path ?
+                                    const image = person.profile_path ?
                                         `${ImageUrl}w45${person.profile_path}` :
                                         '/app/resources/images/profile_avatar_placeholder.png';
                                     return (
                                         <ListItem primaryText={person.name}
+                                                  containerElement={
+                                                      <Link to={`/person/${person.id}/${person.name}`}/>
+                                                  }
                                                   leftAvatar={<Avatar src={image}/>}/>
                                     )
                                 })}
                             </List>
-                        </ListItem>
-                        : null
+                        </ListItem >
+                        :
+                        null
                     }
                 </List>
             )

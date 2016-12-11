@@ -11,6 +11,7 @@ import UpcomingComponent from './components/upcoming/upcomingComponent';
 import MovieComponent from './components/movie/movieComponent';
 import SearchComponent from './components/search/searchComponent';
 import TvShowComponent from './components/tv/tvShowComponent';
+import PersonComponent from './components/person/personComponent';
 import AppNavComponent from './components/navigation/appNavComponent';
 
 class App extends React.Component {
@@ -44,6 +45,7 @@ const renderApplication = () => {
                 <Route path="upcoming" component={UpcomingComponent}/>
                 <Route path="movie/:movieId/:movieName" component={MovieComponent}/>
                 <Route path="tv/:tvShowId/:tvShowName" component={TvShowComponent}/>
+                <Route path="person/:personId/:personName" components={PersonComponent}/>
                 <Route path="search" component={SearchComponent}/>
             </Route>
         </Router>

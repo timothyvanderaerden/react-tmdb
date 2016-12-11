@@ -26,9 +26,15 @@ React application with information about movies and TV shows
 - [x] Search
    - [x] Movies/TV
    - [x] People
-- [ ] People page
+- [x] People page
 - [ ] Minimize bundle size
 
 ---
+- [ ] Design pattern (?MVC, ?MVP)
+- [ ] Redesign some pages (simplifying)
+- [ ] Popular People
+- [ ] Video trailers
+- [ ] Lazy load images
+- [ ] Infinite scrolling
 - [ ] Remove inline style
 - [ ] Dynamic configuration (image basurl, image sizes)

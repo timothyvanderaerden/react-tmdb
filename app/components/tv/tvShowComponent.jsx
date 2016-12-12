@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from '../../store';
+import Store from '../../store/store';
 import {
     getTvShowById, getKeywordsForTvShow,
     getCastForTvShow, getSimilarTvShows
@@ -18,7 +18,7 @@ export default class TvShowComponent extends React.Component {
     componentWillMount() {
         const tvShowId = this.props.params.tvShowId;
         this.state = { showLoaded: false, location: Store.getState().location };
-        Store.dispatch({type: 'appbar_title', data: this.props.params.tvShowName});
+        Store.dispatch({type: 'APPBAR_TITLE', data: this.props.params.tvShowName});
 
         this.getTvShowData(tvShowId);
 
@@ -32,7 +32,7 @@ export default class TvShowComponent extends React.Component {
     componentWillUpdate(nextState) {
         if (this.state.location !== nextState.location && this.state.location !== undefined) {
             const [ , , tvshowId, tvShowTitle ] = nextState.location.pathname.split('/');
-            Store.dispatch({type: 'appbar_title', data: tvShowTitle});
+            Store.dispatch({type: 'APPBAR_TITLE', data: tvShowTitle});
             this.getTvShowData(tvshowId);
         }
     }

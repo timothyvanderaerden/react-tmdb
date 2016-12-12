@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from './store';
+import Store from './store/store';
 import {render} from 'react-dom';
 import {Router, Route, browserHistory, IndexRedirect} from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -34,7 +34,7 @@ class App extends React.Component {
     }
 }
 
-browserHistory.listen(location => Store.dispatch({type: 'react_router', data: location}));
+browserHistory.listen(location => Store.dispatch({type: 'ROUTER_LISTEN', data: location}));
 
 const renderApplication = () => {
     render((

@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from '../../store';
+import Store from '../../store/store';
 import {getUpcomingMovies} from '../../api/Movies';
 import {getMovieGenres} from '../../api/Genres';
 import MovieListComponent from '../movie/movieCardsComponent';
@@ -8,7 +8,7 @@ import LoadingComponent from '../shared/loadingComponent';
 export default class UpcomingComponent extends React.Component {
     componentWillMount() {
         this.state = {appBarTitle: "Now in theaters", movieLoaded: false};
-        Store.dispatch({type: 'appbar_title', data: this.state.appBarTitle});
+        Store.dispatch({type: 'APPBAR_TITLE', data: this.state.appBarTitle});
 
         this.getMovieData();
     }

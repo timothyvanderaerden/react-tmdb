@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from '../../store';
+import Store from '../../store/store';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -47,7 +47,7 @@ export default class appNavComponent extends React.Component {
 
     handleSearchClose = () => {
         browserHistory.goBack();
-        Store.dispatch({type: 'search_bar', data: false});
+        Store.dispatch({type: 'APPBAR_SEARCH', data: false});
     };
 
     render() {

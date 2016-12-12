@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from '../../store';
+import Store from '../../store/store';
 import {searchMulti, searchPerson} from '../../api/Search';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -29,12 +29,12 @@ export default class searchBarComponent extends React.Component {
                 searchPerson(event.target.value)
             ]).then((data) => {
                 let [ multi, person ] = data;
-                Store.dispatch({type: 'search', data: multi});
-                Store.dispatch({type: 'search_people', data: person});
+                Store.dispatch({type: 'SEARCH_RESULTS', data: multi});
+                Store.dispatch({type: 'SEARCH_PEOPLE', data: person});
             })
         } else {
-            Store.dispatch({type: 'search', data: null});
-            Store.dispatch({type: 'search_people', data: null});
+            Store.dispatch({type: 'SEARCH_RESULTS', data: null});
+            Store.dispatch({type: 'SEARCH_PEOPLE', data: null});
         }
     };
 

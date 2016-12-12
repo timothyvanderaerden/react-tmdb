@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from '../../store';
+import Store from '../../store/store';
 import {Link} from 'react-router';
 import {ImageUrl} from '../../api/ApiUrl';
 import {Row} from 'react-flexbox-grid/lib/index';
@@ -21,7 +21,7 @@ export default class SearchComponent extends React.Component {
 
     componentWillMount() {
         this.state = {searchResult: null, searchPeople: null};
-        Store.dispatch({type: 'search_bar', data: true});
+        Store.dispatch({type: 'APPBAR_SEARCH', data: true});
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -32,7 +32,7 @@ export default class SearchComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        Store.dispatch({type: 'search_bar', data: false});
+        Store.dispatch({type: 'APPBAR_SEARCH', data: false});
         this.unsubscribe();
     }
 

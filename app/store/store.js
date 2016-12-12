@@ -2,17 +2,17 @@ import {createStore} from 'redux';
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'react_router':
+        case 'ROUTER_LISTEN':
             return Object.assign({}, state, {location: action.data});
-        case 'search':
+        case 'SEARCH_RESULTS':
             return Object.assign({}, state, {searchResult: action.data});
-        case 'search_people':
+        case 'SEARCH_PEOPLE':
             return Object.assign({}, state, {searchPeople: action.data});
-        case 'search_bar':
+        case 'APPBAR_SEARCH':
             return Object.assign({}, state, {searchBar: action.data});
-        case 'appbar_title':
+        case 'APPBAR_TITLE':
             return Object.assign({}, state, {appBarTitle: action.data});
-        case 'appbar_style':
+        case 'APPBAR_STYLE':
             return Object.assign({}, state, {appBarStyle: action.data});
         default:
             return state;

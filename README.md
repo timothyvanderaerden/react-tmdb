@@ -15,8 +15,10 @@ React application with information about movies and TV shows
     `/app/api/ApiKey.js`
 5. Create webpack bundle:
     `npm run build-dev`
-6. Launch application:
+6. Start webpack server:
     `webpack-dev-server`
+7. Go to:
+    `http://localhost:8080`
     
 ### TODO ###
 #### Release v1 ####
@@ -30,7 +32,7 @@ React application with information about movies and TV shows
 - [x] Minimize bundle size
 
 ---
-- [ ] Design pattern (?MVC, ?MVP)
+- [ ] Flux
 - [ ] Redesign some pages (simplifying)
 - [ ] Popular People
 - [ ] Video trailers

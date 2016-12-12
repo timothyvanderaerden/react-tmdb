@@ -32,7 +32,6 @@ React application with information about movies and TV shows
 - [x] Minimize bundle size
 
 ---
-- [ ] Flux
 - [ ] Redesign some pages (simplifying)
 - [ ] Popular People
 - [ ] Video trailers

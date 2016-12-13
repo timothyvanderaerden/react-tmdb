@@ -1,18 +1,19 @@
 import {createStore} from 'redux';
+import * as types from '../constants/actionTypes';
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'ROUTER_LISTEN':
+        case types.ROUTER_LISTEN:
             return Object.assign({}, state, {location: action.data});
-        case 'SEARCH_RESULTS':
+        case types.SEARCH_RESULTS:
             return Object.assign({}, state, {searchResult: action.data});
-        case 'SEARCH_PEOPLE':
+        case types.SEARCH_PEOPLE:
             return Object.assign({}, state, {searchPeople: action.data});
-        case 'APPBAR_SEARCH':
+        case types.APPBAR_SEARCH:
             return Object.assign({}, state, {searchBar: action.data});
-        case 'APPBAR_TITLE':
+        case types.APPBAR_TITLE:
             return Object.assign({}, state, {appBarTitle: action.data});
-        case 'APPBAR_STYLE':
+        case types.APPBAR_STYLE:
             return Object.assign({}, state, {appBarStyle: action.data});
         default:
             return state;

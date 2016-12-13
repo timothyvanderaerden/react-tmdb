@@ -1,0 +1,6 @@
+export const ROUTER_LISTEN = 'ROUTER_LISTEN';
+export const SEARCH_RESULTS = 'SEARCH_RESULTS';
+export const SEARCH_PEOPLE = 'SEARCH_PEOPLE';
+export const APPBAR_SEARCH = 'APPBAR_SEARCH';
+export const APPBAR_TITLE = 'APPBAR_TITLE';
+export const APPBAR_STYLE = 'APPBAR_STYLE';

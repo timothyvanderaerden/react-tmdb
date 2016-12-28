@@ -22,7 +22,7 @@ export default class SimilarComponent extends React.Component {
                         <GridTile
                             key={type+similar.id}
                             containerElement={<Link to={`/${type}/${similar.id}/${similar.original_title}`}/>}
-                            title={similar.original_title != null ? similar.original_title : similar.original_name}
+                            title={type === 'movie' ? similar.original_title : similar.original_name}
                         >
                             <img src={image}/>
                         </GridTile>

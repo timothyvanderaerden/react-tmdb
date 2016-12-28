@@ -52,11 +52,11 @@ export default class PeopleComponent extends React.Component {
                                     const image = credit.poster_path ?
                                         `${ImageUrl}w154${credit.poster_path}` :
                                         '/app/resources/images/poster_avatar_placeholder.png';
-                                    const link = credit.media_type === 'movie' ? 'movie' : 'tv';
+                                    const type = credit.media_type === 'movie' ? 'movie' : 'tv';
                                     return (
-                                        <Link key={credit.media_type+credit.id} to={`/${link}/${credit.id}/${credit.title}`}>
+                                        <Link key={type+credit.id} to={`/${type}/${credit.id}/${credit.title}`}>
                                             <PosterComponent poster={image}
-                                                             title={credit.title}
+                                                             title={type === 'movie' ? credit.title : credit.name}
                                                              subtitle={credit.character}/>
                                         </Link>
                                     )

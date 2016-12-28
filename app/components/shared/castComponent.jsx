@@ -33,7 +33,7 @@ export default class CastComponent extends React.Component {
                         `${ImageUrl}w45${credit.profile_path}` :
                         '/app/resources/images/profile_avatar_placeholder.png';
                     return (
-                        <Chip key={credit.id}
+                        <Chip key={credit.cast_id+credit.id}
                               style={this.styles.chip}
                               onTouchTap={() => {
                                   this._handleClick(credit.id, credit.name)

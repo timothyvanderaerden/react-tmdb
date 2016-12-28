@@ -54,7 +54,7 @@ export default class PeopleComponent extends React.Component {
                                         '/app/resources/images/poster_avatar_placeholder.png';
                                     const link = credit.media_type === 'movie' ? 'movie' : 'tv';
                                     return (
-                                        <Link to={`/${link}/${credit.id}/${credit.title}`}>
+                                        <Link key={credit.media_type+credit.id} to={`/${link}/${credit.id}/${credit.title}`}>
                                             <PosterComponent poster={image}
                                                              title={credit.title}
                                                              subtitle={credit.character}/>

@@ -51,7 +51,7 @@ export default class SearchComponent extends React.Component {
                                 {movies.map(movie => {
                                     const image = `${ImageUrl}w154${movie.poster_path}`;
                                     return (
-                                        <Link to={`/movie/${movie.id}/${movie.original_title}`}>
+                                        <Link key={'movie'+movie.id} to={`/movie/${movie.id}/${movie.original_title}`}>
                                             <PosterComponent poster={image}/>
                                         </Link>
                                     )
@@ -68,7 +68,7 @@ export default class SearchComponent extends React.Component {
                                 {tvShows.map(show => {
                                     const image = `${ImageUrl}w154${show.poster_path}`;
                                     return (
-                                        <Link to={`/tv/${show.id}/${show.original_name}`}>
+                                        <Link key={'tv'+show.id} to={`/tv/${show.id}/${show.original_name}`}>
                                             <PosterComponent poster={image}/>
                                         </Link>
                                     )
@@ -87,7 +87,8 @@ export default class SearchComponent extends React.Component {
                                         `${ImageUrl}w45${person.profile_path}` :
                                         '/app/resources/images/profile_avatar_placeholder.png';
                                     return (
-                                        <ListItem primaryText={person.name}
+                                        <ListItem key={'person'+person.id}
+                                                  primaryText={person.name}
                                                   containerElement={
                                                       <Link to={`/person/${person.id}/${person.name}`}/>
                                                   }

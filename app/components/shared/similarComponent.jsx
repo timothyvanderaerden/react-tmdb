@@ -17,13 +17,11 @@ export default class SimilarComponent extends React.Component {
                     const image = similar.backdrop_path ?
                         `${ImageUrl}w300${similar.backdrop_path}` :
                         '/app/resources/images/backdrop_placeholder.png';
+                    const type = similar.original_title != null ? 'movie' : 'tv';
                     return (
                         <GridTile
-                            key={similar.id}
-                            containerElement={similar.original_title != null ?
-                                <Link to={`/movie/${similar.id}/${similar.original_title}`}/> :
-                                <Link to={`/tv/${similar.id}/${similar.original_name}`}/>
-                            }
+                            key={type+similar.id}
+                            containerElement={<Link to={`/${type}/${similar.id}/${similar.original_title}`}/>}
                             title={similar.original_title != null ? similar.original_title : similar.original_name}
                         >
                             <img src={image}/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Store from '../../store/store';
+import {changeAppBarTitle} from '../../actions/appBarActions';
 import {Link} from 'react-router';
 import {ImageUrl} from '../../api/ApiUrl';
 import {getPersonById, getCombinedCredits} from '../../api/People';
@@ -17,7 +18,7 @@ export default class PeopleComponent extends React.Component {
     componentWillMount() {
         const personId = this.props.params.personId;
         this.state = {personLoaded: false};
-        Store.dispatch({type: 'APPBAR_TITLE', data: this.props.params.personName});
+        Store.dispatch(changeAppBarTitle(this.props.params.personName));
 
         this.getPersonData(personId);
     }

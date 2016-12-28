@@ -1,6 +1,6 @@
 {
   "name": "react-TMDb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React application with information about movies and TV shows",
   "author": "Timothy Vanderaerden",
   "license": "MIT",
@@ -47,6 +47,7 @@
     "react-swipeable-views": "^0.8.0",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "react-redux": "^4.4.6",
     "scroll-behavior": "^0.9.1"
   }
 }

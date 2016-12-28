@@ -3,6 +3,7 @@ import Store from '../../store/store';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import {setAppBarSearch} from '../../actions/appBarActions';
 import {Link, browserHistory} from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import PopularIcon from 'material-ui/svg-icons/action/stars';
@@ -47,7 +48,7 @@ export default class appNavComponent extends React.Component {
 
     handleSearchClose = () => {
         browserHistory.goBack();
-        Store.dispatch({type: 'APPBAR_SEARCH', data: false});
+        Store.dispatch(setAppBarSearch(true));
     };
 
     render() {

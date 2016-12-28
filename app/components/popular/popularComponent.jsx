@@ -1,5 +1,6 @@
 import React from 'react';
 import Store from '../../store/store';
+import {changeAppBarTitle, changeAppBarStyle} from '../../actions/appBarActions'
 import {getPopularMovies} from '../../api/Discover';
 import {getMovieGenres} from '../../api/Genres';
 import {getPopularShows} from '../../api/Discover';
@@ -12,15 +13,15 @@ import SwipeableViews from 'react-swipeable-views';
 
 export default class PopularComponent extends React.Component {
     componentWillMount() {
-        this.state = {appBarTitle: "Popular", slideIndex: 0, load: false, movieLoaded: false, showLoaded: false};
-        Store.dispatch({type: 'APPBAR_TITLE', data: this.state.appBarTitle});
-        Store.dispatch({type: 'APPBAR_STYLE', data: {boxShadow: 'none'}});
+        this.state = {slideIndex: 0, load: false, movieLoaded: false, showLoaded: false};
+        Store.dispatch(changeAppBarTitle("Popular"));
+        Store.dispatch(changeAppBarStyle({boxShadow: 'none'}));
 
         this.getMovieData();
     }
 
     componentWillUnmount() {
-        Store.dispatch({type: 'APPBAR_STYLE', data: null});
+        Store.dispatch(changeAppBarStyle(null));
     }
 
     getMovieData() {

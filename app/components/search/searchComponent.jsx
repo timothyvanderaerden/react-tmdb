@@ -1,5 +1,6 @@
 import React from 'react';
 import Store from '../../store/store';
+import {setAppBarSearch} from '../../actions/appBarActions';
 import {Link} from 'react-router';
 import {ImageUrl} from '../../api/ApiUrl';
 import {Row} from 'react-flexbox-grid/lib/index';
@@ -21,7 +22,7 @@ export default class SearchComponent extends React.Component {
 
     componentWillMount() {
         this.state = {searchResult: null, searchPeople: null};
-        Store.dispatch({type: 'APPBAR_SEARCH', data: true});
+        Store.dispatch(setAppBarSearch(true));
 
         this.unsubscribe = Store.subscribe(() => {
             this.setState({
@@ -32,7 +33,7 @@ export default class SearchComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        Store.dispatch({type: 'APPBAR_SEARCH', data: false});
+        Store.dispatch(setAppBarSearch(false));
         this.unsubscribe();
     }
 

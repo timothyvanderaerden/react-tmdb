@@ -1,5 +1,6 @@
 import React from 'react';
 import Store from '../../store/store';
+import {changeAppBarTitle} from '../../actions/appBarActions';
 import {
     getMovieById, getKeywordsForMovie, getMovieReviews,
     getCastForMovie, getSimilarMovies
@@ -18,7 +19,7 @@ export default class MovieComponent extends React.Component {
     componentWillMount() {
         const movieId = this.props.params.movieId;
         this.state = {movieLoaded: false, location: Store.getState().location};
-        Store.dispatch({type: 'APPBAR_TITLE', data: this.props.params.movieName});
+        Store.dispatch(changeAppBarTitle(this.props.params.movieName));
 
         this.getMovieData(movieId);
 
@@ -32,7 +33,7 @@ export default class MovieComponent extends React.Component {
     componentWillUpdate(nextState) {
         if (this.state.location !== nextState.location && this.state.location !== undefined) {
             const [ , , movieId, movieName ] = nextState.location.pathname.split('/');
-            Store.dispatch({type: 'APPBAR_TITLE', data: movieName});
+            Store.dispatch(changeAppBarTitle(movieName));
             this.getMovieData(movieId);
         }
     }

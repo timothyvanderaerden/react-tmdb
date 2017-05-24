@@ -1,8 +1,9 @@
 import React from 'react';
-import {ImageUrl} from '../../api/ApiUrl';
+import PropTypes from 'prop-types';
+import { ImageUrl } from '../../api/ApiUrl';
 import Avatar from 'material-ui/Avatar';
-import {List, ListItem} from 'material-ui/List';
-import {Card, CardTitle} from 'material-ui/Card';
+import { List, ListItem } from 'material-ui/List';
+import { Card, CardTitle } from 'material-ui/Card';
 
 export default class SeasonsComponent extends React.Component {
     constructor(props) {
@@ -27,10 +28,14 @@ export default class SeasonsComponent extends React.Component {
                                 secondaryText={`Episodes: ${season.episode_count}`}
                                 leftAvatar={<Avatar src={image} />}
                             />
-                        )
+                        );
                     })}
                 </List>
             </Card>
-        )
+        );
     }
 }
+
+SeasonsComponent.propTypes = {
+  seasons: PropTypes.array.isRequired,
+};

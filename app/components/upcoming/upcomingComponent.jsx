@@ -1,15 +1,18 @@
-import React from 'react';
-import Store from '../../store/store';
-import {changeAppBarTitle} from '../../actions/appBarActions';
-import {getUpcomingMovies} from '../../api/Movies';
-import {getMovieGenres} from '../../api/Genres';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+
+import { appBarActions } from '../../actions';
+import { getUpcomingMovies } from '../../api/Movies';
+import { getMovieGenres } from '../../api/Genres';
 import MovieListComponent from '../movie/movieCardsComponent';
 import LoadingComponent from '../shared/loadingComponent';
 
-export default class UpcomingComponent extends React.Component {
+class UpcomingComponent extends Component {
     componentWillMount() {
-        this.state = {appBarTitle: "Now in theaters", movieLoaded: false};
-        Store.dispatch(changeAppBarTitle(this.state.appBarTitle));
+        this.state = { appBarTitle: "Now in theaters", movieLoaded: false };
+        this.props.actions.changeAppBarTitle(this.state.appBarTitle);
 
         this.getMovieData();
     }
@@ -24,7 +27,7 @@ export default class UpcomingComponent extends React.Component {
             this.setState({movieGenres: genres});
         }).then(() => {
             this.setState({movieLoaded: true});
-        })
+        });
     }
 
     render() {
@@ -32,11 +35,29 @@ export default class UpcomingComponent extends React.Component {
         return (
             <div>
                 { movieLoaded ?
-                    <MovieListComponent movies={ movieList }
-                                        movieGenres={ movieGenres }/>
+                    <MovieListComponent movies={movieList}
+                                        movieGenres={movieGenres}/>
                     : <LoadingComponent/>
                 }
             </div>
-        )
+        );
     }
 }
+
+UpcomingComponent.propTypes = {
+  actions: PropTypes.object.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    location: state.location
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(appBarActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpcomingComponent);

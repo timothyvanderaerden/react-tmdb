@@ -1,16 +1,19 @@
-import React from 'react';
-import Store from '../../store/store';
-import {setAppBarSearch} from '../../actions/appBarActions';
-import {Link} from 'react-router';
-import {ImageUrl} from '../../api/ApiUrl';
-import {Row} from 'react-flexbox-grid/lib/index';
-import {List, ListItem} from 'material-ui/List';
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
+
+import { appBarActions } from '../../actions';
+import { Link } from 'react-router';
+import { ImageUrl } from '../../api/ApiUrl';
+import { Row } from 'react-flexbox-grid/lib/index';
+import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import SubHeader from 'material-ui/Subheader';
 import PosterComponent from '../shared/posterComponent';
 import Divider from 'material-ui/Divider';
 
-export default class SearchComponent extends React.Component {
+class SearchComponent extends Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -22,23 +25,16 @@ export default class SearchComponent extends React.Component {
 
     componentWillMount() {
         this.state = {searchResult: null, searchPeople: null};
-        Store.dispatch(setAppBarSearch(true));
-
-        this.unsubscribe = Store.subscribe(() => {
-            this.setState({
-                searchResult: Store.getState().searchResult,
-                searchPeople: Store.getState().searchPeople
-            });
-        });
+        this.props.actions.setAppBarSearch(true);
     }
 
     componentWillUnmount() {
-        Store.dispatch(setAppBarSearch(false));
+        this.props.actions.setAppBarSearch(false);
         this.unsubscribe();
     }
 
     render() {
-        const {searchResult, searchPeople} = this.state;
+        const { searchResult, searchPeople } = this.props;
         if (searchResult && searchPeople) {
             const movies = searchResult.results.filter(x => x.media_type === 'movie' && x.poster_path !== null);
             const tvShows = searchResult.results.filter(x => x.media_type === 'tv' && x.poster_path !== null);
@@ -54,7 +50,7 @@ export default class SearchComponent extends React.Component {
                                         <Link key={'movie'+movie.id} to={`/movie/${movie.id}/${movie.original_title}`}>
                                             <PosterComponent poster={image}/>
                                         </Link>
-                                    )
+                                    );
                                 })}
                             </Row>
                         </ListItem>
@@ -71,7 +67,7 @@ export default class SearchComponent extends React.Component {
                                         <Link key={'tv'+show.id} to={`/tv/${show.id}/${show.original_name}`}>
                                             <PosterComponent poster={image}/>
                                         </Link>
-                                    )
+                                    );
                                 })}
                             </Row>
                         </ListItem>
@@ -92,8 +88,9 @@ export default class SearchComponent extends React.Component {
                                                   containerElement={
                                                       <Link to={`/person/${person.id}/${person.name}`}/>
                                                   }
-                                                  leftAvatar={<Avatar src={image}/>}/>
-                                    )
+                                                  leftAvatar={<Avatar src={image}/>}
+                                        />
+                                    );
                                 })}
                             </List>
                         </ListItem >
@@ -101,9 +98,30 @@ export default class SearchComponent extends React.Component {
                         null
                     }
                 </List>
-            )
+            );
         } else {
-            return null
+            return null;
         }
     }
 }
+
+SearchComponent.propTypes = {
+  actions: PropTypes.object.isRequired,
+  searchResult: PropTypes.object,
+  searchPeople: PropTypes.object
+};
+
+function mapStateToProps(state) {
+  return {
+    searchResult: state.searchResult,
+    searchPeople: state.searchPeople
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(appBarActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchComponent);

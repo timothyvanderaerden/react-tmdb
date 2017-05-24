@@ -1,6 +1,7 @@
 import React from 'react';
-import {browserHistory} from 'react-router';
-import {ImageUrl} from '../../api/ApiUrl';
+import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { ImageUrl } from '../../api/ApiUrl';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 
@@ -24,7 +25,7 @@ export default class CastComponent extends React.Component {
     };
 
     render() {
-        const {cast} = this.props;
+        const { cast } = this.props;
 
         return (
             <div style={this.styles.wrapper}>
@@ -36,14 +37,18 @@ export default class CastComponent extends React.Component {
                         <Chip key={`${credit.cast_id}${credit.id}`}
                               style={this.styles.chip}
                               onTouchTap={() => {
-                                  this._handleClick(credit.id, credit.name)
+                                  this._handleClick(credit.id, credit.name);
                               }}>
                             <Avatar src={image}/>
                             {credit.name}
                         </Chip>
-                    )
+                    );
                 })}
             </div>
-        )
+        );
     }
 }
+
+CastComponent.propTypes = {
+  cast: PropTypes.object.isRequired,
+};

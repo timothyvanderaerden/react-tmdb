@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {GridTile} from 'material-ui/GridList';
 
 export default class PosterComponent extends React.Component {
@@ -17,11 +18,17 @@ export default class PosterComponent extends React.Component {
         };
     }
     render() {
-        const {poster, title, subtitle} = this.props;
+        const { poster, title, subtitle } = this.props;
         return (
             <GridTile style={this.styles.tile} title={title} subtitle={subtitle}>
                     <img style={this.styles.poster} src={poster}/>
             </GridTile>
-        )
+        );
     }
 }
+
+PosterComponent.propTypes = {
+  poster: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired
+};

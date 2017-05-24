@@ -16,6 +16,6 @@ export default class LoadingComponent extends React.Component {
                     </Row>
                 </Col>
             </Row>
-        )
+        );
     }
 }

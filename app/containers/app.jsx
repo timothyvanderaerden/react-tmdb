@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconUp from 'material-ui/svg-icons/navigation/expand-less';
@@ -24,3 +25,7 @@ export default class App extends React.Component {
         );
     }
 }
+
+App.propTypes = {
+  children: PropTypes.object.isRequired,
+};

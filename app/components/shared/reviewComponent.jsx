@@ -1,5 +1,6 @@
 import React from 'react';
-import {Card, CardText, CardTitle} from 'material-ui/Card';
+import PropTypes from 'prop-types';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 
 export default class ReviewComponent extends React.Component {
@@ -25,9 +26,13 @@ export default class ReviewComponent extends React.Component {
                             </CardText>
                             <Divider/>
                         </div>
-                    )
+                    );
                 })}
             </Card>
-        )
+        );
     }
 }
+
+ReviewComponent.propTypes = {
+  reviews: PropTypes.array.isRequired
+};

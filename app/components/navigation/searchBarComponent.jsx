@@ -1,15 +1,17 @@
-import React from 'react';
-import Store from '../../store/store';
-import {setSearchResults, setSearchPeople} from '../../actions/searchActions';
-import {searchMulti, searchPerson} from '../../api/Search';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+
+import { searchActions } from '../../actions';
+import { searchMulti, searchPerson } from '../../api/Search';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import TextField from 'material-ui/TextField';
-import {white, cyan500} from 'material-ui/styles/colors';
+import { white, cyan500 } from 'material-ui/styles/colors';
 
-export default class searchBarComponent extends React.Component {
-
+class searchBarComponent extends Component {
     constructor(props) {
         super(props);
 
@@ -20,7 +22,7 @@ export default class searchBarComponent extends React.Component {
             textField: {
                 marginTop: 8
             }
-        }
+        };
     }
 
     handleSearch = (event) => {
@@ -30,17 +32,17 @@ export default class searchBarComponent extends React.Component {
                 searchPerson(event.target.value)
             ]).then((data) => {
                 let [ multi, person ] = data;
-                Store.dispatch(setSearchResults(multi));
-                Store.dispatch(setSearchPeople(person));
-            })
+                this.props.actions.setSearchResults(multi);
+                this.props.actions.setSearchPeople(person);
+            });
         } else {
-            Store.dispatch(setSearchResults(null));
-            Store.dispatch(setSearchPeople(null));
+            this.props.actions.setSearchResults(null);
+            this.props.actions.setSearchPeople(null);
         }
     };
 
     render() {
-        const {iconElementLeft, onLeftIconButtonTouchTap} = this.props;
+        const { iconElementLeft, onLeftIconButtonTouchTap } = this.props;
         return (
             <AppBar
                 title={<TextField
@@ -59,3 +61,21 @@ export default class searchBarComponent extends React.Component {
         );
     }
 }
+
+searchBarComponent.propTypes = {
+  actions: PropTypes.object.isRequired,
+  iconElementLeft: PropTypes.object,
+  onLeftIconButtonTouchTap: PropTypes.object
+};
+
+function mapStateToProps() {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(searchActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(searchBarComponent);

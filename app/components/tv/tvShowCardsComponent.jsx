@@ -1,9 +1,10 @@
 import React from 'react';
-import {browserHistory} from 'react-router'
-import {ImageUrl} from '../../api/ApiUrl';
-import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
+import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { ImageUrl } from '../../api/ApiUrl';
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
-import {Row, Col} from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 
 export default class TvShowCardsComponent extends React.Component {
     constructor(props) {
@@ -39,12 +40,12 @@ export default class TvShowCardsComponent extends React.Component {
                                 <CardMedia>
                                     <img src={image} style={{cursor: 'pointer'}}
                                          onClick={() => {
-                                             this._handleClick(show.id, show.original_name)
+                                             this._handleClick(show.id, show.original_name);
                                          }}/>
                                 </CardMedia>
                                 <CardTitle title={show.original_name} style={{cursor: 'pointer'}}
                                            onTouchTap={() => {
-                                               this._handleClick(show.id, show.original_name)
+                                               this._handleClick(show.id, show.original_name);
                                            }}/>
                                 <CardText>
                                     {show.overview}
@@ -66,6 +67,12 @@ export default class TvShowCardsComponent extends React.Component {
                     );
                 })}
             </Row>
-        )
+        );
     }
 }
+
+TvShowCardsComponent.propTypes = {
+  tvShows: PropTypes.array.isRequired,
+  tvGenres: PropTypes.array.isRequired,
+  movieGenres: PropTypes.array.isRequired
+};

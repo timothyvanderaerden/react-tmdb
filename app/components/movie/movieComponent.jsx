@@ -1,6 +1,8 @@
-import React from 'react';
-import Store from '../../store/store';
-import {changeAppBarTitle} from '../../actions/appBarActions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+
 import {
     getMovieById, getKeywordsForMovie, getMovieReviews,
     getCastForMovie, getSimilarMovies
@@ -10,30 +12,21 @@ import SidebarComponent from '../shared/sidebarComponent';
 import ReviewComponent from '../shared/reviewComponent';
 import LoadingComponent from '../shared/loadingComponent';
 import {Row, Col} from 'react-flexbox-grid';
+import { appBarActions } from '../../actions';
 
-export default class MovieComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+class MovieComponent extends Component {
     componentWillMount() {
         const movieId = this.props.params.movieId;
-        this.state = {movieLoaded: false, location: Store.getState().location};
-        Store.dispatch(changeAppBarTitle(this.props.params.movieName));
+        this.state = { movieLoaded: false };
+        this.props.actions.changeAppBarTitle(this.props.params.movieName);
 
         this.getMovieData(movieId);
-
-        this.unsubscribe = Store.subscribe(() => {
-            this.setState({
-                location: Store.getState().location
-            });
-        });
     }
 
     componentWillUpdate(nextState) {
         if (this.state.location !== nextState.location && this.state.location !== undefined) {
             const [ , , movieId, movieName ] = nextState.location.pathname.split('/');
-            Store.dispatch(changeAppBarTitle(movieName));
+            this.props.actions.changeAppBarTitle(movieName);
             this.getMovieData(movieId);
         }
     }
@@ -57,8 +50,8 @@ export default class MovieComponent extends React.Component {
             this.setState({cast: cast});
             this.setState({similar: similar});
         }).then(() => {
-            this.setState({movieLoaded: true})
-        })
+            this.setState({movieLoaded: true});
+        });
     }
 
     render() {
@@ -74,11 +67,30 @@ export default class MovieComponent extends React.Component {
                         <SidebarComponent cast={cast} similar={similar}/>
                     </Col>
                 </Row>
-            )
+            );
         } else {
             return (
                 <LoadingComponent/>
-            )
+            );
         }
     }
 }
+
+MovieComponent.propTypes = {
+  actions: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    location: state.location
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(appBarActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieComponent);

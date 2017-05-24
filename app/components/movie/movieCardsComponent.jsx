@@ -1,9 +1,10 @@
 import React from 'react';
-import {browserHistory} from 'react-router'
-import {ImageUrl} from '../../api/ApiUrl';
+import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { ImageUrl } from '../../api/ApiUrl';
 import Chip from 'material-ui/Chip';
-import {Card, CardMedia, CardTitle, CardText, CardActions} from 'material-ui/Card';
-import {Row, Col} from 'react-flexbox-grid/lib/index';
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card';
+import { Row, Col } from 'react-flexbox-grid/lib/index';
 
 export default class MovieCardsComponent extends React.Component {
     constructor(props) {
@@ -38,12 +39,12 @@ export default class MovieCardsComponent extends React.Component {
                                 <CardMedia>
                                     <img src={image} style={{cursor: 'pointer'}}
                                          onClick={() => {
-                                             this._handleClick(movie.id, movie.original_title)
+                                             this._handleClick(movie.id, movie.original_title);
                                          }}/>
                                 </CardMedia>
                                 <CardTitle title={movie.original_title} style={{cursor: 'pointer'}}
                                            onTouchTap={() => {
-                                               this._handleClick(movie.id, movie.original_title)
+                                               this._handleClick(movie.id, movie.original_title);
                                            }}/>
                                 <CardText>
                                     {movie.overview}
@@ -65,6 +66,11 @@ export default class MovieCardsComponent extends React.Component {
                     );
                 })}
             </Row>
-        )
+        );
     }
 }
+
+MovieCardsComponent.propTypes = {
+  movies: PropTypes.array.isRequired,
+  movieGenres: PropTypes.array.isRequired
+};

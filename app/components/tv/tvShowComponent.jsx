@@ -1,6 +1,9 @@
-import React from 'react';
-import Store from '../../store/store';
-import {changeAppBarTitle} from '../../actions/appBarActions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+
+import { appBarActions } from '../../actions';
 import {
     getTvShowById, getKeywordsForTvShow,
     getCastForTvShow, getSimilarTvShows
@@ -11,29 +14,19 @@ import SidebarComponent from '../shared/sidebarComponent';
 import LoadingComponent from '../shared/loadingComponent';
 import {Row, Col} from 'react-flexbox-grid';
 
-export default class TvShowComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+class TvShowComponent extends Component {
     componentWillMount() {
         const tvShowId = this.props.params.tvShowId;
-        this.state = { showLoaded: false, location: Store.getState().location };
-        Store.dispatch(changeAppBarTitle(this.props.params.tvShowName));
+        this.state = { showLoaded: false };
+        this.props.actions.changeAppBarTitle(this.props.params.tvShowName);
 
         this.getTvShowData(tvShowId);
-
-        this.unsubscribe = Store.subscribe(() => {
-            this.setState({
-                location: Store.getState().location
-            });
-        });
     }
 
     componentWillUpdate(nextState) {
         if (this.state.location !== nextState.location && this.state.location !== undefined) {
             const [ , , tvshowId, tvShowTitle ] = nextState.location.pathname.split('/');
-            Store.dispatch(changeAppBarTitle(tvShowTitle));
+            this.props.actions.changeAppBarTitle(tvShowTitle);
             this.getTvShowData(tvshowId);
         }
     }
@@ -56,7 +49,7 @@ export default class TvShowComponent extends React.Component {
             this.setState({similar: similar});
         }).then(() => {
             this.setState({showLoaded: true});
-        })
+        });
     }
 
     render() {
@@ -72,11 +65,30 @@ export default class TvShowComponent extends React.Component {
                         <SidebarComponent cast={cast} similar={similar}/>
                     </Col>
                 </Row>
-            )
+            );
         } else {
             return (
                 <LoadingComponent/>
-            )
+            );
         }
     }
 }
+
+TvShowComponent.propTypes = {
+  actions: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    location: state.location
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(appBarActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TvShowComponent);

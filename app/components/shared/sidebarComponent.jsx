@@ -1,5 +1,6 @@
 import React from 'react';
-import {Card, CardText, CardTitle} from 'material-ui/Card';
+import PropTypes from 'prop-types';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 import CastComponent from './castComponent';
 import SimilarComponent from './similarComponent';
 
@@ -21,6 +22,11 @@ export default class SidebarComponent extends React.Component {
                     <SimilarComponent similar={similar}/>
                 </CardText>
             </Card>
-        )
+        );
     }
 }
+
+SidebarComponent.propTypes = {
+  cast: PropTypes.object.isRequired,
+  similar: PropTypes.object.isRequired
+};

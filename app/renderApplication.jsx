@@ -1,9 +1,8 @@
 import React from 'react';
-import Store from './store/store';
-import {setRouterLocation} from './actions/routerActions';
-import {render} from 'react-dom';
-import {Router, Route, browserHistory, IndexRedirect} from 'react-router';
-import App from './containers/app';
+// import { setRouterLocation } from './actions/routerActions';
+import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AppNavComponent from './components/navigation/appNavComponent';
 import PopularComponent from './components/popular/popularComponent';
 import UpcomingComponent from './components/upcoming/upcomingComponent';
 import MovieComponent from './components/movie/movieComponent';
@@ -11,24 +10,27 @@ import SearchComponent from './components/search/searchComponent';
 import TvShowComponent from './components/tv/tvShowComponent';
 import PersonComponent from './components/person/personComponent';
 
-browserHistory.listen(location => Store.dispatch(setRouterLocation(location)));
+const renderApplication = () => (
+  <Router history={history}>
+    <div className="App">
+      <AppNavComponent />
+      <div className="container" style={{ margin: 0, width: '100vw'}}>
+        <Switch>
+          <Route exact path="/" component={PopularComponent} />
+          <Route path="/popular" component={PopularComponent}/>
+          <Route path="/upcoming" component={UpcomingComponent}/>
+          <Route exact path="/movie/:movieId/:movieName" component={MovieComponent}/>
+          <Route exact path="/tv/:tvShowId/:tvShowName" component={TvShowComponent}/>
+          <Route exact path="/person/:personId/:personName" components={PersonComponent}/>
+          <Route path="/search" component={SearchComponent}/>
+        </Switch>
+      </div>
+    </div>
+  </Router>
+);
 
-const renderApplication = () => {
-    render((
-        <Router onUpdate={() => {
-            window.scrollTo(0, 0)
-        }} history={browserHistory}>
-            <Route path="/" component={App}>
-                <IndexRedirect to='popular'/>
-                <Route path="popular" component={PopularComponent}/>
-                <Route path="upcoming" component={UpcomingComponent}/>
-                <Route path="movie/:movieId/:movieName" component={MovieComponent}/>
-                <Route path="tv/:tvShowId/:tvShowName" component={TvShowComponent}/>
-                <Route path="person/:personId/:personName" components={PersonComponent}/>
-                <Route path="search" component={SearchComponent}/>
-            </Route>
-        </Router>
-    ), document.getElementById('applicatie'));
+renderApplication.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default renderApplication;

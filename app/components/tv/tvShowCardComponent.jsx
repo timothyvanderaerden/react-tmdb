@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import KeywordComponent from '../shared/keywordComponent';
-import {ImageUrl} from '../../api/ApiUrl';
-import {Card, CardMedia, CardText, CardTitle} from 'material-ui/Card';
+import { ImageUrl } from '../../api/ApiUrl';
+import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
-import {Row, Col} from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 
 export default class TvShowCardComponent extends React.Component {
     constructor(props) {
@@ -76,7 +77,7 @@ export default class TvShowCardComponent extends React.Component {
                                         <Chip key={genre.id} style={this.styles.chip}>
                                             {genre.name}
                                         </Chip>
-                                    )
+                                    );
                                 })}
                             </div>
                         </CardText>
@@ -87,6 +88,11 @@ export default class TvShowCardComponent extends React.Component {
                     </Col>
                 </Row>
             </Card>
-        )
+        );
     }
 }
+
+TvShowCardComponent.propTypes = {
+  tvShow: PropTypes.object.isRequired,
+  keywords: PropTypes.array.isRequired
+};

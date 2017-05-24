@@ -1,7 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {ImageUrl} from '../../api/ApiUrl';
-import {GridList, GridTile} from 'material-ui/GridList';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router';
+import { ImageUrl } from '../../api/ApiUrl';
+import { GridList, GridTile } from 'material-ui/GridList';
 
 export default class SimilarComponent extends React.Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class SimilarComponent extends React.Component {
     }
 
     render() {
-        const {similar} = this.props;
+        const { similar } = this.props;
 
         return (
             <GridList>
@@ -26,9 +27,13 @@ export default class SimilarComponent extends React.Component {
                         >
                             <img src={image}/>
                         </GridTile>
-                    )
+                    );
                 })}
             </GridList>
-        )
+        );
     }
 }
+
+SimilarComponent.propTypes = {
+  similar: PropTypes.object.isRequired,
+};

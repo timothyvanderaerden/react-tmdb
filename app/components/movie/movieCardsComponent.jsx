@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
+
 import { ImageUrl } from '../../api/ApiUrl';
 import Chip from 'material-ui/Chip';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card';
 import { Row, Col } from 'react-flexbox-grid/lib/index';
 
-export default class MovieCardsComponent extends React.Component {
+class MovieCardsComponent extends Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -21,7 +22,7 @@ export default class MovieCardsComponent extends React.Component {
     }
 
     _handleClick = (id, name) => {
-        browserHistory.push(`/movie/${id}/${name}`);
+        this.props.history.push(`/movie/${id}/${name}`);
     };
 
     render() {
@@ -71,6 +72,9 @@ export default class MovieCardsComponent extends React.Component {
 }
 
 MovieCardsComponent.propTypes = {
-  movies: PropTypes.array.isRequired,
-  movieGenres: PropTypes.array.isRequired
+  movies: PropTypes.object.isRequired,
+  movieGenres: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
+
+export default withRouter(MovieCardsComponent);

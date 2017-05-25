@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+
 import KeywordComponent from '../shared/keywordComponent';
 import { ImageUrl } from '../../api/ApiUrl';
 import { Card, CardMedia, CardText, CardTitle } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import { Row, Col } from 'react-flexbox-grid';
 
-export default class MovieCardComponent extends React.Component {
+export default class MovieCardComponent extends Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -92,6 +93,6 @@ export default class MovieCardComponent extends React.Component {
 }
 
 MovieCardComponent.propTypes = {
-  movie: PropTypes.array.isRequired,
-  keywords: PropTypes.array.isRequired
+  movie: PropTypes.object.isRequired,
+  keywords: PropTypes.object.isRequired
 };

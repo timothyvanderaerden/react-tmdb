@@ -5,12 +5,9 @@ import CastComponent from './castComponent';
 import SimilarComponent from './similarComponent';
 
 export default class SidebarComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { cast, similar } = this.props;
+
         return (
             <Card>
                 <CardTitle title="Cast"/>
@@ -19,7 +16,7 @@ export default class SidebarComponent extends React.Component {
                 </CardText>
                 <CardTitle title="Similar"/>
                 <CardText>
-                    <SimilarComponent similar={similar}/>
+                    <SimilarComponent similarList={similar}/>
                 </CardText>
             </Card>
         );

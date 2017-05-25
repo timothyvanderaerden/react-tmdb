@@ -1,7 +1,7 @@
 import * as types from '../constants/actionTypes';
 
 export const changeAppBarTitle = (title) => {
-    return { type: types.APPBAR_TITLE, title: title };
+    return { type: types.APPBAR_TITLE, title: { title } };
 };
 
 export const changeAppBarStyle = (style) => {

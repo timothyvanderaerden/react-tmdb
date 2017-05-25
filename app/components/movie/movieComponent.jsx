@@ -16,9 +16,9 @@ import { appBarActions } from '../../actions';
 
 class MovieComponent extends Component {
     componentWillMount() {
-        const movieId = this.props.params.movieId;
+        const movieId = this.props.match.params.movieId;
         this.state = { movieLoaded: false };
-        this.props.actions.changeAppBarTitle(this.props.params.movieName);
+        this.props.actions.changeAppBarTitle(this.props.match.params.movieName);
 
         this.getMovieData(movieId);
     }
@@ -29,10 +29,6 @@ class MovieComponent extends Component {
             this.props.actions.changeAppBarTitle(movieName);
             this.getMovieData(movieId);
         }
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     getMovieData(movieId) {
@@ -56,6 +52,7 @@ class MovieComponent extends Component {
 
     render() {
         const {movieLoaded, keywords, reviews, movie, cast, similar} = this.state;
+
         if (movieLoaded) {
             return (
                 <Row style={{margin: 8}}>
@@ -78,7 +75,7 @@ class MovieComponent extends Component {
 
 MovieComponent.propTypes = {
   actions: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

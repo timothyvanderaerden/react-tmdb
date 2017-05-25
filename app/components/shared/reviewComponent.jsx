@@ -34,5 +34,5 @@ export default class ReviewComponent extends React.Component {
 }
 
 ReviewComponent.propTypes = {
-  reviews: PropTypes.array.isRequired
+  reviews: PropTypes.object.isRequired
 };

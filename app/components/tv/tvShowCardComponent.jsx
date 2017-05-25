@@ -31,7 +31,8 @@ export default class TvShowCardComponent extends React.Component {
                     overlay={
                         <CardTitle
                             title={tvShow.original_title}
-                            subtitle={`Created by ${tvShow.created_by[0].name}`}/>
+                            //subtitle={`Created by ${tvShow.created_by[0].name}`} fix needed when empty
+                        />
                     }>
                     {tvShow.backdrop_path ?
                         <img src={image}/> : null

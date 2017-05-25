@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
+
 import { ImageUrl } from '../../api/ApiUrl';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import { Row, Col } from 'react-flexbox-grid';
 
-export default class TvShowCardsComponent extends React.Component {
+class TvShowCardsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -21,7 +22,7 @@ export default class TvShowCardsComponent extends React.Component {
     }
 
     _handleClick = (id, name) => {
-        browserHistory.push(`/tv/${id}/${name}`);
+        this.props.history.push(`/tv/${id}/${name}`);
     };
 
     render() {
@@ -72,7 +73,10 @@ export default class TvShowCardsComponent extends React.Component {
 }
 
 TvShowCardsComponent.propTypes = {
-  tvShows: PropTypes.array.isRequired,
-  tvGenres: PropTypes.array.isRequired,
-  movieGenres: PropTypes.array.isRequired
+  tvShows: PropTypes.object.isRequired,
+  tvGenres: PropTypes.object.isRequired,
+  movieGenres: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
+
+export default withRouter(TvShowCardsComponent);

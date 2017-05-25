@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {ImageUrl} from '../../api/ApiUrl';
 import {Card, CardText, CardTitle} from 'material-ui/Card';
 import {Row, Col} from 'react-flexbox-grid';
 
 export default class PersonCardComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { person } = this.props;
         const image = `${ImageUrl}w185${person.profile_path}`;

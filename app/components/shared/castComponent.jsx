@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
+
 import { ImageUrl } from '../../api/ApiUrl';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 
-export default class CastComponent extends React.Component {
+class CastComponent extends React.Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -21,7 +22,7 @@ export default class CastComponent extends React.Component {
     }
 
     _handleClick = (id, name) => {
-        browserHistory.push(`/person/${id}/${name}`);
+      this.props.history.push(`/person/${id}/${name}`);
     };
 
     render() {
@@ -51,4 +52,7 @@ export default class CastComponent extends React.Component {
 
 CastComponent.propTypes = {
   cast: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
+
+export default withRouter(CastComponent);

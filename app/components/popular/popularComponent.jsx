@@ -22,7 +22,7 @@ class PopularComponent extends Component {
       movieLoaded: false,
       showLoaded: false
     };
-    this.props.actions.changeAppBarTitle(null);
+    this.props.actions.changeAppBarTitle("Popular");
     this.props.actions.changeAppBarStyle({ boxShadow: 'none' });
 
     this.getMovieData();

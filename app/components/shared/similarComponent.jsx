@@ -1,20 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ImageUrl } from '../../api/ApiUrl';
 import { GridList, GridTile } from 'material-ui/GridList';
 
 export default class SimilarComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const { similar } = this.props;
+        const { similarList } = this.props;
 
         return (
             <GridList>
-                {similar.results.map(similar => {
+                {similarList.results.map(similar => {
                     const image = similar.backdrop_path ?
                         `${ImageUrl}w300${similar.backdrop_path}` :
                         '/app/resources/images/backdrop_placeholder.png';
@@ -35,5 +31,5 @@ export default class SimilarComponent extends React.Component {
 }
 
 SimilarComponent.propTypes = {
-  similar: PropTypes.object.isRequired,
+  similarList: PropTypes.object.isRequired
 };

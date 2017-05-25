@@ -16,9 +16,9 @@ import {Row, Col} from 'react-flexbox-grid';
 
 class TvShowComponent extends Component {
     componentWillMount() {
-        const tvShowId = this.props.params.tvShowId;
+        const tvShowId = this.props.match.params.tvShowId;
         this.state = { showLoaded: false };
-        this.props.actions.changeAppBarTitle(this.props.params.tvShowName);
+        this.props.actions.changeAppBarTitle(this.props.match.params.tvShowName);
 
         this.getTvShowData(tvShowId);
     }
@@ -29,10 +29,6 @@ class TvShowComponent extends Component {
             this.props.actions.changeAppBarTitle(tvShowTitle);
             this.getTvShowData(tvshowId);
         }
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     getTvShowData(tvShowId) {
@@ -54,6 +50,7 @@ class TvShowComponent extends Component {
 
     render() {
         const { showLoaded, keywords, tvShow, cast, similar } = this.state;
+
         if (showLoaded) {
             return (
                 <Row style={{margin: 8}}>
@@ -76,7 +73,7 @@ class TvShowComponent extends Component {
 
 TvShowComponent.propTypes = {
   actions: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

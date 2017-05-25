@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import { appBarActions } from '../../actions';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ImageUrl } from '../../api/ApiUrl';
 import { getPersonById, getCombinedCredits } from '../../api/People';
 import PersonCardComponent from './personCardComponent';
@@ -13,11 +13,11 @@ import PosterComponent from '../shared/posterComponent';
 import { Row, Col } from 'react-flexbox-grid';
 import { Card, CardTitle } from 'material-ui/Card';
 
-class PeopleComponent extends Component {
+class PersonComponent extends Component {
     componentWillMount() {
-        const personId = this.props.params.personId;
+        const personId = this.props.match.params.personId;
         this.state = {personLoaded: false};
-        this.props.actions.changeAppBarTitle(this.props.params.personName);
+        this.props.actions.changeAppBarTitle(this.props.match.params.personName);
 
         this.getPersonData(personId);
     }
@@ -37,6 +37,7 @@ class PeopleComponent extends Component {
 
     render() {
         const {person, personLoaded, credits} = this.state;
+
         if (personLoaded) {
             return (
                 <Row style={{margin: 8}}>
@@ -73,15 +74,13 @@ class PeopleComponent extends Component {
     }
 }
 
-PeopleComponent.propTypes = {
+PersonComponent.propTypes = {
   actions: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    location: state.location
-  };
+function mapStateToProps() {
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -90,4 +89,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PeopleComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(PersonComponent);

@@ -46,7 +46,7 @@ class appNavComponent extends Component {
 
   render() {
     const { open } = this.state;
-    const { appBarTitle, searchBar } = this.props;
+    const { appBarTitle, searchBar, appBarStyle } = this.props;
 
     return (
         <div>
@@ -70,7 +70,7 @@ class appNavComponent extends Component {
                             </IconButton>
                         }
                         onRightIconButtonTouchTap={this.handleSearchToggle}
-                        style={this.state.appBarStyle}
+                        style={appBarStyle}
                 />
                 :
                 <SearchBar iconElementLeft={<IconButton><BackIcon color={cyan500}/></IconButton>}
@@ -84,14 +84,15 @@ class appNavComponent extends Component {
 
 appNavComponent.propTypes = {
   actions: PropTypes.object.isRequired,
-  appBarTitle: PropTypes.object,
-  searchBar: PropTypes.bool
+  appBarTitle: PropTypes.string,
+  searchBar: PropTypes.bool,
+  appBarStyle: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
-    appBarTitle: state.appBarTitle,
-    appBarStyle: state.appBarStyle,
+    appBarTitle: state.appBar.title,
+    appBarStyle: state.appBar.Style,
     searchBar: state.searchBar
   };
 }

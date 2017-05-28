@@ -15,60 +15,59 @@ import LoadingComponent from '../shared/loadingComponent';
 import {Row, Col} from 'react-flexbox-grid';
 
 class TvShowComponent extends Component {
-    componentWillMount() {
-        const tvShowId = this.props.match.params.tvShowId;
-        this.state = { showLoaded: false };
-        this.props.actions.changeAppBarTitle(this.props.match.params.tvShowName);
+  componentWillMount() {
+    const tvShowId = this.props.match.params.tvShowId;
+    this.state = { showLoaded: false };
+    this.props.actions.changeAppBarTitle(this.props.match.params.tvShowName);
 
-        this.getTvShowData(tvShowId);
+    this.getTvShowData(tvShowId);
+  }
+
+   componentWillUpdate(nextProps) {
+    if (this.props.match.params !== nextProps.match.params) {
+      this.props.actions.changeAppBarTitle(nextProps.match.params.tvShowName);
+      this.getTvShowData(nextProps.match.params.tvShowId);
     }
+  }
 
-    componentWillUpdate(nextState) {
-        if (this.state.location !== nextState.location && this.state.location !== undefined) {
-            const [ , , tvshowId, tvShowTitle ] = nextState.location.pathname.split('/');
-            this.props.actions.changeAppBarTitle(tvShowTitle);
-            this.getTvShowData(tvshowId);
-        }
+  getTvShowData(tvShowId) {
+    Promise.all([
+      getTvShowById(tvShowId),
+      getKeywordsForTvShow(tvShowId),
+      getCastForTvShow(tvShowId),
+      getSimilarTvShows(tvShowId)
+      ]).then((data) => {
+        let [ show, keywords, cast, similar ] = data;
+        this.setState({tvShow: show});
+        this.setState({keywords: keywords});
+        this.setState({cast: cast});
+        this.setState({similar: similar});
+      }).then(() => {
+        this.setState({showLoaded: true});
+    });
+  }
+
+  render() {
+    const { showLoaded, keywords, tvShow, cast, similar } = this.state;
+
+    if (showLoaded) {
+      return (
+        <Row style={{margin: 8}}>
+          <Col xs={12} md={8}>
+            <TvShowCardComponent keywords={keywords.results} tvShow={tvShow}/>
+            <SeasonComponent seasons={tvShow.seasons}/>
+          </Col>
+          <Col xs={12} md={4}>
+            <SidebarComponent cast={cast} similar={similar}/>
+          </Col>
+        </Row>
+      );
+    } else {
+      return (
+        <LoadingComponent/>
+      );
     }
-
-    getTvShowData(tvShowId) {
-        Promise.all([
-            getTvShowById(tvShowId),
-            getKeywordsForTvShow(tvShowId),
-            getCastForTvShow(tvShowId),
-            getSimilarTvShows(tvShowId)
-        ]).then((data) => {
-            let [ show, keywords, cast, similar ] = data;
-            this.setState({tvShow: show});
-            this.setState({keywords: keywords});
-            this.setState({cast: cast});
-            this.setState({similar: similar});
-        }).then(() => {
-            this.setState({showLoaded: true});
-        });
-    }
-
-    render() {
-        const { showLoaded, keywords, tvShow, cast, similar } = this.state;
-
-        if (showLoaded) {
-            return (
-                <Row style={{margin: 8}}>
-                    <Col xs={12} md={8}>
-                        <TvShowCardComponent keywords={keywords.results} tvShow={tvShow}/>
-                        <SeasonComponent seasons={tvShow.seasons}/>
-                    </Col>
-                    <Col xs={12} md={4}>
-                        <SidebarComponent cast={cast} similar={similar}/>
-                    </Col>
-                </Row>
-            );
-        } else {
-            return (
-                <LoadingComponent/>
-            );
-        }
-    }
+  }
 }
 
 TvShowComponent.propTypes = {

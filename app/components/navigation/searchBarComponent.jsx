@@ -12,60 +12,62 @@ import TextField from 'material-ui/TextField';
 import { white, cyan500 } from 'material-ui/styles/colors';
 
 class searchBarComponent extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.styles = {
-            appBar: {
-                backgroundColor: white
-            },
-            textField: {
-                marginTop: 8
-            }
-        };
-    }
-
-    handleSearch = (event) => {
-        if (event.target.value && event.target.value.replace(/\s/g, '').length) {
-            Promise.all([
-                searchMulti(event.target.value),
-                searchPerson(event.target.value)
-            ]).then((data) => {
-                let [ multi, person ] = data;
-                this.props.actions.setSearchResults(multi);
-                this.props.actions.setSearchPeople(person);
-            });
-        } else {
-            this.props.actions.setSearchResults(null);
-            this.props.actions.setSearchPeople(null);
-        }
+    this.styles = {
+      appBar: {
+        backgroundColor: white
+      },
+      textField: {
+        marginTop: 8
+      }
     };
+  }
 
-    render() {
-        const { iconElementLeft, onLeftIconButtonTouchTap } = this.props;
-        return (
-            <AppBar
-                title={<TextField
-                    hintText="Search..."
-                    style={this.styles.textField}
-                    fullWidth={true}
-                    underlineShow={false}
-                    onChange={this.handleSearch}
-                    autoFocus
-                />}
-                style={this.styles.appBar}
-                iconElementLeft={iconElementLeft}
-                onLeftIconButtonTouchTap={onLeftIconButtonTouchTap}
-                iconElementRight={<IconButton><SearchIcon color={cyan500}/></IconButton>}
-            />
-        );
+  handleSearch = (event) => {
+    if (event.target.value && event.target.value.replace(/\s/g, '').length) {
+      Promise.all([
+        searchMulti(event.target.value),
+        searchPerson(event.target.value)
+      ]).then((data) => {
+        const [ multi, person ] = data;
+
+        this.props.actions.setSearchResults(multi);
+        this.props.actions.setSearchPeople(person);
+      });
+    } else {
+      this.props.actions.setSearchResults(null);
+      this.props.actions.setSearchPeople(null);
     }
+  };
+
+  render() {
+    const { iconElementLeft, onLeftIconButtonTouchTap } = this.props;
+
+    return (
+      <AppBar
+        title={<TextField
+          hintText="Search..."
+          style={this.styles.textField}
+          fullWidth={true}
+          underlineShow={false}
+          onChange={this.handleSearch}
+          autoFocus
+          />}
+        style={this.styles.appBar}
+        iconElementLeft={iconElementLeft}
+        onLeftIconButtonTouchTap={onLeftIconButtonTouchTap}
+        iconElementRight={<IconButton><SearchIcon color={cyan500}/></IconButton>}
+      />
+    );
+  }
 }
 
 searchBarComponent.propTypes = {
   actions: PropTypes.object.isRequired,
-  iconElementLeft: PropTypes.object,
-  onLeftIconButtonTouchTap: PropTypes.object
+  iconElementLeft: PropTypes.object.isRequired,
+  onLeftIconButtonTouchTap: PropTypes.func.isRequired
 };
 
 function mapStateToProps() {

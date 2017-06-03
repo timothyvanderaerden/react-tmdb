@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 import { ImageUrl } from '../../api/ApiUrl';
+import backdropImage from '../../resources/images/backdrop_placeholder.png';
 import { GridList, GridTile } from 'material-ui/GridList';
 
 export default class SimilarComponent extends React.Component {
@@ -13,7 +15,7 @@ export default class SimilarComponent extends React.Component {
         {similarList.results.map(similar => {
           const image = similar.backdrop_path ?
             `${ImageUrl}w300${similar.backdrop_path}` :
-            '/app/resources/images/backdrop_placeholder.png';
+            backdropImage;
           const type = similar.hasOwnProperty('original_title') ? 'movie' : 'tv';
           const title = type === 'movie' ? similar.original_title : similar.original_name;
 

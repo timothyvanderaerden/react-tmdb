@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { appBarActions } from '../../actions';
 import { Link } from 'react-router-dom';
 import { ImageUrl } from '../../api/ApiUrl';
+import posterImage from '../../resources/images/poster_avatar_placeholder.png';
 import { getPersonById, getCombinedCredits } from '../../api/People';
 import PersonCardComponent from './personCardComponent';
 import LoadingComponent from '../shared/loadingComponent';
@@ -51,7 +52,7 @@ class PersonComponent extends Component {
                 {credits.cast.map(credit => {
                   const image = credit.poster_path ?
                     `${ImageUrl}w154${credit.poster_path}` :
-                    '/app/resources/images/poster_avatar_placeholder.png';
+                    posterImage;
                   const type = credit.media_type === 'movie' ? 'movie' : 'tv';
 
                   return (

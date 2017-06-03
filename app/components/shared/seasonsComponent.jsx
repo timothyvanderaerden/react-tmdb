@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { ImageUrl } from '../../api/ApiUrl';
+import posterImage from '../../resources/images/poster_avatar_placeholder.png';
 import Avatar from 'material-ui/Avatar';
 import { List, ListItem } from 'material-ui/List';
 import { Card, CardTitle } from 'material-ui/Card';
@@ -20,7 +22,7 @@ export default class SeasonsComponent extends React.Component {
                     {seasons.map(season => {
                         const image = season.poster_path ?
                             `${ImageUrl}w300${season.poster_path}` :
-                            '/app/resources/images/poster_avatar_placeholder.png';
+                            posterImage;
                         return (
                             <ListItem
                                 key={season.id}

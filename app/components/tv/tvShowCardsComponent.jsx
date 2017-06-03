@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { ImageUrl } from '../../api/ApiUrl';
+import backdropImage from '../../resources/images/backdrop_placeholder.png';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import { Row, Col } from 'react-flexbox-grid';
@@ -34,7 +35,7 @@ class TvShowCardsComponent extends React.Component {
                 {tvShows.results.map(show => {
                     const image = show.backdrop_path ?
                         `${ImageUrl}w500/${show.backdrop_path}` :
-                        '/app/resources/images/backdrop_placeholder.png';
+                        backdropImage;
                     return (
                         <Col xs={12} sm={6} md={6} lg={4} key={show.id} style={{marginBottom: 12}}>
                             <Card>

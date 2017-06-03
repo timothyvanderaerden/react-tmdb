@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { appBarActions } from '../../actions';
 import { Link } from 'react-router-dom';
 import { ImageUrl } from '../../api/ApiUrl';
+import profileImage from '../../resources/images/profile_avatar_placeholder.png';
 import { Row } from 'react-flexbox-grid/lib/index';
 import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -82,7 +83,7 @@ class SearchComponent extends Component {
                   {searchPeople.results.map(person => {
                     const image = person.profile_path ?
                       `${ImageUrl}w45${person.profile_path}` :
-                      '/app/resources/images/profile_avatar_placeholder.png';
+                      profileImage;
 
                     return (
                       <ListItem

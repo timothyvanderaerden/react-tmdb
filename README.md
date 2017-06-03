@@ -30,13 +30,5 @@ React application with information about movies and TV shows
 ---
 
 #### Release v2 ###
-- [ ] React redux flow
-- [ ] React router v4
-- [ ] onUpdate => Scroll to top (deprecated in react-router v4)
-
-- [ ] Redesign some pages (simplifying)
-- [ ] Video trailers
-- [ ] Lazy load images
-- [ ] Infinite scrolling
-- [ ] Remove inline style
-- [ ] Dynamic configuration (image basurl, image sizes)
+- [x] React redux flow
+- [x] React router v4

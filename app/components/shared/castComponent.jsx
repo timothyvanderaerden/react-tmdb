@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+import profileImage from '../../resources/images/profile_avatar_placeholder.png';
 import { ImageUrl } from '../../api/ApiUrl';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
@@ -33,7 +34,7 @@ class CastComponent extends React.Component {
         {cast.cast.map(credit => {
           const image = credit.profile_path ?
             `${ImageUrl}w45${credit.profile_path}` :
-            '/app/resources/images/profile_avatar_placeholder.png';
+            profileImage;
 
           return (
             <Chip key={`${credit.cast_id}${credit.id}`}
